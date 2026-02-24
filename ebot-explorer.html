@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ê-Bot Explorer | Inteligência para Turismo</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/typography.css">
+  <link rel="stylesheet" href="css/glassmorphism.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body style="--primary: #f39c12; --primary-hover: #e67e22; --primary-light: rgba(243, 156, 18, 0.1);">
+
+  <!-- HEADER -->
+  <header class="glass-header" style="position: fixed; top: 0; width: 100%; z-index: 1000;">
+    <div class="container header-inner">
+      
+      <div class="logo">
+        <a href="index.html" style="display: flex; align-items: center; gap: 0.5rem; font-weight: 800; font-size: 1.75rem;">
+          <img src="assets/images/ebot_icon.avif" alt="ebot Logo" style="height: 48px; width: auto; object-fit: contain;">
+          <span><span style="color: #88a72f;">ê</span><span style="color: #adb4be;">bot</span></span>
+        </a>
+      </div>
+      <nav class="nav-menu flex">
+        <ul class="flex gap-lg">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="produtos.html" class="text-primary" style="font-weight: 600;">Produtos</a></li>
+          <li><a href="nossa_historia.html">Nossa História</a></li>
+          <li><a href="privacidade.html">Privacidade</a></li>
+          <li><a href="contato.html">Contato</a></li>
+        </ul>
+      </nav>
+      <div class="desktop-cta">
+        <button class="trigger-wa-modal btn btn-primary" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.28 14.3c-.22.61-1.28 1.15-1.78 1.22-.43.06-1.02.13-3.23-.79-2.66-1.11-4.38-3.83-4.52-4.01-.13-.19-1.08-1.44-1.08-2.75 0-1.31.68-1.95.92-2.22.24-.26.52-.33.69-.33.17 0 .34 0 .49.01.16.01.37-.06.57.43.21.5.73 1.77.79 1.9.06.13.1.28.01.47-.08.19-.13.31-.26.46-.13.15-.28.33-.39.46-.13.14-.27.29-.12.56.15.26.68 1.13 1.46 1.83.99.9 1.84 1.18 2.1 1.31.26.13.41.11.56-.06.15-.17.65-.75.82-1.01.17-.26.34-.22.58-.13.24.09 1.53.72 1.79.85.26.13.43.19.5.3.06.11.06.64-.16 1.25z"/></svg> Solicitar Demonstração</button>
+      </div>
+      <div class="hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="section section-light bg-grid-pattern" style="padding-top: 150px;">
+      <div class="container">
+        <div class="text-micro text-primary" style="margin-bottom: 1rem; justify-self: center;"><a href="index.html">Home</a> &gt; <a href="produtos.html">Produtos</a> &gt; Ê-Bot Explorer</div>
+      </div>
+      <div class="container grid grid-2 items-center hero-split">
+        <div class="reveal reveal-left">
+          <span class="badge" style="background: var(--primary-light); color: var(--primary);">🌍 Turismo e Cidades</span>
+          <h1 class="h1">O Guia Turístico Digital da sua Cidade</h1>
+          <p class="body-large" style="margin: 2rem 0;">O Ê-Bot Explorer transforma a experiência do visitante integrando WhatsApp via QR Code e Totens Conversacionais interativos, conectando o turista à cultura, roteiros e negócios locais em tempo real.</p>
+          <button class="trigger-wa-modal btn btn-primary">Falar com Consultor</button>
+        </div>
+        <div class="reveal reveal-right" style="display: flex; justify-content: center; gap: 1rem;">
+          <!-- Ê-Bot Explorer Interactive Demo - Nova Versão Sofisticada -->
+          <div class="explorer-demo-container" style="width: 340px; height: 605px; position: relative;">
+            
+            <!-- Phone Frame -->
+            <div class="explorer-phone" style="width: 100%; height: 100%; background: linear-gradient(145deg, #0f0f0f, #1a1a1a); border-radius: 44px; padding: 12px; box-shadow: 
+              0 50px 100px rgba(0,0,0,0.5),
+              0 0 0 1px rgba(255,255,255,0.1),
+              inset 0 0 30px rgba(255,255,255,0.03); position: relative; overflow: hidden;">
+              
+              <!-- Notch -->
+              <div style="position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: 110px; height: 26px; background: #0f0f0f; border-radius: 0 0 16px 16px; z-index: 10;"></div>
+              
+              <!-- Screen -->
+              <div class="explorer-screen" style="width: 100%; height: 100%; background: linear-gradient(180deg, #0d1117 0%, #161b22 100%); border-radius: 36px; overflow: hidden; position: relative; display: flex; flex-direction: column; box-shadow: inset 0 0 50px rgba(0,0,0,0.3);">
+                
+                <!-- Header -->
+                <div style="padding: 40px 16px 12px; display: flex; align-items: center; gap: 12px; flex-shrink: 0; background: linear-gradient(180deg, rgba(13,17,23,0.95), rgba(13,17,23,0.8)); backdrop-filter: blur(10px);">
+                  <div style="width: 42px; height: 42px; background: linear-gradient(135deg, #f39c12, #e67e22); border-radius: 14px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(243,156,18,0.4); overflow: hidden;">
+                    <img src="assets/images/ebot_icon.avif" alt="Ê-Bot" style="width: 28px; height: 28px; object-fit: contain;">
+                  </div>
+                  <div style="flex: 1;">
+                    <div style="color: white; font-weight: 700; font-size: 1rem; letter-spacing: -0.3px;">Ê-Bot Explorer</div>
+                    <div style="color: rgba(255,255,255,0.5); font-size: 0.7rem; display: flex; align-items: center; gap: 6px;">
+                      <span class="explorer-online-dot" style="width: 6px; height: 6px; background: #4ade80; border-radius: 50%;"></span>
+                      Online
+                    </div>
+                  </div>
+                  <div style="color: rgba(255,255,255,0.3);">•••</div>
+                </div>
+                
+                <!-- Chat Area -->
+                <div class="explorer-chat-area" style="flex: 1; padding: 16px; display: flex; flex-direction: column; gap: 12px; position: relative; overflow-y: auto; overflow-x: hidden; scrollbar-width: none; -ms-overflow-style: none;">
+                  <div class="chat-area-inner" style="display: flex; flex-direction: column; gap: 12px;">
+                    
+                    <!-- Bot Message 1: Greeting -->
+                    <div class="chat-msg bot-msg msg-1 explorer-chat-msg" style="align-self: flex-start; max-width: 88%;">
+                      <div style="display: flex; align-items: flex-start; gap: 8px;">
+                        <div style="width: 28px; height: 28px; background: linear-gradient(135deg, #f39c12, #e67e22); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 3px 12px rgba(243,156,18,0.35); overflow: hidden;">
+                          <img src="assets/images/ebot_icon.avif" alt="Ê-Bot" style="width: 20px; height: 20px; object-fit: contain;">
+                        </div>
+                        <div style="background: linear-gradient(135deg, #21262d, #1c2128); padding: 12px 16px; border-radius: 0 18px 18px 18px; box-shadow: 0 4px 20px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.05);">
+                          <div style="font-size: 0.85rem; color: #e6edf3; line-height: 1.5;">Olá! Sou seu guia turístico virtual! 🌍<br>Posso te ajudar com:</div>
+                          <div style="font-size: 0.75rem; color: #f39c12; margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px;">
+                            <span style="background: rgba(243,156,18,0.15); padding: 3px 10px; border-radius: 12px;">🍽️ Restaurantes</span>
+                            <span style="background: rgba(243,156,18,0.15); padding: 3px 10px; border-radius: 12px;">🎭 Eventos</span>
+                            <span style="background: rgba(243,156,18,0.15); padding: 3px 10px; border-radius: 12px;">🗺️ Roteiros</span>
+                          </div>
+                          <div style="font-size: 0.6rem; color: #6e7681; text-align: right; margin-top: 8px;">10:30</div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- User Message 1 -->
+                    <div class="chat-msg user-msg msg-2 explorer-chat-msg" style="align-self: flex-end; max-width: 88%;">
+                      <div style="background: linear-gradient(135deg, #f39c12, #e67e22); padding: 12px 16px; border-radius: 18px 0 18px 18px; box-shadow: 0 4px 20px rgba(243,156,18,0.35);">
+                        <div style="font-size: 0.85rem; color: white; line-height: 1.4;">Quais eventos estão acontecendo hoje na cidade?</div>
+                        <div style="font-size: 0.6rem; color: rgba(255,255,255,0.7); text-align: right; margin-top: 6px; display: flex; align-items: center; justify-content: flex-end; gap: 4px;">10:31 <svg viewBox="0 0 16 15" width="14" height="12" fill="rgba(255,255,255,0.8);"><path d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.879a.32.32 0 0 1-.484.033l-.358-.325a.319.319 0 0 0-.484.032l-.378.483a.418.418 0 0 0 .036.541l1.32 1.266c.143.14.361.125.484-.033l6.272-8.048a.366.366 0 0 0-.064-.512z"/></svg></div>
+                      </div>
+                    </div>
+                    
+                    <!-- Typing Indicator 1 -->
+                    <div class="typing-indicator typing-1 explorer-typing-wrap" style="align-self: flex-start;">
+                      <div style="display: flex; align-items: flex-start; gap: 8px;">
+                        <div style="width: 28px; height: 28px; background: linear-gradient(135deg, #f39c12, #e67e22); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 3px 12px rgba(243,156,18,0.35); overflow: hidden;">
+                          <img src="assets/images/ebot_icon.avif" alt="Ê-Bot" style="width: 20px; height: 20px; object-fit: contain;">
+                        </div>
+                        <div style="background: linear-gradient(135deg, #21262d, #1c2128); padding: 14px 18px; border-radius: 0 18px 18px 18px; display: flex; gap: 6px; align-items: center; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+                          <div class="explorer-typing-dot" style="width: 8px; height: 8px; background: #f39c12; border-radius: 50%;"></div>
+                          <div class="explorer-typing-dot" style="width: 8px; height: 8px; background: #f39c12; border-radius: 50%;"></div>
+                          <div class="explorer-typing-dot" style="width: 8px; height: 8px; background: #f39c12; border-radius: 50%;"></div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- Bot Event Card Message -->
+                    <div class="chat-msg bot-msg msg-event explorer-chat-msg" style="align-self: flex-start; max-width: 92%;">
+                      <div style="display: flex; align-items: flex-start; gap: 8px;">
+                        <div style="width: 28px; height: 28px; background: linear-gradient(135deg, #f39c12, #e67e22); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 3px 12px rgba(243,156,18,0.35); overflow: hidden;">
+                          <img src="assets/images/ebot_icon.avif" alt="Ê-Bot" style="width: 20px; height: 20px; object-fit: contain;">
+                        </div>
+                        <div style="background: linear-gradient(135deg, #21262d, #1c2128); border-radius: 0 18px 18px 18px; box-shadow: 0 8px 30px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05); overflow: hidden;">
+                          <div style="width: 100%; height: 90px; background: url('assets/images/evento_explorer.webp') center/cover no-repeat; display: flex; align-items: flex-end; justify-content: flex-end; padding: 8px;">
+                            <div style="background: rgba(0,0,0,0.7); padding: 4px 10px; border-radius: 10px; font-size: 0.65rem; color: white; font-weight: 600;">HOJE</div>
+                          </div>
+                          <div style="padding: 12px 14px;">
+                            <div style="font-weight: 700; font-size: 0.9rem; color: white; margin-bottom: 6px;">Festival de Música na Praça</div>
+                            <div style="display: flex; flex-wrap: wrap; gap: 8px; font-size: 0.7rem; color: #8b949e;">
+                              <span style="display: flex; align-items: center; gap: 4px;">📍 Praça Central</span>
+                              <span style="display: flex; align-items: center; gap: 4px;">🕐 19:00</span>
+                              <span style="display: flex; align-items: center; gap: 4px; color: #4ade80;">🎟️ Grátis</span>
+                            </div>
+                          </div>
+                          <div style="font-size: 0.6rem; color: #6e7681; text-align: right; padding: 0 14px 10px;">10:31</div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- User Message 2 -->
+                    <div class="chat-msg user-msg msg-3 explorer-chat-msg" style="align-self: flex-end; max-width: 88%;">
+                      <div style="background: linear-gradient(135deg, #f39c12, #e67e22); padding: 12px 16px; border-radius: 18px 0 18px 18px; box-shadow: 0 4px 20px rgba(243,156,18,0.35);">
+                        <div style="font-size: 0.85rem; color: white; line-height: 1.4;">Pode me indicar um restaurante bom?</div>
+                        <div style="font-size: 0.6rem; color: rgba(255,255,255,0.7); text-align: right; margin-top: 6px; display: flex; align-items: center; justify-content: flex-end; gap: 4px;">10:32 <svg viewBox="0 0 16 15" width="14" height="12" fill="rgba(255,255,255,0.8);"><path d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.879a.32.32 0 0 1-.484.033l-.358-.325a.319.319 0 0 0-.484.032l-.378.483a.418.418 0 0 0 .036.541l1.32 1.266c.143.14.361.125.484-.033l6.272-8.048a.366.366 0 0 0-.064-.512z"/></svg></div>
+                      </div>
+                    </div>
+                    
+                    <!-- Typing Indicator 2 -->
+                    <div class="typing-indicator typing-2 explorer-typing-wrap" style="align-self: flex-start;">
+                      <div style="display: flex; align-items: flex-start; gap: 8px;">
+                        <div style="width: 28px; height: 28px; background: linear-gradient(135deg, #f39c12, #e67e22); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 3px 12px rgba(243,156,18,0.35); overflow: hidden;">
+                          <img src="assets/images/ebot_icon.avif" alt="Ê-Bot" style="width: 20px; height: 20px; object-fit: contain;">
+                        </div>
+                        <div style="background: linear-gradient(135deg, #21262d, #1c2128); padding: 14px 18px; border-radius: 0 18px 18px 18px; display: flex; gap: 6px; align-items: center; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+                          <div class="explorer-typing-dot" style="width: 8px; height: 8px; background: #f39c12; border-radius: 50%;"></div>
+                          <div class="explorer-typing-dot" style="width: 8px; height: 8px; background: #f39c12; border-radius: 50%;"></div>
+                          <div class="explorer-typing-dot" style="width: 8px; height: 8px; background: #f39c12; border-radius: 50%;"></div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- Bot Restaurant Card Message -->
+                    <div class="chat-msg bot-msg msg-restaurant explorer-chat-msg" style="align-self: flex-start; max-width: 92%;">
+                      <div style="display: flex; align-items: flex-start; gap: 8px;">
+                        <div style="width: 28px; height: 28px; background: linear-gradient(135deg, #f39c12, #e67e22); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 3px 12px rgba(243,156,18,0.35); overflow: hidden;">
+                          <img src="assets/images/ebot_icon.avif" alt="Ê-Bot" style="width: 20px; height: 20px; object-fit: contain;">
+                        </div>
+                        <div style="background: linear-gradient(135deg, #21262d, #1c2128); border-radius: 0 18px 18px 18px; box-shadow: 0 8px 30px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05); overflow: hidden;">
+                          <div style="width: 100%; height: 85px; background: linear-gradient(135deg, #f59e0b, #fbbf24); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+                            <div style="font-size: 2.5rem;">🍽️</div>
+                            <div style="position: absolute; top: 8px; right: 8px; background: rgba(0,0,0,0.6); padding: 4px 10px; border-radius: 12px; font-size: 0.7rem; color: white; font-weight: 600; display: flex; align-items: center; gap: 4px;">⭐ 4.8</div>
+                          </div>
+                          <div style="padding: 12px 14px;">
+                            <div style="font-weight: 700; font-size: 0.9rem; color: white; margin-bottom: 4px;">Sabor Regional</div>
+                            <div style="font-size: 0.75rem; color: #8b949e; margin-bottom: 8px;">Cozinha típica mineira • 250m</div>
+                            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                              <div style="background: rgba(243,156,18,0.15); padding: 6px 12px; border-radius: 8px; font-size: 0.7rem; color: #f39c12; font-weight: 600;">💰 R$ 35-60</div>
+                              <div style="background: rgba(59, 130, 246, 0.15); padding: 6px 12px; border-radius: 8px; font-size: 0.7rem; color: #3b82f6; font-weight: 600;">🗺️ Ver Mapa</div>
+                            </div>
+                          </div>
+                          <div style="font-size: 0.6rem; color: #6e7681; text-align: right; padding: 0 14px 10px;">10:32</div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- User Message 3 -->
+                    <div class="chat-msg user-msg msg-4 explorer-chat-msg" style="align-self: flex-end; max-width: 88%;">
+                      <div style="background: linear-gradient(135deg, #f39c12, #e67e22); padding: 12px 16px; border-radius: 18px 0 18px 18px; box-shadow: 0 4px 20px rgba(243,156,18,0.35);">
+                        <div style="font-size: 0.85rem; color: white; line-height: 1.4;">Perfeito! Me faça um roteiro a pé</div>
+                        <div style="font-size: 0.6rem; color: rgba(255,255,255,0.7); text-align: right; margin-top: 6px; display: flex; align-items: center; justify-content: flex-end; gap: 4px;">10:33 <svg viewBox="0 0 16 15" width="14" height="12" fill="rgba(255,255,255,0.8);"><path d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.879a.32.32 0 0 1-.484.033l-.358-.325a.319.319 0 0 0-.484.032l-.378.483a.418.418 0 0 0 .036.541l1.32 1.266c.143.14.361.125.484-.033l6.272-8.048a.366.366 0 0 0-.064-.512z"/></svg></div>
+                      </div>
+                    </div>
+                    
+                    <!-- Typing Indicator 3 -->
+                    <div class="typing-indicator typing-3 explorer-typing-wrap" style="align-self: flex-start;">
+                      <div style="display: flex; align-items: flex-start; gap: 8px;">
+                        <div style="width: 28px; height: 28px; background: linear-gradient(135deg, #f39c12, #e67e22); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 3px 12px rgba(243,156,18,0.35); overflow: hidden;">
+                          <img src="assets/images/ebot_icon.avif" alt="Ê-Bot" style="width: 20px; height: 20px; object-fit: contain;">
+                        </div>
+                        <div style="background: linear-gradient(135deg, #21262d, #1c2128); padding: 14px 18px; border-radius: 0 18px 18px 18px; display: flex; gap: 6px; align-items: center; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+                          <div class="explorer-typing-dot" style="width: 8px; height: 8px; background: #f39c12; border-radius: 50%;"></div>
+                          <div class="explorer-typing-dot" style="width: 8px; height: 8px; background: #f39c12; border-radius: 50%;"></div>
+                          <div class="explorer-typing-dot" style="width: 8px; height: 8px; background: #f39c12; border-radius: 50%;"></div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- Bot Route Message -->
+                    <div class="chat-msg bot-msg msg-route explorer-chat-msg" style="align-self: flex-start; max-width: 92%;">
+                      <div style="display: flex; align-items: flex-start; gap: 8px;">
+                        <div style="width: 28px; height: 28px; background: linear-gradient(135deg, #f39c12, #e67e22); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 3px 12px rgba(243,156,18,0.35); overflow: hidden;">
+                          <img src="assets/images/ebot_icon.avif" alt="Ê-Bot" style="width: 20px; height: 20px; object-fit: contain;">
+                        </div>
+                        <div style="background: linear-gradient(135deg, #21262d, #1c2128); padding: 12px 16px; border-radius: 0 18px 18px 18px; box-shadow: 0 8px 30px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05);">
+                          <div style="font-weight: 700; font-size: 0.9rem; color: white; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 1.2rem;">🚶</span> Roteiro Cultural a Pé
+                          </div>
+                          <div style="display: flex; flex-direction: column; gap: 8px;">
+                            <div style="display: flex; align-items: center; gap: 10px; font-size: 0.8rem; color: #e6edf3;">
+                              <div style="width: 22px; height: 22px; background: #f39c12; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; color: white;">1</div>
+                              <span style="color: #8b949e;">Praça Central (início)</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 10px; font-size: 0.8rem; color: #e6edf3;">
+                              <div style="width: 22px; height: 22px; background: #e67e22; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; color: white;">2</div>
+                              <span style="color: #8b949e;">Museu Histórico (15 min)</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 10px; font-size: 0.8rem; color: #e6edf3;">
+                              <div style="width: 22px; height: 22px; background: #d35400; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; color: white;">3</div>
+                              <span style="color: #8b949e;">Restaurante Sabor Regional</span>
+                            </div>
+                          </div>
+                          <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.75rem; color: #f39c12; font-weight: 600; display: flex; align-items: center; gap: 6px;">
+                            ⏱️ Tempo total: ~1h30min • 📏 1.2km
+                          </div>
+                          <div style="font-size: 0.6rem; color: #6e7681; text-align: right; margin-top: 8px;">10:33</div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                  </div>
+                </div>
+                
+                <!-- Input Bar -->
+                <div style="padding: 10px 14px; background: linear-gradient(180deg, rgba(22,27,34,0.95), rgba(22,27,34,0.9)); display: flex; align-items: center; gap: 10px; flex-shrink: 0; border-top: 1px solid rgba(255,255,255,0.05);">
+                  <div style="width: 36px; height: 36px; background: rgba(255,255,255,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.5);">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                  </div>
+                  <div style="flex: 1; background: #21262d; border-radius: 22px; padding: 10px 18px; font-size: 0.85rem; color: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.05);">
+                    Digite sua mensagem...
+                  </div>
+                  <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #f39c12, #e67e22); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(243,156,18,0.4);">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+            
+            <!-- Animated Floating Cursor - Movimento Fluida e Sofisticado -->
+            <div class="explorer-demo-cursor" style="position: absolute; width: 24px; height: 24px; pointer-events: none; z-index: 100; filter: drop-shadow(0 3px 6px rgba(0,0,0,0.4));">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86a.5.5 0 0 1 .35-.15h6.87c.45 0 .67-.54.35-.85L6.35 2.42c-.31-.31-.85-.09-.85.34z" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+              </svg>
+            </div>
+            
+            <!-- Click Ripple Effect -->
+            <div class="explorer-click-effect" style="position: absolute; width: 16px; height: 16px; border-radius: 50%; background: rgba(243,156,18,0.5); pointer-events: none; z-index: 99; transform: scale(0); opacity: 0;"></div>
+            
+          </div>
+          
+          <!-- Styles for Explorer Demo - Versão Premium com Animação Fluida -->
+          <style>
+            .explorer-chat-area::-webkit-scrollbar { display: none; }
+            
+            /* Pulse online indicator */
+            @keyframes explorerPulseOnline {
+              0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 8px #4ade80; }
+              50% { opacity: 0.6; transform: scale(0.85); box-shadow: 0 0 4px #4ade80; }
+            }
+            .explorer-online-dot {
+              animation: explorerPulseOnline 2s ease-in-out infinite;
+            }
+            
+            /* Message fade in animation */
+            @keyframes explorerMsgFadeIn {
+              0% { opacity: 0; transform: translateY(25px) scale(0.9); }
+              60% { transform: translateY(-3px) scale(1.02); }
+              100% { opacity: 1; transform: translateY(0) scale(1); }
+            }
+            
+            /* Message fade out animation */
+            @keyframes explorerMsgFadeOut {
+              0% { opacity: 1; transform: translateY(0) scale(1); }
+              100% { opacity: 0; transform: translateY(-15px) scale(0.95); }
+            }
+            
+            /* Typing dots bounce animation */
+            @keyframes explorerTypingBounce {
+              0%, 60%, 100% { transform: translateY(0) scale(0.8); opacity: 0.4; }
+              30% { transform: translateY(-8px) scale(1); opacity: 1; }
+            }
+            .explorer-typing-dot {
+              animation: explorerTypingBounce 1.2s ease-in-out infinite;
+            }
+            .explorer-typing-dot:nth-child(1) { animation-delay: 0s; }
+            .explorer-typing-dot:nth-child(2) { animation-delay: 0.15s; }
+            .explorer-typing-dot:nth-child(3) { animation-delay: 0.3s; }
+            
+            /* Cursor floating animation - sofisticada e fluida */
+            @keyframes explorerCursorFloat {
+              0% { top: 88%; left: 50%; }
+              8% { top: 85%; left: 55%; }
+              15% { top: 40%; left: 72%; }
+              18% { top: 40%; left: 72%; transform: scale(0.75); }
+              21% { top: 40%; left: 72%; transform: scale(1); }
+              28% { top: 48%; left: 78%; }
+              35% { top: 55%; left: 70%; }
+              42% { top: 50%; left: 75%; }
+              50% { top: 60%; left: 72%; }
+              58% { top: 68%; left: 78%; }
+              65% { top: 75%; left: 70%; }
+              75% { top: 85%; left: 65%; }
+              85% { top: 88%; left: 50%; }
+              100% { top: 88%; left: 50%; }
+            }
+            
+            /* Click ripple effect */
+            @keyframes explorerClickRipple {
+              0% { transform: scale(0); opacity: 0.8; }
+              50% { transform: scale(1.5); opacity: 0.4; }
+              100% { transform: scale(2.5); opacity: 0; }
+            }
+            
+            /* Typing indicator fade */
+            @keyframes explorerTypingFadeIn {
+              from { opacity: 0; transform: translateY(10px) scale(0.95); }
+              to { opacity: 1; transform: translateY(0) scale(1); }
+            }
+            @keyframes explorerTypingFadeOut {
+              from { opacity: 1; transform: translateY(0) scale(1); }
+              to { opacity: 0; transform: translateY(-5px) scale(0.95); visibility: hidden; }
+            }
+            
+            /* Message states */
+            .explorer-chat-msg {
+              opacity: 0;
+              transform: translateY(25px) scale(0.9);
+              transition: opacity 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                          transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            }
+            .explorer-chat-msg.explorer-visible {
+              opacity: 1;
+              transform: translateY(0) scale(1);
+            }
+            .explorer-chat-msg.explorer-fading {
+              opacity: 0;
+              transform: translateY(-15px) scale(0.95);
+              transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            }
+            
+            /* Typing indicator */
+            .explorer-typing-wrap {
+              opacity: 0;
+              visibility: hidden;
+              transform: translateY(10px) scale(0.95);
+              transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
+            }
+            .explorer-typing-wrap.explorer-typing-visible {
+              opacity: 1;
+              visibility: visible;
+              transform: translateY(0) scale(1);
+            }
+            
+            /* Override original animations */
+            .chat-msg.bot-msg.msg-1,
+            .chat-msg.user-msg.msg-2,
+            .chat-msg.bot-msg.msg-event,
+            .chat-msg.user-msg.msg-3,
+            .chat-msg.bot-msg.msg-restaurant,
+            .chat-msg.user-msg.msg-4,
+            .chat-msg.bot-msg.msg-route {
+              animation: none !important;
+              opacity: 0;
+              transform: translateY(25px) scale(0.9);
+            }
+            .typing-1, .typing-2, .typing-3 {
+              animation: none !important;
+              opacity: 0;
+              visibility: hidden;
+            }
+            
+            /* Demo cursor */
+            .explorer-demo-cursor {
+              animation: explorerCursorFloat 20s ease-in-out infinite;
+              filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+            }
+            
+            /* Click effect */
+            .explorer-click-effect {
+              animation: explorerClickRipple 20s ease-out infinite;
+            }
+            
+            .chat-area-inner {
+              animation: none !important;
+            }
+            
+            @media (max-width: 768px) {
+              .explorer-demo-container {
+                width: 300px !important;
+                height: 535px !important;
+              }
+            }
+          </style>
+          <script>
+            (function() {
+              if(window.explorerChatV3Initialized) return;
+              window.explorerChatV3Initialized = true;
+              
+              document.addEventListener('DOMContentLoaded', function() {
+                var chatArea = document.querySelector('.explorer-chat-area') || document.querySelector('.chat-area');
+                var chatInner = document.querySelector('.chat-area-inner');
+                if (!chatArea || !chatInner) return;
+                
+                var CYCLE_DURATION = 20000;
+                var FADEOUT_START = 17500;
+                
+                var messageSequence = [
+                  { type: 'msg', selector: '.msg-1', showAt: 500, scroll: 0 },
+                  { type: 'msg', selector: '.msg-2', showAt: 2500, scroll: 30 },
+                  { type: 'typing', selector: '.typing-1', showAt: 3200, hideAt: 5500, scroll: 50 },
+                  { type: 'msg', selector: '.msg-event', showAt: 5500, scroll: 120 },
+                  { type: 'msg', selector: '.msg-3', showAt: 7500, scroll: 200 },
+                  { type: 'typing', selector: '.typing-2', showAt: 8200, hideAt: 10500, scroll: 240 },
+                  { type: 'msg', selector: '.msg-restaurant', showAt: 10500, scroll: 340 },
+                  { type: 'msg', selector: '.msg-4', showAt: 12500, scroll: 420 },
+                  { type: 'typing', selector: '.typing-3', showAt: 13200, hideAt: 15500, scroll: 460 },
+                  { type: 'msg', selector: '.msg-route', showAt: 15500, scroll: 'max' }
+                ];
+                
+                var timeouts = [];
+                
+                function clearAllTimeouts() {
+                  timeouts.forEach(function(t) { clearTimeout(t); });
+                  timeouts = [];
+                }
+                
+                function runCycle() {
+                  clearAllTimeouts();
+                  
+                  var allMsgs = document.querySelectorAll('.explorer-chat-msg');
+                  allMsgs.forEach(function(msg) {
+                    msg.classList.remove('explorer-visible', 'explorer-fading');
+                    msg.style.opacity = '0';
+                    msg.style.transform = 'translateY(25px) scale(0.9)';
+                  });
+                  
+                  var allTypings = document.querySelectorAll('.explorer-typing-wrap');
+                  allTypings.forEach(function(typing) {
+                    typing.classList.remove('explorer-typing-visible');
+                    typing.style.opacity = '0';
+                    typing.style.visibility = 'hidden';
+                  });
+                  
+                  chatArea.scrollTo({ top: 0, behavior: 'instant' });
+                  
+                  messageSequence.forEach(function(item) {
+                    var el = document.querySelector(item.selector);
+                    if (!el) return;
+                    
+                    var showTimeout = setTimeout(function() {
+                      if (item.type === 'msg') {
+                        el.classList.add('explorer-visible');
+                        el.style.opacity = '1';
+                        el.style.transform = 'translateY(0) scale(1)';
+                        
+                        var scrollTarget = item.scroll;
+                        if (scrollTarget === 'max') {
+                          scrollTarget = chatArea.scrollHeight - chatArea.clientHeight + 50;
+                        }
+                        chatArea.scrollTo({ 
+                          top: scrollTarget, 
+                          behavior: 'smooth' 
+                        });
+                      } else if (item.type === 'typing') {
+                        el.classList.add('explorer-typing-visible');
+                        el.style.opacity = '1';
+                        el.style.visibility = 'visible';
+                        chatArea.scrollTo({ top: item.scroll, behavior: 'smooth' });
+                        
+                        var hideTimeout = setTimeout(function() {
+                          el.classList.remove('explorer-typing-visible');
+                          el.style.opacity = '0';
+                          el.style.visibility = 'hidden';
+                        }, item.hideAt - item.showAt);
+                        timeouts.push(hideTimeout);
+                      }
+                    }, item.showAt);
+                    
+                    timeouts.push(showTimeout);
+                  });
+                  
+                  var fadeoutTimeout = setTimeout(function() {
+                    var allMsgs = document.querySelectorAll('.explorer-chat-msg');
+                    allMsgs.forEach(function(msg, index) {
+                      setTimeout(function() {
+                        msg.classList.remove('explorer-visible');
+                        msg.classList.add('explorer-fading');
+                        msg.style.opacity = '0';
+                        msg.style.transform = 'translateY(-15px) scale(0.95)';
+                      }, index * 100);
+                    });
+                  }, FADEOUT_START);
+                  
+                  timeouts.push(fadeoutTimeout);
+                }
+                
+                runCycle();
+                setInterval(runCycle, CYCLE_DURATION);
+              });
+            })();
+          </script>
+        </div>
+      </div>
+    </section>
+
+    <!-- BENTO GRID -->
+    <section class="section section-gray">
+      <div class="container reveal">
+        <h2 class="h2 text-center" style="margin-bottom: 1rem;">Jornada Completa do Turista</h2>
+        <p class="body-large text-center" style="margin-bottom: 4rem;">Do acesso por QR Code nas praças até a reserva nos restaurantes.</p>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
+          <div class="glass-card" style="padding: 1.5rem; border-color: var(--primary);"><div style="font-size: 2rem; margin-bottom: 0.5rem;">📱</div><h4 style="font-weight: 700; margin-bottom: 0.5rem;">QR Code Integrado</h4><p class="text-small">Basta escanear em pontos turísticos, hotéis e restaurantes para iniciar o WhatsApp.</p></div>
+          <div class="glass-card" style="padding: 1.5rem; border-color: var(--primary);"><div style="font-size: 2rem; margin-bottom: 0.5rem;">🤖</div><h4 style="font-weight: 700; margin-bottom: 0.5rem;">IA Especialista</h4><p class="text-small">Recomenda locais, rotas (a pé, bike, carro) e restaurantes baseados no tempo disponível do turista.</p></div>
+          <div class="glass-card" style="padding: 1.5rem; border-color: var(--primary);"><div style="font-size: 2rem; margin-bottom: 0.5rem;">🎙️</div><h4 style="font-weight: 700; margin-bottom: 0.5rem;">Totem por Voz</h4><p class="text-small">Atendimento acessível por diálogo e voz direto na rodoviária e praças centrais da cidade.</p></div>
+          <div class="glass-card" style="padding: 1.5rem; border-color: var(--primary);"><div style="font-size: 2rem; margin-bottom: 0.5rem;">📅</div><h4 style="font-weight: 700; margin-bottom: 0.5rem;">Agenda Cultural</h4><p class="text-small">Divulgação de eventos e roteiros da cidade atualizados automaticamente pela secretaria.</p></div>
+          <div class="glass-card" style="padding: 1.5rem; border-color: var(--primary);"><div style="font-size: 2rem; margin-bottom: 0.5rem;">🎯</div><h4 style="font-weight: 700; margin-bottom: 0.5rem;">Marketing Ativo</h4><p class="text-small">Disparos segmentados divulgando atrações privadas e estimulando consumo local.</p></div>
+          <div class="glass-card" style="padding: 1.5rem; border-color: var(--primary);"><div style="font-size: 2rem; margin-bottom: 0.5rem;">📊</div><h4 style="font-weight: 700; margin-bottom: 0.5rem;">Painel de Gestão</h4><p class="text-small">Prefeituras e iniciativa privada gerenciam o fluxo, mapeiam interesses e medem resultados.</p></div>
+        </div>
+      </div>
+    </section>
+  
+  
+    <!-- FINAL CTA -->
+    <section class="section section-dark bg-grid-pattern-dark" style="background: linear-gradient(135deg, var(--dark) 0%, #1a252f 100%); overflow: hidden; margin-bottom: 0;">
+      <div class="container reveal">
+        <div class="final-cta-container" style="display: flex; align-items: center; justify-content: space-between; gap: 4rem; flex-wrap: wrap;">
+          
+          <div class="final-cta-content" style="flex: 3; min-width: 350px; text-align: left;">
+            <h2 class="h1" style="color: white; margin-bottom: 1.5rem;">Pronto para Transformar Seu Atendimento?</h2>
+            <p class="body-large" style="margin-bottom: 2.5rem; opacity: 0.9;">Junte-se a milhares de empresas, clínicas e prefeituras que já automatizaram e humanizaram seus processos com Ê-Sistemas.</p>
+            <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 1rem;" class="cta-button-wrapper">
+              <button class="trigger-wa-modal btn btn-primary float-hover" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; font-size: 1.25rem; padding: 1rem 2.5rem;"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.28 14.3c-.22.61-1.28 1.15-1.78 1.22-.43.06-1.02.13-3.23-.79-2.66-1.11-4.38-3.83-4.52-4.01-.13-.19-1.08-1.44-1.08-2.75 0-1.31.68-1.95.92-2.22.24-.26.52-.33.69-.33.17 0 .34 0 .49.01.16.01.37-.06.57.43.21.5.73 1.77.79 1.9.06.13.1.28.01.47-.08.19-.13.31-.26.46-.13.15-.28.33-.39.46-.13.14-.27.29-.12.56.15.26.68 1.13 1.46 1.83.99.9 1.84 1.18 2.1 1.31.26.13.41.11.56-.06.15-.17.65-.75.82-1.01.17-.26.34-.22.58-.13.24.09 1.53.72 1.79.85.26.13.43.19.5.3.06.11.06.64-.16 1.25z"/></svg>  Falar com Especialista </button>
+              <div class="text-small" style="opacity: 0.7;">Orçamento personalizado • Setup em 48h • Suporte dedicado</div>
+            </div>
+          </div>
+          
+          <div class="final-cta-robot" style="flex: 0.6; min-width: 280px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; perspective: 1000px;">
+            
+            <div class="robot-icon-container float-hover" style="position: relative; width: 130px; height: 130px; display: flex; align-items: center; justify-content: center; margin-bottom: 2.5rem; z-index: 10;">
+              <!-- Fluid and slower pulse effect matching icon contour -->
+              <img src="assets/images/ebot_icon.avif" alt="" class="pulse-layer">
+              <img src="assets/images/ebot_icon.avif" alt="" class="pulse-layer pulse-layer-2">
+              
+              <!-- Main Icon -->
+              <img src="assets/images/ebot_icon.avif" alt="Ê-Bot" style="position: absolute; width: 100%; height: 100%; object-fit: contain; z-index: 2; filter: drop-shadow(0 25px 35px rgba(0,0,0,0.7));">
+            </div>
+
+            <!-- Chat Container for descending bubbles -->
+            <div id="wa-chat-container" style="position: relative; width: 100%; max-width: 290px; height: 210px; z-index: 2;">
+              <!-- Bubbles injected by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA SCRIPTS & STYLES -->
+    <style>
+      .pulse-layer {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        z-index: 1;
+        animation: smoothPulse 4.5s cubic-bezier(0.25, 0.8, 0.25, 1) infinite;
+        opacity: 0;
+      }
+      .pulse-layer-2 {
+        animation-delay: 2.25s;
+      }
+      
+      @keyframes smoothPulse {
+        0% { transform: scale(0.9); opacity: 0.6; filter: drop-shadow(0 0 15px var(--primary)) blur(0px); }
+        100% { transform: scale(1.7); opacity: 0; filter: drop-shadow(0 0 35px var(--primary)) blur(4px); }
+      }
+      
+      .wa-bubble {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: #ffffff;
+        color: #111b21;
+        border-radius: 0 12px 12px 12px;
+        padding: 10px 14px 10px 14px;
+        text-align: left;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        transform-origin: top center;
+        transition: all 0.9s cubic-bezier(0.25, 1, 0.3, 1);
+        will-change: transform, opacity, filter;
+      }
+      
+      .wa-bubble::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -10px;
+          width: 0;
+          height: 0;
+          border-top: 0px solid transparent;
+          border-right: 10px solid #ffffff;
+          border-bottom: 14px solid transparent;
+      }
+      
+      .wa-time {
+        font-size: 0.68rem;
+        color: #667781;
+        float: right;
+        margin-top: 6px;
+        margin-left: 10px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .wa-check {
+        color: #53bdeb;
+      }
+      
+      /* Chat Scroll States */
+      .chat-entering {
+        opacity: 0;
+        transform: translateY(-40px) scale(0.95) translateZ(-20px);
+      }
+      .chat-active {
+        opacity: 1;
+        transform: translateY(0) scale(1) translateZ(60px);
+        filter: blur(0);
+        z-index: 3;
+        box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.8), 0 20px 30px -5px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255,255,255,0.05);
+      }
+      .chat-previous {
+        opacity: 0.55;
+        transform: translateY(90px) scale(0.92) translateZ(10px);
+        filter: blur(1.5px);
+        z-index: 2;
+        box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.5);
+      }
+      .chat-leaving {
+        opacity: 0;
+        transform: translateY(165px) scale(0.85) translateZ(-20px);
+        filter: blur(4px);
+        z-index: 1;
+      }
+      
+      @media (max-width: 992px) {
+        .final-cta-container { flex-direction: column; text-align: center; gap: 3rem !important; }
+        .final-cta-content { text-align: center !important; display: flex; flex-direction: column; align-items: center; }
+        .cta-button-wrapper { align-items: center !important; }
+        #wa-chat-container { margin: 0 auto; }
+      }
+    </style>
+    <script>
+      (function() {
+        if(window.finalCtaInitialized) return;
+        window.finalCtaInitialized = true;
+        
+        document.addEventListener('DOMContentLoaded', () => {
+          const messages = [
+            "Sabia que 80% dos clientes preferem respostas imediatas? Clique ao lado!",
+            "Reduza seu tempo de resposta de horas para segundos. É só clicar no botão ali!",
+            "Aumente a satisfação dos clientes com IA 24/7. Fale com um Especialista!",
+            "Não perca mais vendas por demora. O botão ao lado é o primeiro passo para o sucesso."
+          ];
+          
+          const container = document.getElementById('wa-chat-container');
+          if (!container) return;
+          
+          let msgIndex = 0;
+          const displayDuration = 4500;
+          
+          function spawnMessage() {
+            if (!document.getElementById('wa-chat-container')) return;
+            
+            const now = new Date();
+            const timeStr = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+            
+            const bubble = document.createElement('div');
+            bubble.className = 'wa-bubble chat-entering';
+            bubble.innerHTML = `
+               <p style="margin: 0; display: inline; line-height: 1.3; font-size: 0.85rem;">${messages[msgIndex]}</p>
+               <div class="wa-time">
+                 <span>${timeStr}</span>
+                 <svg class="wa-check" viewBox="0 0 16 15" width="16" height="15"><path fill="currentColor" d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.879a.32.32 0 0 1-.484.033l-.358-.325a.319.319 0 0 0-.484.032l-.378.483a.418.418 0 0 0 .036.541l1.32 1.266c.143.14.361.125.484-.033l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.879a.32.32 0 0 1-.484.033L1.891 7.769a.366.366 0 0 0-.515.006l-.423.433a.364.364 0 0 0 .006.514l3.258 3.185c.143.14.361.125.484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z"></path></svg>
+               </div>
+               <div style="clear: both;"></div>
+            `;
+            
+            container.prepend(bubble);
+            
+            // force reflow to trigger CSS transitions
+            void bubble.offsetWidth;
+            
+            bubble.classList.remove('chat-entering');
+            bubble.classList.add('chat-active');
+            
+            // shift previous bubbles down
+            const allBubbles = container.querySelectorAll('.wa-bubble');
+            allBubbles.forEach((b, i) => {
+               if (i === 1) {
+                   b.className = 'wa-bubble chat-previous';
+               } else if (i === 2) {
+                   b.className = 'wa-bubble chat-leaving';
+               } else if (i > 2) {
+                   // clean up DOM
+                   setTimeout(() => { if (b.parentNode) b.remove() }, 1000);
+               }
+            });
+            
+            msgIndex = (msgIndex + 1) % messages.length;
+            setTimeout(spawnMessage, displayDuration);
+          }
+          
+          // Initial delay to let the page load
+          setTimeout(spawnMessage, 500);
+        });
+      })();
+    </script>
+
+  </main>
+
+  
+
+    <footer style="background: var(--dark-header); color: #999; border-top: 1px solid rgba(255,255,255,0.05); padding: 4rem 0 2rem; margin-top: 0;">
+    <div class="container">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 3rem;">
+        
+        <div style="flex: 1.5; min-width: 250px;">
+          <div style="margin-bottom: 1.5rem; display: flex; align-items: center;">
+            <img src="assets/images/esistemas_logo.avif" alt="Ê-Sistemas Corporativo" style="height: 48px; width: auto; object-fit: contain;">
+          </div>
+          <p class="text-small" style="margin-bottom: 1.5rem; max-width: 300px; line-height: 1.6;">Transformando tecnologia em conexões reais através de inteligência artificial focada em eficiência, resultados e humanização.</p>
+        </div>
+        
+        <div style="flex: 1; min-width: 150px;">
+          <h4 style="color: white; margin-bottom: 1.5rem; font-weight: 600; font-size: 1.125rem;">Produtos</h4>
+          <ul style="display: flex; flex-direction: column; gap: 0.75rem;" class="text-small">
+            <li><a href="ebot-api.html" style="transition: color 0.2s;">Ê-Bot API</a></li>
+            <li><a href="ebot-panel.html" style="transition: color 0.2s;">Ê-Bot Panel</a></li>
+            <li><a href="ebot-clinical.html" style="transition: color 0.2s;">Ê-Bot Clinical</a></li>
+            <li><a href="ebot-explorer.html" style="transition: color 0.2s;">Ê-Bot Explorer</a></li>
+          </ul>
+        </div>
+
+        <div style="flex: 1; min-width: 150px;">
+          <h4 style="color: white; margin-bottom: 1.5rem; font-weight: 600; font-size: 1.125rem;">A Empresa</h4>
+          <ul style="display: flex; flex-direction: column; gap: 0.75rem;" class="text-small">
+            <li><a href="nossa_historia.html" style="transition: color 0.2s;">Nossa História</a></li>
+            <li><a href="nossa_historia.html#premios" style="transition: color 0.2s;">Premiações e Imersões</a></li>
+            <li><a href="contato.html" style="transition: color 0.2s;">Fale Conosco</a></li>
+          </ul>
+        </div>
+
+        <div style="flex: 1; min-width: 150px;">
+          <h4 style="color: white; margin-bottom: 1.5rem; font-weight: 600; font-size: 1.125rem;">Legal e Privacidade</h4>
+          <ul style="display: flex; flex-direction: column; gap: 0.75rem;" class="text-small">
+            <li><a href="privacidade.html" style="transition: color 0.2s;">Aviso de Privacidade</a></li>
+            <li><a href="privacidade.html" style="transition: color 0.2s;">Conformidade LGPD</a></li>
+            <li><a href="privacidade.html" style="transition: color 0.2s;">Termos de Uso</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 4rem; padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <div style="font-size: 0.875rem;">&copy; 2024-2025 Ê-Sistemas. Todos os direitos reservados.</div>
+        <div style="font-size: 0.875rem; display: flex; gap: 1.5rem;">
+          <span>(46) 9 9113-0554</span>
+          <span>ebot@esistemas.dev.br</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/utils.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/scroll-animations.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nossa História | Ê-Sistemas</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/typography.css">
+  <link rel="stylesheet" href="css/glassmorphism.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  
+  <style>
+    /* Custom Editorial Layout Styles for "Nossa História" */
+    .story-hero {
+      padding: 180px 0 80px;
+    }
+    
+    .story-hero-images {
+      display: flex;
+      gap: 1.5rem;
+      position: relative;
+      align-items: center;
+    }
+    
+    .story-img-main {
+      width: 60%;
+      overflow: inherit;
+      border-radius: 20px;
+      object-fit: cover;
+      aspect-ratio: 3/4;
+      z-index: 1;
+    }
+
+    .story-img-secondary {
+      width: 45%;
+      overflow: inherit;
+      border-radius: 20px;
+      object-fit: cover;
+      aspect-ratio: 4/5;
+      margin-top: 4rem;
+      margin-left: -15%;
+      z-index: 2;
+    }
+    
+    .editorial-quote {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--dark);
+      text-align: center;
+      margin: 6rem auto 1rem;
+      max-width: 900px;
+    }
+    
+    .editorial-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    .editorial-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    
+    .editorial-item {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      background: rgba(255,255,255,0.6);
+      padding: 1.5rem;
+      border-radius: 16px;
+      border: 1px solid rgba(0,0,0,0.04);
+      transition: all 0.3s;
+    }
+
+    .editorial-item:hover {
+      background: white;
+      transform: translateY(-5px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.06);
+    }
+    
+    .editorial-icon {
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      background: var(--primary-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+    }
+    
+    .circle-seal {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      top: -30px;
+      right: 10%;
+      z-index: 5;
+      animation: spin-slow 20s linear infinite;
+    }
+    
+    @keyframes spin-slow { 100% { transform: rotate(360deg); } }
+    
+    @media (max-width: 1024px) {
+      .story-hero, .editorial-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .story-hero { padding: 140px 0 60px; text-align: center; }
+      .story-hero-images { justify-content: center; }
+    }
+  </style>
+</head>
+<body style="background: #F8F9FA;">
+
+  <!-- HEADER -->
+  <header class="glass-header" style="position: fixed; top: 0; width: 100%; z-index: 1000;">
+    <div class="container header-inner">
+      
+      <div class="logo">
+        <a href="index.html" style="display: flex; align-items: center; gap: 0.5rem; font-weight: 800; font-size: 1.75rem;">
+          <img src="assets/images/ebot_icon.avif" alt="ebot Logo" style="height: 48px; width: auto; object-fit: contain;">
+          <span><span style="color: #88a72f;">ê</span><span style="color: #adb4be;">bot</span></span>
+        </a>
+      </div>
+      <nav class="nav-menu flex">
+        <ul class="flex gap-lg">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="produtos.html">Produtos</a></li>
+          <li><a href="nossa_historia.html" class="text-primary" style="font-weight: 600;">Nossa História</a></li>
+          <li><a href="privacidade.html">Privacidade</a></li>
+          <li><a href="contato.html">Contato</a></li>
+        </ul>
+      </nav>
+      <div class="desktop-cta">
+        <button class="trigger-wa-modal btn btn-primary" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.28 14.3c-.22.61-1.28 1.15-1.78 1.22-.43.06-1.02.13-3.23-.79-2.66-1.11-4.38-3.83-4.52-4.01-.13-.19-1.08-1.44-1.08-2.75 0-1.31.68-1.95.92-2.22.24-.26.52-.33.69-.33.17 0 .34 0 .49.01.16.01.37-.06.57.43.21.5.73 1.77.79 1.9.06.13.1.28.01.47-.08.19-.13.31-.26.46-.13.15-.28.33-.39.46-.13.14-.27.29-.12.56.15.26.68 1.13 1.46 1.83.99.9 1.84 1.18 2.1 1.31.26.13.41.11.56-.06.15-.17.65-.75.82-1.01.17-.26.34-.22.58-.13.24.09 1.53.72 1.79.85.26.13.43.19.5.3.06.11.06.64-.16 1.25z"/></svg> Falar com Especialista
+        </button>
+      </div>
+      <div class="hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </header>
+
+  <main>
+    <!-- EDITORIAL HERO -->
+    <style>
+      .aurora-container {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        z-index: 0;
+        background-color: #ffffff; /* Solid white */
+        background-image: 
+          linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+        background-size: 40px 40px;
+      }
+      .aurora-bubble {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        opacity: 0.25;
+        animation: floatBubble 18s infinite alternate ease-in-out;
+      }
+      .aurora-1 {
+        width: 50vw; height: 50vw;
+        max-width: 600px; max-height: 600px;
+        background: var(--primary-light);
+        top: -10%; left: -10%;
+      }
+      .aurora-2 {
+        width: 45vw; height: 45vw;
+        max-width: 500px; max-height: 500px;
+        background: rgba(136, 167, 47, 0.15); /* Primary slightly stronger */
+        bottom: -5%; right: -5%;
+        animation-delay: -5s;
+        animation-duration: 22s;
+      }
+      .aurora-3 {
+        width: 35vw; height: 35vw;
+        max-width: 400px; max-height: 400px;
+        background: rgba(136, 167, 47, 0.08);
+        top: 30%; left: 40%;
+        animation-delay: -10s;
+        animation-duration: 15s;
+      }
+      @keyframes floatBubble {
+        0% { transform: translate(0, 0) scale(1); }
+        33% { transform: translate(5%, -5%) scale(1.1); }
+        66% { transform: translate(-3%, 4%) scale(0.9); }
+        100% { transform: translate(0, 0) scale(1); }
+      }
+      .hero-content-wrapper {
+        position: relative;
+        z-index: 2;
+      }
+    </style>
+
+    <section class="story-hero bg-grid-pattern" style="position: relative;">
+      <div class="aurora-container">
+        <div class="aurora-bubble aurora-1"></div>
+        <div class="aurora-bubble aurora-2"></div>
+        <div class="aurora-bubble aurora-3"></div>
+      </div>
+      
+      <div class="container hero-content-wrapper reveal" style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+        <div class="story-hero-text">
+          <h1 class="h1" style="margin-bottom: 2rem;">Inovação que nasce da prática.<br>Evolui com propósito.</h1>
+          <p class="body-large" style="margin-bottom: 2rem; color: var(--text-body);">A Ê-Systems nasceu de um diagnóstico claro: empresas, clínicas, hospitais e órgãos públicos estavam sobrecarregados com atendimentos manuais, filas intermináveis e processos repetitivos — enquanto a tecnologia deveria estar facilitando tudo isso.</p>
+          <div style="display: flex; gap: 1.5rem; flex-direction: column; opacity: 0.8; font-weight: 500;">
+            <div style="display: flex; gap: 1rem;"><span style="color: var(--primary);">01</span> Mapeamos processos reais e ouvimos quem vive o problema na pele.</div>
+            <div style="display: flex; gap: 1rem;"><span style="color: var(--primary);">02</span> Conversamos com equipes da linha de frente.</div>
+            <div style="display: flex; gap: 1rem;"><span style="color: var(--primary);">03</span> Criamos o Ê-Bot: inteligência que conecta e reduz esforços.</div>
+          </div>
+        </div>
+        
+        <div class="story-hero-images">
+          <div class="circle-seal">Ê-BOT<br>EST. 2020</div>
+          <img src="./assets/images/industry-3d.webp" alt="Atendimento e Conexões" class="story-img-main">
+          <img src="./assets/images/notebook-3d.webp" alt="Tecnologia Avançada" class="story-img-secondary">
+        </div>
+      </div>
+    </section>
+
+    <!-- BIG QUOTE -->
+    <section class="container reveal">
+      <h2 class="editorial-quote">
+        "Diariamente, nos dedicamos a melhorar a comunicação de nossos clientes, visando um futuro mais eficiente e conectado."
+      </h2>
+      <div class="text-center" style="margin-bottom: 8rem; color: var(--text-body); font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase;">
+        — Silveira P., CEO Ê-Sistemas (2022)
+      </div>
+    </section>
+
+    <!-- NOSSO TIME -->
+    <style>
+      .team-section {
+        position: relative;
+        background-color: #3e4a46;
+        padding: 6rem 0;
+        overflow: hidden;
+      }
+      .team-section::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: 
+          linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        background-size: 40px 40px;
+        z-index: 1;
+        pointer-events: none;
+      }
+      
+      /* Fireflies */
+      #fireflies-container {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        z-index: 0;
+        pointer-events: none;
+      }
+      .firefly {
+        position: absolute;
+        width: 3px;
+        height: 3px;
+        border-radius: 50%;
+        pointer-events: none;
+        animation-name: fireflyMove, fireflyBlink;
+        animation-timing-function: linear, ease-in-out;
+        animation-iteration-count: infinite, infinite;
+        animation-direction: normal, alternate;
+      }
+      @keyframes fireflyMove {
+        0% { transform: translate(0, 0); }
+        33% { transform: translate(var(--tx1), var(--ty1)); }
+        66% { transform: translate(var(--tx2), var(--ty2)); }
+        100% { transform: translate(0, 0); }
+      }
+      @keyframes fireflyBlink {
+        0% { opacity: 0.1; }
+        100% { opacity: 1; filter: drop-shadow(0 0 10px currentColor); }
+      }
+      
+      .team-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 1.5rem;
+        position: relative;
+      }
+      
+      @media (max-width: 1200px) {
+        .team-grid { grid-template-columns: repeat(3, 1fr); }
+      }
+      @media (max-width: 768px) {
+        .team-grid { grid-template-columns: repeat(2, 1fr); }
+      }
+      @media (max-width: 480px) {
+        .team-grid { grid-template-columns: 1fr; }
+      }
+      
+      .team-card {
+        position: relative;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 2.5rem 1.5rem;
+        transition: transform 0.3s ease, border-color 0.3s ease;
+        cursor: pointer;
+      }
+      .team-card:hover {
+        transform: translateY(-10px);
+        border-color: rgba(255, 255, 255, 0.3);
+      }
+      .team-card-inner {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+      }
+      .flashlight {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        background: radial-gradient(circle 120px at var(--x, 50%) var(--y, 50%), rgba(255, 255, 255, 0.15), transparent 80%);
+        z-index: 1;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      .team-card:hover .flashlight {
+        opacity: 1;
+      }
+      
+      .team-photo-wrapper {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin-bottom: 1.25rem;
+        padding: 4px;
+        background: linear-gradient(135deg, rgba(255,255,255,0.4), rgba(255,255,255,0.05));
+        overflow: hidden;
+      }
+      .team-photo {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+      .team-name {
+        color: #ffffff;
+        font-size: 1.125rem;
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+      }
+      .team-role {
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .team-quote {
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 0.875rem;
+        font-style: italic;
+        line-height: 1.5;
+        margin-bottom: 1.5rem;
+        flex-grow: 1;
+      }
+      .team-socials {
+        display: flex;
+        gap: 1rem;
+        margin-top: auto;
+      }
+      .team-social-link {
+        color: rgba(255, 255, 255, 0.5);
+        transition: color 0.3s, transform 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .team-social-link:hover {
+        color: #ffffff;
+        transform: scale(1.1);
+      }
+    </style>
+    <script>
+      function handleMouseMove(e, element) {
+        const rect = element.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        element.style.setProperty('--x', `${x}px`);
+        element.style.setProperty('--y', `${y}px`);
+      }
+      
+      document.addEventListener("DOMContentLoaded", () => {
+        const container = document.getElementById("fireflies-container");
+        if(container) {
+          const colors = ["#86a530", "#f6a11b"];
+          for(let i=0; i<40; i++) {
+            const firefly = document.createElement("div");
+            firefly.className = "firefly";
+            
+            const left = Math.random() * 100;
+            const top = Math.random() * 100;
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            const animDuration = 10 + Math.random() * 20;
+            const blinkDuration = 1 + Math.random() * 3;
+            const animDelay = Math.random() * -10;
+            
+            const tx1 = (Math.random() - 0.5) * 300;
+            const ty1 = (Math.random() - 0.5) * 300;
+            const tx2 = (Math.random() - 0.5) * 300;
+            const ty2 = (Math.random() - 0.5) * 300;
+            
+            firefly.style.left = `${left}%`;
+            firefly.style.top = `${top}%`;
+            firefly.style.backgroundColor = color;
+            firefly.style.color = color; // For currentColor drop-shadow
+            firefly.style.animationDuration = `${animDuration}s, ${blinkDuration}s`;
+            firefly.style.animationDelay = `${animDelay}s, ${animDelay}s`;
+            
+            firefly.style.setProperty('--tx1', `${tx1}px`);
+            firefly.style.setProperty('--ty1', `${ty1}px`);
+            firefly.style.setProperty('--tx2', `${tx2}px`);
+            firefly.style.setProperty('--ty2', `${ty2}px`);
+            
+            container.appendChild(firefly);
+          }
+        }
+      });
+    </script>
+    <section class="team-section reveal">
+      <div id="fireflies-container"></div>
+      <div class="container" style="position: relative; z-index: 2;">
+        <h2 class="h2 text-center" style="color: white; margin-bottom: 4rem;">O Nosso Time</h2>
+        <div class="team-grid">
+          
+          <div class="team-card" onmousemove="handleMouseMove(event, this)">
+            <div class="flashlight"></div>
+            <div class="team-card-inner">
+              <div class="team-photo-wrapper">
+                <img src="./assets/images/pedrao-perfil.webp" alt="Pessoa 1" class="team-photo">
+              </div>
+              <h3 class="team-name">Pessoa 1</h3>
+              <p class="team-role">Cargo da Pessoa 1</p>
+              <p class="team-quote">"Inovação é sobre facilitar a vida das pessoas."</p>
+              <div class="team-socials">
+                <a href="#" class="team-social-link" title="Instagram">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                </a>
+                <a href="#" class="team-social-link" title="LinkedIn">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="team-card" onmousemove="handleMouseMove(event, this)">
+            <div class="flashlight"></div>
+            <div class="team-card-inner">
+              <div class="team-photo-wrapper">
+                <img src="./assets/images/pedrao-perfil.webp" alt="Pessoa 2" class="team-photo">
+              </div>
+              <h3 class="team-name">Pessoa 2</h3>
+              <p class="team-role">Cargo da Pessoa 2</p>
+              <p class="team-quote">"Conectando pessoas através de soluções eficientes."</p>
+              <div class="team-socials">
+                <a href="#" class="team-social-link" title="Instagram">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                </a>
+                <a href="#" class="team-social-link" title="LinkedIn">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="team-card" onmousemove="handleMouseMove(event, this)">
+            <div class="flashlight"></div>
+            <div class="team-card-inner">
+              <div class="team-photo-wrapper">
+                <img src="./assets/images/pedrao-perfil.webp" alt="Pessoa 3" class="team-photo">
+              </div>
+              <h3 class="team-name">Pessoa 3</h3>
+              <p class="team-role">Cargo da Pessoa 3</p>
+              <p class="team-quote">"Tecnologia com propósito é o nosso maior diferencial."</p>
+              <div class="team-socials">
+                <a href="#" class="team-social-link" title="Instagram">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                </a>
+                <a href="#" class="team-social-link" title="LinkedIn">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="team-card" onmousemove="handleMouseMove(event, this)">
+            <div class="flashlight"></div>
+            <div class="team-card-inner">
+              <div class="team-photo-wrapper">
+                <img src="./assets/images/pedrao-perfil.webp" alt="Pessoa 4" class="team-photo">
+              </div>
+              <h3 class="team-name">Pessoa 4</h3>
+              <p class="team-role">Cargo da Pessoa 4</p>
+              <p class="team-quote">"Construindo um futuro eficiente e altamente escalável."</p>
+              <div class="team-socials">
+                <a href="#" class="team-social-link" title="Instagram">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                </a>
+                <a href="#" class="team-social-link" title="LinkedIn">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="team-card" onmousemove="handleMouseMove(event, this)">
+            <div class="flashlight"></div>
+            <div class="team-card-inner">
+              <div class="team-photo-wrapper">
+                <img src="./assets/images/pedrao-perfil.webp" alt="Pessoa 5" class="team-photo">
+              </div>
+              <h3 class="team-name">Pessoa 5</h3>
+              <p class="team-role">Cargo da Pessoa 5</p>
+              <p class="team-quote">"Design e desenvolvimento pensados para pessoas."</p>
+              <div class="team-socials">
+                <a href="#" class="team-social-link" title="Instagram">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                </a>
+                <a href="#" class="team-social-link" title="LinkedIn">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- EDITORIAL LIST & VISION -->
+    <section class="section" style="background: rgba(39, 174, 96, 0.03); border-top: 1px solid rgba(0,0,0,0.05);">
+      <div class="container editorial-grid reveal">
+        <div style="padding-right: 2rem;">
+          <h2 class="h1" style="margin-bottom: 2rem;">A evolução: do chatbot ao ecossistema completo.</h2>
+          <p class="body-large" style="margin-bottom: 2rem;">O Ê-Bot provou que a automação pode ser humana, eficiente e escalável. Expandimos de um simples fluxo para um ecossistema de APIs, Painel e Vertical da Saúde (Ê-Bot Clinical) que move milhares de pacientes, clientes e cidadãos diariamente com nossa essência: tecnologia que respeita pessoas.</p>
+          <img src="./assets/images/pedro-google.webp" alt="Ê-Bot Platform" style="border-radius: 20px; box-shadow: 0 24px 48px rgba(0,0,0,0.08); width: 100%; aspect-ratio: 16/9; object-fit: cover;">
+        </div>
+        
+        <div class="editorial-list">
+          <div class="editorial-item stagger-1">
+            <div class="editorial-icon">💡</div>
+            <div>
+              <h4 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">Simplicidade Inteligente</h4>
+              <p class="text-small">A tecnologia deve facilitar a operação, não complicá-la. Desenvolvemos interfaces intuitivas que conversam com sistemas complexos nos bastidores.</p>
+            </div>
+          </div>
+          
+          <div class="editorial-item stagger-2">
+            <div class="editorial-icon">🤝</div>
+            <div>
+              <h4 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">Humanização Real</h4>
+              <p class="text-small">Uma IA que entende, responde em áudio natural e ajuda verdadeiramente, assim como o melhor atendimento humano faria.</p>
+            </div>
+          </div>
+          
+          <div class="editorial-item stagger-3">
+            <div class="editorial-icon">📈</div>
+            <div>
+              <h4 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">Escalabilidade Absoluta</h4>
+              <p class="text-small">Nossa infraestrutura atende desde a clínica local até prefeituras inteiras, mantendo a consistência e alta disponibilidade do serviço.</p>
+            </div>
+          </div>
+          
+          <div class="editorial-item stagger-4">
+            <div class="editorial-icon">🎯</div>
+            <div>
+              <h4 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">Resultados Mensuráveis</h4>
+              <p class="text-small">Não entregamos apenas software, entregamos impacto comprovado em métricas de satisfação, conversão e redução de custos operacionais.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AWARDS -->
+    <style>
+      .certificate-card {
+        position: relative;
+        background: #ffffff;
+        border: 1px solid rgba(0,0,0,0.08);
+        border-radius: 16px;
+        padding: 2rem;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+        background-image: 
+          linear-gradient(to right, rgba(136, 167, 47, 0.03) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(136, 167, 47, 0.03) 1px, transparent 1px);
+        background-size: 20px 20px;
+        overflow: hidden;
+        z-index: 1;
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+      }
+      .certificate-card::before {
+        content: '';
+        position: absolute;
+        inset: 10px;
+        border: 1px solid rgba(136, 167, 47, 0.2);
+        border-radius: 8px;
+        pointer-events: none;
+      }
+      .certificate-card:hover {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 20px 50px rgba(136, 167, 47, 0.12);
+      }
+      .cert-image {
+        width: 100%;
+        aspect-ratio: 2 / 1;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 8px;
+        border: 1px solid rgba(0,0,0,0.08);
+        box-shadow: inset 0 2px 4px rgba(0,0,0,0.02), 0 8px 24px rgba(0,0,0,0.06);
+        margin-bottom: 1.5rem;
+        object-fit: cover;
+        display: block;
+        position: relative;
+        overflow: hidden;
+      }
+      /*.cert-image::after {
+        content: '🏆';
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        opacity: 0.2;
+      }*/
+      .cert-title-badge {
+        display: inline-block;
+        background: var(--primary);
+        color: white;
+        padding: 0.6rem 1.2rem;
+        border-radius: 8px;
+        font-weight: 700;
+        box-shadow: 0 4px 15px rgba(136, 167, 47, 0.4);
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+      }
+      .cert-title-badge::after {
+        content: "";
+        position: absolute;
+        top: 0; left: -100%;
+        width: 50%; height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+        animation: shineBadge 3s infinite cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .cert-title-badge:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(136, 167, 47, 0.6);
+        background: var(--primary-hover);
+      }
+      @keyframes shineBadge {
+        0% { left: -100%; }
+        20% { left: 200%; }
+        100% { left: 200%; }
+      }
+    </style>
+
+    <section class="section section-light bg-grid-pattern" id="premios" style="position: relative;">
+      <div class="container reveal" style="position: relative; z-index: 2;">
+        <div class="text-center" style="margin-bottom: 4rem;">
+          <h2 class="h2">Premiações e Imersões Globais</h2>
+          <p class="body-large">O mundo da tecnologia validou nossa visão e o nosso compromisso com a excelência.</p>
+        </div>
+        
+        <div class="grid grid-3">
+          <div class="certificate-card stagger-1" style="text-align: center;">
+            <div class="cert-image">
+              <img src="./assets/images/sebrae-startups.webp">
+            </div>
+            <div class="cert-title-badge">Sebrae e Sudotec</div>
+            <p class="text-small" style="color: var(--text-body); line-height: 1.6;">Selecionados como protagonistas na série 'Juntos Fazemos História' e premiados como Startup Destaque 2024.</p>
+          </div>
+          
+          <div class="certificate-card stagger-2" style="text-align: center;">
+            <div class="cert-image" style="background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);">
+              <img src="./assets/images/plugandplay-silicon.webp">
+            </div>
+            <div class="cert-title-badge">Vale do Silício</div>
+            <p class="text-small" style="color: var(--text-body); line-height: 1.6;">Imersões em inovação diretamente no Campus do Google e na Sede Global do LinkedIn. Certificação na Plug and Play Tech Center.</p>
+          </div>
+          
+          <div class="certificate-card stagger-3" style="text-align: center;">
+            <div class="cert-image" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+              <img src="./assets/images/campus-mobile.webp">
+            </div>
+            <div class="cert-title-badge">Campus Mobile</div>
+            <p class="text-small" style="color: var(--text-body); line-height: 1.6;">Vencedores Nacionais do programa Campus Mobile e imersão tecnológica no Instituto Lemann, focado em tecnologia e impacto.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    
+    
+    
+    
+    <!-- FINAL CTA -->
+    <section class="section section-dark bg-grid-pattern-dark" style="background: linear-gradient(135deg, var(--dark) 0%, #1a252f 100%); overflow: hidden; margin-top: 6rem; margin-bottom: 0;">
+      <div class="container reveal">
+        <div class="final-cta-container" style="display: flex; align-items: center; justify-content: space-between; gap: 4rem; flex-wrap: wrap;">
+          
+          <div class="final-cta-content" style="flex: 3; min-width: 350px; text-align: left;">
+            <h2 class="h1" style="color: white; margin-bottom: 1.5rem;">Pronto para Transformar Seu Atendimento?</h2>
+            <p class="body-large" style="margin-bottom: 2.5rem; opacity: 0.9;">Junte-se a milhares de empresas, clínicas e prefeituras que já automatizaram e humanizaram seus processos com Ê-Sistemas.</p>
+            <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 1rem;" class="cta-button-wrapper">
+              <button class="trigger-wa-modal btn btn-primary float-hover" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; font-size: 1.25rem; padding: 1rem 2.5rem;"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.28 14.3c-.22.61-1.28 1.15-1.78 1.22-.43.06-1.02.13-3.23-.79-2.66-1.11-4.38-3.83-4.52-4.01-.13-.19-1.08-1.44-1.08-2.75 0-1.31.68-1.95.92-2.22.24-.26.52-.33.69-.33.17 0 .34 0 .49.01.16.01.37-.06.57.43.21.5.73 1.77.79 1.9.06.13.1.28.01.47-.08.19-.13.31-.26.46-.13.15-.28.33-.39.46-.13.14-.27.29-.12.56.15.26.68 1.13 1.46 1.83.99.9 1.84 1.18 2.1 1.31.26.13.41.11.56-.06.15-.17.65-.75.82-1.01.17-.26.34-.22.58-.13.24.09 1.53.72 1.79.85.26.13.43.19.5.3.06.11.06.64-.16 1.25z"/></svg>  Falar com Especialista </button>
+              <div class="text-small" style="opacity: 0.7;">Orçamento personalizado • Setup em 48h • Suporte dedicado</div>
+            </div>
+          </div>
+          
+          <div class="final-cta-robot" style="flex: 0.6; min-width: 280px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; perspective: 1000px;">
+            
+            <div class="robot-icon-container float-hover" style="position: relative; width: 130px; height: 130px; display: flex; align-items: center; justify-content: center; margin-bottom: 2.5rem; z-index: 10;">
+              <!-- Fluid and slower pulse effect matching icon contour -->
+              <img src="assets/images/ebot_icon.avif" alt="" class="pulse-layer">
+              <img src="assets/images/ebot_icon.avif" alt="" class="pulse-layer pulse-layer-2">
+              
+              <!-- Main Icon -->
+              <img src="assets/images/ebot_icon.avif" alt="Ê-Bot" style="position: absolute; width: 100%; height: 100%; object-fit: contain; z-index: 2; filter: drop-shadow(0 25px 35px rgba(0,0,0,0.7));">
+            </div>
+
+            <!-- Chat Container for descending bubbles -->
+            <div id="wa-chat-container" style="position: relative; width: 100%; max-width: 290px; height: 210px; z-index: 2;">
+              <!-- Bubbles injected by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA SCRIPTS & STYLES -->
+    <style>
+      .pulse-layer {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        z-index: 1;
+        animation: smoothPulse 4.5s cubic-bezier(0.25, 0.8, 0.25, 1) infinite;
+        opacity: 0;
+      }
+      .pulse-layer-2 {
+        animation-delay: 2.25s;
+      }
+      
+      @keyframes smoothPulse {
+        0% { transform: scale(0.9); opacity: 0.6; filter: drop-shadow(0 0 15px var(--primary)) blur(0px); }
+        100% { transform: scale(1.7); opacity: 0; filter: drop-shadow(0 0 35px var(--primary)) blur(4px); }
+      }
+      
+      .wa-bubble {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: #ffffff;
+        color: #111b21;
+        border-radius: 0 12px 12px 12px;
+        padding: 10px 14px 10px 14px;
+        text-align: left;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        transform-origin: top center;
+        transition: all 0.9s cubic-bezier(0.25, 1, 0.3, 1);
+        will-change: transform, opacity, filter;
+      }
+      
+      .wa-bubble::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -10px;
+          width: 0;
+          height: 0;
+          border-top: 0px solid transparent;
+          border-right: 10px solid #ffffff;
+          border-bottom: 14px solid transparent;
+      }
+      
+      .wa-time {
+        font-size: 0.68rem;
+        color: #667781;
+        float: right;
+        margin-top: 6px;
+        margin-left: 10px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .wa-check {
+        color: #53bdeb;
+      }
+      
+      /* Chat Scroll States */
+      .chat-entering {
+        opacity: 0;
+        transform: translateY(-40px) scale(0.95) translateZ(-20px);
+      }
+      .chat-active {
+        opacity: 1;
+        transform: translateY(0) scale(1) translateZ(60px);
+        filter: blur(0);
+        z-index: 3;
+        box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.8), 0 20px 30px -5px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255,255,255,0.05);
+      }
+      .chat-previous {
+        opacity: 0.55;
+        transform: translateY(90px) scale(0.92) translateZ(10px);
+        filter: blur(1.5px);
+        z-index: 2;
+        box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.5);
+      }
+      .chat-leaving {
+        opacity: 0;
+        transform: translateY(165px) scale(0.85) translateZ(-20px);
+        filter: blur(4px);
+        z-index: 1;
+      }
+      
+      @media (max-width: 992px) {
+        .final-cta-container { flex-direction: column; text-align: center; gap: 3rem !important; }
+        .final-cta-content { text-align: center !important; display: flex; flex-direction: column; align-items: center; }
+        .cta-button-wrapper { align-items: center !important; }
+        #wa-chat-container { margin: 0 auto; }
+      }
+    </style>
+    <script>
+      (function() {
+        if(window.finalCtaInitialized) return;
+        window.finalCtaInitialized = true;
+        
+        document.addEventListener('DOMContentLoaded', () => {
+          const messages = [
+            "Sabia que 80% dos clientes preferem respostas imediatas? Clique ao lado!",
+            "Reduza seu tempo de resposta de horas para segundos. É só clicar no botão ali!",
+            "Aumente a satisfação dos clientes com IA 24/7. Fale com um Especialista!",
+            "Não perca mais vendas por demora. O botão ao lado é o primeiro passo para o sucesso."
+          ];
+          
+          const container = document.getElementById('wa-chat-container');
+          if (!container) return;
+          
+          let msgIndex = 0;
+          const displayDuration = 4500;
+          
+          function spawnMessage() {
+            if (!document.getElementById('wa-chat-container')) return;
+            
+            const now = new Date();
+            const timeStr = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+            
+            const bubble = document.createElement('div');
+            bubble.className = 'wa-bubble chat-entering';
+            bubble.innerHTML = `
+               <p style="margin: 0; display: inline; line-height: 1.3; font-size: 0.85rem;">${messages[msgIndex]}</p>
+               <div class="wa-time">
+                 <span>${timeStr}</span>
+                 <svg class="wa-check" viewBox="0 0 16 15" width="16" height="15"><path fill="currentColor" d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.879a.32.32 0 0 1-.484.033l-.358-.325a.319.319 0 0 0-.484.032l-.378.483a.418.418 0 0 0 .036.541l1.32 1.266c.143.14.361.125.484-.033l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.879a.32.32 0 0 1-.484.033L1.891 7.769a.366.366 0 0 0-.515.006l-.423.433a.364.364 0 0 0 .006.514l3.258 3.185c.143.14.361.125.484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z"></path></svg>
+               </div>
+               <div style="clear: both;"></div>
+            `;
+            
+            container.prepend(bubble);
+            
+            // force reflow to trigger CSS transitions
+            void bubble.offsetWidth;
+            
+            bubble.classList.remove('chat-entering');
+            bubble.classList.add('chat-active');
+            
+            // shift previous bubbles down
+            const allBubbles = container.querySelectorAll('.wa-bubble');
+            allBubbles.forEach((b, i) => {
+               if (i === 1) {
+                   b.className = 'wa-bubble chat-previous';
+               } else if (i === 2) {
+                   b.className = 'wa-bubble chat-leaving';
+               } else if (i > 2) {
+                   // clean up DOM
+                   setTimeout(() => { if (b.parentNode) b.remove() }, 1000);
+               }
+            });
+            
+            msgIndex = (msgIndex + 1) % messages.length;
+            setTimeout(spawnMessage, displayDuration);
+          }
+          
+          // Initial delay to let the page load
+          setTimeout(spawnMessage, 500);
+        });
+      })();
+    </script>
+
+  </main>
+  
+  
+
+    <footer style="background: var(--dark-header); color: #999; border-top: 1px solid rgba(255,255,255,0.05); padding: 4rem 0 2rem; margin-top: 0;">
+    <div class="container">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 3rem;">
+        
+        <div style="flex: 1.5; min-width: 250px;">
+          <div style="margin-bottom: 1.5rem; display: flex; align-items: center;">
+            <img src="assets/images/esistemas_logo.avif" alt="Ê-Sistemas Corporativo" style="height: 48px; width: auto; object-fit: contain;">
+          </div>
+          <p class="text-small" style="margin-bottom: 1.5rem; max-width: 300px; line-height: 1.6;">Transformando tecnologia em conexões reais através de inteligência artificial focada em eficiência, resultados e humanização.</p>
+        </div>
+        
+        <div style="flex: 1; min-width: 150px;">
+          <h4 style="color: white; margin-bottom: 1.5rem; font-weight: 600; font-size: 1.125rem;">Produtos</h4>
+          <ul style="display: flex; flex-direction: column; gap: 0.75rem;" class="text-small">
+            <li><a href="ebot-api.html" style="transition: color 0.2s;">Ê-Bot API</a></li>
+            <li><a href="ebot-panel.html" style="transition: color 0.2s;">Ê-Bot Panel</a></li>
+            <li><a href="ebot-clinical.html" style="transition: color 0.2s;">Ê-Bot Clinical</a></li>
+            <li><a href="ebot-explorer.html" style="transition: color 0.2s;">Ê-Bot Explorer</a></li>
+          </ul>
+        </div>
+
+        <div style="flex: 1; min-width: 150px;">
+          <h4 style="color: white; margin-bottom: 1.5rem; font-weight: 600; font-size: 1.125rem;">A Empresa</h4>
+          <ul style="display: flex; flex-direction: column; gap: 0.75rem;" class="text-small">
+            <li><a href="nossa_historia.html" style="transition: color 0.2s;">Nossa História</a></li>
+            <li><a href="nossa_historia.html#premios" style="transition: color 0.2s;">Premiações e Imersões</a></li>
+            <li><a href="contato.html" style="transition: color 0.2s;">Fale Conosco</a></li>
+          </ul>
+        </div>
+
+        <div style="flex: 1; min-width: 150px;">
+          <h4 style="color: white; margin-bottom: 1.5rem; font-weight: 600; font-size: 1.125rem;">Legal e Privacidade</h4>
+          <ul style="display: flex; flex-direction: column; gap: 0.75rem;" class="text-small">
+            <li><a href="privacidade.html" style="transition: color 0.2s;">Aviso de Privacidade</a></li>
+            <li><a href="privacidade.html" style="transition: color 0.2s;">Conformidade LGPD</a></li>
+            <li><a href="privacidade.html" style="transition: color 0.2s;">Termos de Uso</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 4rem; padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <div style="font-size: 0.875rem;">&copy; 2024-2025 Ê-Sistemas. Todos os direitos reservados.</div>
+        <div style="font-size: 0.875rem; display: flex; gap: 1.5rem;">
+          <span>(46) 9 9113-0554</span>
+          <span>ebot@esistemas.dev.br</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/utils.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/scroll-animations.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

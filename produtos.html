@@ -1,0 +1,1628 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Produtos e Soluções | Ê-Bot e Ê-Sistemas</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/typography.css">
+  <link rel="stylesheet" href="css/glassmorphism.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/accordion.css">
+
+<style id="custom-dash-chat-animations">
+/* --- CONFIGURAÇÕES DASHBOARD --- */
+.dash-wrapper {
+  height: 400px;
+  background: linear-gradient(135deg, #f0f4f8, #e2e8f0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  border-color: rgba(135, 166, 48, 0.2);
+  border-radius: 24px;
+}
+.dash-ui {
+  width: 85%;
+  height: 80%;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  display: flex;
+  overflow: hidden;
+  position: relative;
+}
+.dash-sidebar {
+  width: 25%;
+  background: #3d4945; /* Dark color */
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.dash-logo {
+  height: 20px;
+  width: 60%;
+  background: rgba(255,255,255,0.2);
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+.dash-menu-item {
+  height: 12px;
+  width: 80%;
+  background: rgba(255,255,255,0.1);
+  border-radius: 4px;
+}
+.dash-menu-item.active {
+  background: #87a630; /* Green color */
+  width: 90%;
+}
+.dash-main {
+  flex: 1;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  background: #f8fafc;
+}
+.dash-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.dash-title {
+  height: 16px;
+  width: 40%;
+  background: #e2e8f0;
+  border-radius: 4px;
+}
+.dash-user {
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  background: #87a630;
+}
+.dash-cards {
+  display: flex;
+  gap: 1rem;
+}
+.dash-card {
+  flex: 1;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+  border: 1px solid rgba(135,166,48,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transform: translateY(10px);
+  opacity: 0;
+  animation: cardIn 4s infinite;
+}
+.dash-card:nth-child(2) { animation-delay: 0.2s; }
+.dash-card:nth-child(3) { animation-delay: 0.4s; }
+
+.dash-card-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  background: rgba(135,166,48,0.2);
+}
+.dash-card-value {
+  width: 60%;
+  height: 12px;
+  background: #3d4945;
+  border-radius: 4px;
+}
+.dash-chart-area {
+  flex: 1;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 1rem;
+  position: relative;
+  border: 1px solid rgba(135,166,48,0.1);
+  overflow: hidden;
+}
+.dash-chart-bars {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  height: 60%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 0 10%;
+  gap: 10px;
+}
+.dash-bar {
+  width: 15%;
+  background: #3d4945;
+  border-radius: 4px 4px 0 0;
+  transform-origin: bottom;
+  animation: barGrow 4s infinite;
+}
+.dash-bar.b1 { height: 40%; animation-delay: 0.1s; }
+.dash-bar.b2 { height: 70%; animation-delay: 0.2s; }
+.dash-bar.b3 { height: 50%; background: #87a630; animation-delay: 0.3s; }
+.dash-bar.b4 { height: 90%; animation-delay: 0.4s; }
+.dash-bar.b5 { height: 60%; animation-delay: 0.5s; }
+
+.dash-line-chart {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  width: calc(100% - 2rem);
+  height: 80%;
+}
+.dash-path {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  animation: drawLine 4s infinite;
+}
+.dash-path-fill {
+  opacity: 0;
+  animation: fadeInFill 4s infinite;
+}
+
+/* Mac Cursor */
+.mac-cursor {
+  position: absolute;
+  z-index: 10;
+  top: 80%;
+  left: 80%;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+  animation: cursorMoveDashboard 4s infinite ease-in-out;
+}
+
+@keyframes cardIn {
+  0% { transform: translateY(10px); opacity: 0; }
+  10%, 90% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(10px); opacity: 0; }
+}
+@keyframes barGrow {
+  0% { transform: scaleY(0); }
+  15%, 85% { transform: scaleY(1); }
+  100% { transform: scaleY(0); }
+}
+@keyframes drawLine {
+  0% { stroke-dashoffset: 200; }
+  25%, 85% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: 200; }
+}
+@keyframes fadeInFill {
+  0%, 25% { opacity: 0; }
+  35%, 85% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes cursorMoveDashboard {
+  0% { top: 80%; left: 80%; transform: scale(1); }
+  20% { top: 35%; left: 45%; transform: scale(1); }
+  25% { top: 35%; left: 45%; transform: scale(0.8); }
+  30% { top: 35%; left: 45%; transform: scale(1); }
+  50% { top: 70%; left: 60%; transform: scale(1); }
+  55% { top: 70%; left: 60%; transform: scale(0.8); }
+  60% { top: 70%; left: 60%; transform: scale(1); }
+  100% { top: 80%; left: 80%; transform: scale(1); }
+}
+
+
+/* --- CONFIGURAÇÕES CHAT --- */
+.chat-wrapper {
+  height: 400px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f0f4f8, #e2e8f0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-color: rgba(135, 166, 48, 0.2);
+  border-radius: 24px;
+}
+
+/* Integração Background */
+.integration-bg {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+.float-icon {
+  position: absolute;
+  width: 80px; height: 80px;
+  z-index: 2;
+  background: white;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  animation: floatIcon 3s infinite ease-in-out alternate;
+}
+.wpp-icon { top: 6%; left: 6%; }
+.ebot-icon { bottom: 6%; right: 6%; animation-delay: -1.5s; }
+@keyframes floatIcon {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(-15px); }
+}
+
+.connection-line {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 1;
+}
+.flowing-data {
+  stroke-dasharray: 4, 12;
+  animation: flowLine 1.5s linear infinite;
+}
+@keyframes flowLine {
+  from { stroke-dashoffset: 16; }
+  to { stroke-dashoffset: 0; }
+}
+
+/* Chat UI */
+.chat-ui {
+  width: 65%;
+  height: 85%;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 24px 48px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 2;
+}
+.chat-header {
+  background: #3d4945;
+  color: white;
+  padding: 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.status-dot {
+  display: inline-block;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #87a630; box-shadow: 0 0 8px #87a630;
+  animation: pulseDot 2s infinite;
+}
+@keyframes pulseDot {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+.chat-body {
+  flex: 1;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background: #fafafa;
+  overflow: hidden;
+}
+
+.msg-bubble {
+  padding: 0.75rem;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  max-width: 85%;
+  opacity: 0;
+  position: absolute;
+  display: none;
+}
+.msg-bubble.user {
+  background: rgba(135,166,48,0.15); /* #87a630 tinted */
+  color: #3d4945;
+  border-bottom-right-radius: 4px;
+  align-self: flex-end;
+  border: 1px solid rgba(135,166,48,0.3);
+}
+.msg-bubble.ai {
+  background: white;
+  border-bottom-left-radius: 4px;
+  align-self: flex-start;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  color: #3d4945;
+}
+
+/* Timeline Animation - Full Sequence is 12s */
+.m1 { display: block; position: relative; animation: appearStatic 12s infinite; }
+.m2 { display: block; position: relative; animation: appearStatic2 12s infinite; }
+.m3 { display: flex; position: relative; animation: appearStatic3 12s infinite; }
+.m4 { display: block; position: relative; animation: appearStatic4 12s infinite; }
+.m5 { display: block; position: relative; animation: appearStatic5 12s infinite; }
+
+@keyframes appearStatic {
+  0%, 100% { opacity: 0; transform: translateY(10px) scale(0.95); }
+  2%, 98% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes appearStatic2 {
+  0%, 15%, 100% { opacity: 0; transform: translateY(10px) scale(0.95); }
+  18%, 98% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes appearStatic3 {
+  0%, 35%, 100% { opacity: 0; transform: translateY(10px) scale(0.95); }
+  38%, 98% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes appearStatic4 {
+  0%, 50%, 75%, 100% { opacity: 0; transform: translateY(10px) scale(0.95); display: none; }
+  52%, 73% { opacity: 1; transform: translateY(0) scale(1); display: block; }
+}
+@keyframes appearStatic5 {
+  0%, 75%, 100% { opacity: 0; transform: translateY(10px) scale(0.95); }
+  78%, 98% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Audio Message */
+.audio-msg {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.play-btn {
+  background: #87a630;
+  border: none;
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  padding: 0;
+}
+.audio-wave {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 20px;
+}
+.audio-wave .bar {
+  width: 3px;
+  background: #3d4945;
+  border-radius: 3px;
+  height: 4px;
+  animation: waveAnim 1s infinite alternate;
+}
+.audio-wave .bar:nth-child(1) { height: 8px; animation-delay: 0.1s; }
+.audio-wave .bar:nth-child(2) { height: 16px; animation-delay: 0.2s; }
+.audio-wave .bar:nth-child(3) { height: 10px; animation-delay: 0.3s; }
+.audio-wave .bar:nth-child(4) { height: 18px; animation-delay: 0.4s; }
+.audio-wave .bar:nth-child(5) { height: 6px; animation-delay: 0.5s; }
+.audio-wave .bar:nth-child(6) { height: 14px; animation-delay: 0.6s; }
+.audio-wave .bar:nth-child(7) { height: 10px; animation-delay: 0.7s; }
+.audio-wave .bar:nth-child(8) { height: 8px; animation-delay: 0.8s; }
+
+@keyframes waveAnim {
+  0% { transform: scaleY(0.5); }
+  100% { transform: scaleY(1); }
+}
+
+.audio-time {
+  font-size: 0.7rem;
+  color: #3d4945;
+  font-weight: 500;
+}
+
+/* Typing Indicator */
+.typing .dot {
+  display: inline-block;
+  width: 5px; height: 5px;
+  background: #87a630;
+  border-radius: 50%;
+  margin: 0 2px;
+  animation: bounceDot 1.4s infinite ease-in-out both;
+}
+.typing .dot:nth-child(1) { animation-delay: -0.32s; }
+.typing .dot:nth-child(2) { animation-delay: -0.16s; }
+@keyframes bounceDot {
+  0%, 80%, 100% { transform: scale(0.5); opacity: 0.5; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+/* EXPLORER ANIMATIONS */
+@keyframes pinBounce {
+  0%, 100% { transform: translate(-50%, -100%); }
+  50% { transform: translate(-50%, -115%); }
+}
+@keyframes shadowPulse {
+  0%, 100% { transform: scale(1); opacity: 0.4; }
+  50% { transform: scale(0.6); opacity: 0.1; }
+}
+@keyframes popupSlideUp {
+  0% { transform: translate(-50%, 20px); opacity: 0.8; }
+  20%, 80% { transform: translate(-50%, 0); opacity: 1; }
+  100% { transform: translate(-50%, 20px); opacity: 0.8; }
+}
+@keyframes scanLine {
+  0% { top: 0; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+</style>
+
+<style>
+/* CLINICAL CUSTOM CSS */
+.clinical-sent {
+  background: rgba(48, 163, 164, 0.15) !important;
+  border: 1px solid rgba(48, 163, 164, 0.3) !important;
+}
+.clinical-checklist li::before {
+  color: #30a3a4 !important;
+}
+@keyframes cursorMoveClinical {
+  0% { top: 80%; left: 80%; transform: scale(1); }
+  20% { top: 55%; left: 45%; transform: scale(1); }
+  25% { top: 55%; left: 45%; transform: scale(0.8); }
+  30% { top: 55%; left: 45%; transform: scale(1); }
+  50% { top: 75%; left: 60%; transform: scale(1); }
+  55% { top: 75%; left: 60%; transform: scale(0.8); }
+  60% { top: 75%; left: 60%; transform: scale(1); }
+  100% { top: 80%; left: 80%; transform: scale(1); }
+}
+</style>
+
+<style id="custom-dash-chat-animations">
+/* --- CONFIGURAÇÕES DASHBOARD --- */
+.dash-wrapper {
+  height: 400px;
+  background: linear-gradient(135deg, #f0f4f8, #e2e8f0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  border-color: rgba(135, 166, 48, 0.2);
+  border-radius: 24px;
+}
+.dash-ui {
+  width: 85%;
+  height: 80%;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  display: flex;
+  overflow: hidden;
+  position: relative;
+}
+.dash-sidebar {
+  width: 25%;
+  background: #3d4945; /* Dark color */
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.dash-logo {
+  height: 20px;
+  width: 60%;
+  background: rgba(255,255,255,0.2);
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+.dash-menu-item {
+  height: 12px;
+  width: 80%;
+  background: rgba(255,255,255,0.1);
+  border-radius: 4px;
+}
+.dash-menu-item.active {
+  background: #87a630; /* Green color */
+  width: 90%;
+}
+.dash-main {
+  flex: 1;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  background: #f8fafc;
+}
+.dash-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.dash-title {
+  height: 16px;
+  width: 40%;
+  background: #e2e8f0;
+  border-radius: 4px;
+}
+.dash-user {
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  background: #87a630;
+}
+.dash-cards {
+  display: flex;
+  gap: 1rem;
+}
+.dash-card {
+  flex: 1;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+  border: 1px solid rgba(135,166,48,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transform: translateY(10px);
+  opacity: 0;
+  animation: cardIn 4s infinite;
+}
+.dash-card:nth-child(2) { animation-delay: 0.2s; }
+.dash-card:nth-child(3) { animation-delay: 0.4s; }
+
+.dash-card-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  background: rgba(135,166,48,0.2);
+}
+.dash-card-value {
+  width: 60%;
+  height: 12px;
+  background: #3d4945;
+  border-radius: 4px;
+}
+.dash-chart-area {
+  flex: 1;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 1rem;
+  position: relative;
+  border: 1px solid rgba(135,166,48,0.1);
+  overflow: hidden;
+}
+.dash-chart-bars {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  height: 60%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 0 10%;
+  gap: 10px;
+}
+.dash-bar {
+  width: 15%;
+  background: #3d4945;
+  border-radius: 4px 4px 0 0;
+  transform-origin: bottom;
+  animation: barGrow 4s infinite;
+}
+.dash-bar.b1 { height: 40%; animation-delay: 0.1s; }
+.dash-bar.b2 { height: 70%; animation-delay: 0.2s; }
+.dash-bar.b3 { height: 50%; background: #87a630; animation-delay: 0.3s; }
+.dash-bar.b4 { height: 90%; animation-delay: 0.4s; }
+.dash-bar.b5 { height: 60%; animation-delay: 0.5s; }
+
+.dash-line-chart {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  width: calc(100% - 2rem);
+  height: 80%;
+}
+.dash-path {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  animation: drawLine 4s infinite;
+}
+.dash-path-fill {
+  opacity: 0;
+  animation: fadeInFill 4s infinite;
+}
+
+/* Mac Cursor */
+.mac-cursor {
+  position: absolute;
+  z-index: 10;
+  top: 80%;
+  left: 80%;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+  animation: cursorMoveDashboard 4s infinite ease-in-out;
+}
+
+@keyframes cardIn {
+  0% { transform: translateY(10px); opacity: 0; }
+  10%, 90% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(10px); opacity: 0; }
+}
+@keyframes barGrow {
+  0% { transform: scaleY(0); }
+  15%, 85% { transform: scaleY(1); }
+  100% { transform: scaleY(0); }
+}
+@keyframes drawLine {
+  0% { stroke-dashoffset: 200; }
+  25%, 85% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: 200; }
+}
+@keyframes fadeInFill {
+  0%, 25% { opacity: 0; }
+  35%, 85% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes cursorMoveDashboard {
+  0% { top: 80%; left: 80%; transform: scale(1); }
+  20% { top: 35%; left: 45%; transform: scale(1); }
+  25% { top: 35%; left: 45%; transform: scale(0.8); }
+  30% { top: 35%; left: 45%; transform: scale(1); }
+  50% { top: 70%; left: 60%; transform: scale(1); }
+  55% { top: 70%; left: 60%; transform: scale(0.8); }
+  60% { top: 70%; left: 60%; transform: scale(1); }
+  100% { top: 80%; left: 80%; transform: scale(1); }
+}
+
+
+/* --- CONFIGURAÇÕES CHAT --- */
+.chat-wrapper {
+  height: 400px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f0f4f8, #e2e8f0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-color: rgba(135, 166, 48, 0.2);
+  border-radius: 24px;
+}
+
+/* Integração Background */
+.integration-bg {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+.float-icon {
+  position: absolute;
+  width: 80px; height: 80px;
+  z-index: 2;
+  background: white;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  animation: floatIcon 3s infinite ease-in-out alternate;
+}
+.wpp-icon { top: 6%; left: 6%; }
+.ebot-icon { bottom: 6%; right: 6%; animation-delay: -1.5s; }
+@keyframes floatIcon {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(-15px); }
+}
+
+.connection-line {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 1;
+}
+.flowing-data {
+  stroke-dasharray: 4, 12;
+  animation: flowLine 1.5s linear infinite;
+}
+@keyframes flowLine {
+  from { stroke-dashoffset: 16; }
+  to { stroke-dashoffset: 0; }
+}
+
+/* Chat UI */
+.chat-ui {
+  width: 65%;
+  height: 85%;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 24px 48px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 2;
+}
+.chat-header {
+  background: #3d4945;
+  color: white;
+  padding: 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.status-dot {
+  display: inline-block;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #87a630; box-shadow: 0 0 8px #87a630;
+  animation: pulseDot 2s infinite;
+}
+@keyframes pulseDot {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+.chat-body {
+  flex: 1;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background: #fafafa;
+  overflow: hidden;
+}
+
+.msg-bubble {
+  padding: 0.75rem;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  max-width: 85%;
+  opacity: 0;
+  position: absolute;
+  display: none;
+}
+.msg-bubble.user {
+  background: rgba(135,166,48,0.15); /* #87a630 tinted */
+  color: #3d4945;
+  border-bottom-right-radius: 4px;
+  align-self: flex-end;
+  border: 1px solid rgba(135,166,48,0.3);
+}
+.msg-bubble.ai {
+  background: white;
+  border-bottom-left-radius: 4px;
+  align-self: flex-start;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  color: #3d4945;
+}
+
+/* Timeline Animation - Full Sequence is 12s */
+.m1 { display: block; position: relative; animation: appearStatic 12s infinite; }
+.m2 { display: block; position: relative; animation: appearStatic2 12s infinite; }
+.m3 { display: flex; position: relative; animation: appearStatic3 12s infinite; }
+.m4 { display: block; position: relative; animation: appearStatic4 12s infinite; }
+.m5 { display: block; position: relative; animation: appearStatic5 12s infinite; }
+
+@keyframes appearStatic {
+  0%, 100% { opacity: 0; transform: translateY(10px) scale(0.95); }
+  2%, 98% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes appearStatic2 {
+  0%, 15%, 100% { opacity: 0; transform: translateY(10px) scale(0.95); }
+  18%, 98% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes appearStatic3 {
+  0%, 35%, 100% { opacity: 0; transform: translateY(10px) scale(0.95); }
+  38%, 98% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes appearStatic4 {
+  0%, 50%, 75%, 100% { opacity: 0; transform: translateY(10px) scale(0.95); display: none; }
+  52%, 73% { opacity: 1; transform: translateY(0) scale(1); display: block; }
+}
+@keyframes appearStatic5 {
+  0%, 75%, 100% { opacity: 0; transform: translateY(10px) scale(0.95); }
+  78%, 98% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Audio Message */
+.audio-msg {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.play-btn {
+  background: #87a630;
+  border: none;
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  padding: 0;
+}
+.audio-wave {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 20px;
+}
+.audio-wave .bar {
+  width: 3px;
+  background: #3d4945;
+  border-radius: 3px;
+  height: 4px;
+  animation: waveAnim 1s infinite alternate;
+}
+.audio-wave .bar:nth-child(1) { height: 8px; animation-delay: 0.1s; }
+.audio-wave .bar:nth-child(2) { height: 16px; animation-delay: 0.2s; }
+.audio-wave .bar:nth-child(3) { height: 10px; animation-delay: 0.3s; }
+.audio-wave .bar:nth-child(4) { height: 18px; animation-delay: 0.4s; }
+.audio-wave .bar:nth-child(5) { height: 6px; animation-delay: 0.5s; }
+.audio-wave .bar:nth-child(6) { height: 14px; animation-delay: 0.6s; }
+.audio-wave .bar:nth-child(7) { height: 10px; animation-delay: 0.7s; }
+.audio-wave .bar:nth-child(8) { height: 8px; animation-delay: 0.8s; }
+
+@keyframes waveAnim {
+  0% { transform: scaleY(0.5); }
+  100% { transform: scaleY(1); }
+}
+
+.audio-time {
+  font-size: 0.7rem;
+  color: #3d4945;
+  font-weight: 500;
+}
+
+/* Typing Indicator */
+.typing .dot {
+  display: inline-block;
+  width: 5px; height: 5px;
+  background: #87a630;
+  border-radius: 50%;
+  margin: 0 2px;
+  animation: bounceDot 1.4s infinite ease-in-out both;
+}
+.typing .dot:nth-child(1) { animation-delay: -0.32s; }
+.typing .dot:nth-child(2) { animation-delay: -0.16s; }
+@keyframes bounceDot {
+  0%, 80%, 100% { transform: scale(0.5); opacity: 0.5; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+/* EXPLORER ANIMATIONS */
+@keyframes pinBounce {
+  0%, 100% { transform: translate(-50%, -100%); }
+  50% { transform: translate(-50%, -115%); }
+}
+@keyframes shadowPulse {
+  0%, 100% { transform: scale(1); opacity: 0.4; }
+  50% { transform: scale(0.6); opacity: 0.1; }
+}
+@keyframes popupSlideUp {
+  0% { transform: translate(-50%, 20px); opacity: 0.8; }
+  20%, 80% { transform: translate(-50%, 0); opacity: 1; }
+  100% { transform: translate(-50%, 20px); opacity: 0.8; }
+}
+@keyframes scanLine {
+  0% { top: 0; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+</style>
+
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="glass-header" style="position: fixed; top: 0; width: 100%; z-index: 1000;">
+    <div class="container header-inner">
+      
+      <div class="logo">
+        <a href="index.html" style="display: flex; align-items: center; gap: 0.5rem; font-weight: 800; font-size: 1.75rem;">
+          <img src="assets/images/ebot_icon.avif" alt="ebot Logo" style="height: 48px; width: auto; object-fit: contain;">
+          <span><span style="color: #88a72f;">ê</span><span style="color: #adb4be;">bot</span></span>
+        </a>
+      </div>
+      <nav class="nav-menu flex">
+        <ul class="flex gap-lg">
+          <li><a href="index.html" >Home</a></li>
+          <li><a href="produtos.html" class="text-primary" style="font-weight: 600;">Produtos</a></li>
+          <li><a href="nossa_historia.html" >Nossa História</a></li>
+          <li><a href="privacidade.html" >Privacidade</a></li>
+          <li><a href="contato.html" >Contato</a></li>
+        </ul>
+      </nav>
+      <div class="desktop-cta"><button   class="trigger-wa-modal btn btn-primary" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.28 14.3c-.22.61-1.28 1.15-1.78 1.22-.43.06-1.02.13-3.23-.79-2.66-1.11-4.38-3.83-4.52-4.01-.13-.19-1.08-1.44-1.08-2.75 0-1.31.68-1.95.92-2.22.24-.26.52-.33.69-.33.17 0 .34 0 .49.01.16.01.37-.06.57.43.21.5.73 1.77.79 1.9.06.13.1.28.01.47-.08.19-.13.31-.26.46-.13.15-.28.33-.39.46-.13.14-.27.29-.12.56.15.26.68 1.13 1.46 1.83.99.9 1.84 1.18 2.1 1.31.26.13.41.11.56-.06.15-.17.65-.75.82-1.01.17-.26.34-.22.58-.13.24.09 1.53.72 1.79.85.26.13.43.19.5.3.06.11.06.64-.16 1.25z"/></svg>  Falar com Especialista </button></div>
+      <div class="hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="section section-light bg-grid-pattern" style="padding-top: 150px; text-align: center;">
+      <div class="container reveal">
+        <div class="text-micro text-primary" style="margin-bottom: 1rem;">Home &gt; Produtos</div>
+        <h1 class="h1" style="margin-bottom: 1.5rem;">Nossas Soluções</h1>
+        <p class="body-large" style="max-width: 600px; margin: 0 auto 3rem;">Escolha a solução ideal para transformar seu negócio. Da automação básica à gestão especializada de saúde e turismo.</p>
+      </div>
+    </section>
+
+    <!-- PRODUTO 1: API -->
+    <section class="section section-gray">
+      <div class="container">
+        <div class="grid grid-2 items-center reveal reveal-left">
+                    <div class="glass-card float-hover chat-wrapper" style="height: 400px; border-radius: 24px;">
+  <!-- Integração WhatsApp e Ebot (Background) -->
+  <div class="integration-bg">
+    <svg class="connection-line" viewBox="0 0 100 100" preserveAspectRatio="none">
+      <path d="M 13,18 C 40,18 60,82 87,82" fill="none" stroke="rgba(135, 166, 48, 0.2)" stroke-width="1.5" />
+      <path d="M 13,18 C 40,18 60,82 87,82" fill="none" stroke="#87a630" stroke-width="1.5" class="flowing-data" />
+    </svg>
+
+    <div class="wpp-icon float-icon">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="#87a630"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.28 14.3c-.22.61-1.28 1.15-1.78 1.22-.43.06-1.02.13-3.23-.79-2.66-1.11-4.38-3.83-4.52-4.01-.13-.19-1.08-1.44-1.08-2.75 0-1.31.68-1.95.92-2.22.24-.26.52-.33.69-.33.17 0 .34 0 .49.01.16.01.37-.06.57.43.21.5.73 1.77.79 1.9.06.13.1.28.01.47-.08.19-.13.31-.26.46-.13.15-.28.33-.39.46-.13.14-.27.29-.12.56.15.26.68 1.13 1.46 1.83.99.9 1.84 1.18 2.1 1.31.26.13.41.11.56-.06.15-.17.65-.75.82-1.01.17-.26.34-.22.58-.13.24.09 1.53.72 1.79.85.26.13.43.19.5.3.06.11.06.64-.16 1.25z"/></svg>
+    </div>
+    <div class="ebot-icon float-icon">
+      <img src="assets/images/ebot_icon.avif" alt="ebot" style="width: 48px; height: 48px; object-fit: contain;">
+    </div>
+  </div>
+
+  <div class="chat-ui">
+    <div class="chat-header">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span class="status-dot"></span> API de Mensageria
+      </div>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+    </div>
+    <div class="chat-body">
+      <div class="msg-bubble user m1">Gostaria de integrar o ERP para envios.</div>
+      <div class="msg-bubble ai m2">Ótimo! Você pode usar nossa API REST para enviar notificações, boletos e alertas com alta taxa de entrega.</div>
+      
+      <!-- Mensagem de Áudio -->
+      <div class="msg-bubble user m3 audio-msg">
+        <button class="play-btn">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <div class="audio-wave">
+          <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+          <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        </div>
+        <span class="audio-time">0:04</span>
+      </div>
+      
+      <div class="msg-bubble ai m4 typing">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      </div>
+      <div class="msg-bubble ai m5">Temos webhooks para atualizar seu sistema em tempo real sobre entregas e leituras.</div>
+    </div>
+  </div>
+</div>
+          <div style="padding: 2rem;">
+            <span class="badge">Mensageria e Disparos</span>
+            <h2 class="h2">Ê-Bot API</h2>
+            <p class="body-large" style="margin-bottom: 1.5rem;">Serviço de mensageria focado em envio de mensagens e automações via WhatsApp (Oficial e Não Oficial). Elimina processos manuais, garante padronização e escala envios.</p>
+            <ul class="checklist text-small">
+              <li>Notificações transacionais e protocolos</li>
+              <li>Cobranças e mensagens com links</li>
+              <li>Integração direta com seu ERP/CRM</li>
+              <li>Webhooks e eventos de status em tempo real</li>
+            </ul>
+            <a href="ebot-api.html" class="btn btn-primary" style="margin-top: 2rem; background-color: #87a630; border-color: #87a630; color: white;">Ver detalhes da API</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUTO 2: PAINEL -->
+    <section class="section section-light bg-grid-pattern">
+      <div class="container">
+        <div class="grid grid-2 items-center reveal reveal-right">
+          <div style="padding: 2rem; order: 2;">
+            <span class="badge" style="background: rgba(135, 166, 48, 0.1); color: #87a630;">Solução Principal</span>
+            <h2 class="h2">Ê-Bot Panel</h2>
+            <p class="body-large" style="margin-bottom: 1.5rem;">A central operacional de atendimento e vendas. Um painel de multiatendimento que organiza conversas, equipes e processos com IA e visão em Kanban.</p>
+            <ul class="checklist text-small">
+              <li>Centraliza setores e filas de atendimento</li>
+              <li>CRM integrado e histórico completo do cliente</li>
+              <li>Dashboard e métricas de performance detalhadas</li>
+              <li>Automação e triagem com IA de forma humanizada</li>
+            </ul>
+            <a href="ebot-panel.html" class="btn btn-primary" style="margin-top: 2rem;">Ver detalhes do Panel</a>
+          </div>
+                    <div class="glass-card float-hover dash-wrapper" style="order: 1; height: 400px; border-radius: 24px;">
+  <div class="dash-ui">
+    <div class="dash-sidebar">
+      <div class="dash-logo"></div>
+      <div class="dash-menu-item active"></div>
+      <div class="dash-menu-item"></div>
+      <div class="dash-menu-item"></div>
+    </div>
+    <div class="dash-main">
+      <div class="dash-header">
+        <div class="dash-title"></div>
+        <div class="dash-user"></div>
+      </div>
+      <div class="dash-cards">
+        <div class="dash-card">
+          <div class="dash-card-icon"></div>
+          <div class="dash-card-value"></div>
+        </div>
+        <div class="dash-card">
+          <div class="dash-card-icon"></div>
+          <div class="dash-card-value"></div>
+        </div>
+        <div class="dash-card">
+          <div class="dash-card-icon"></div>
+          <div class="dash-card-value"></div>
+        </div>
+      </div>
+      <div class="dash-chart-area">
+        <div class="dash-chart-bars">
+          <div class="dash-bar b1"></div>
+          <div class="dash-bar b2"></div>
+          <div class="dash-bar b3"></div>
+          <div class="dash-bar b4"></div>
+          <div class="dash-bar b5"></div>
+        </div>
+        <svg class="dash-line-chart" viewBox="0 0 100 40" preserveAspectRatio="none">
+          <path d="M0 30 Q 20 10, 40 25 T 80 15 T 100 5" fill="none" stroke="#87a630" stroke-width="2" class="dash-path"></path>
+          <path d="M0 30 Q 20 10, 40 25 T 80 15 T 100 5 L 100 40 L 0 40 Z" fill="rgba(135, 166, 48, 0.2)" class="dash-path-fill"></path>
+        </svg>
+      </div>
+    </div>
+    <!-- Cursor do Mac -->
+    <svg class="mac-cursor" viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5.5 2.5L19.5 10.5L12.5 12.5L16.5 20.5L13.5 22.5L9.5 14.5L3.5 18.5V2.5Z" fill="#3d4945" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+    </svg>
+  </div>
+</div>
+        </div>
+      </div>
+    </section>
+
+        <!-- PRODUTO 3: CLINICAL -->
+    <section class="section section-gray">
+      <div class="container">
+        <div class="grid grid-2 items-center reveal reveal-left">
+          <div class="glass-card float-hover chat-wrapper clinical-container" style="height: 400px; padding: 0; background: linear-gradient(135deg, #f0f4f8, #e2e8f0); display: flex; align-items: center; justify-content: center; border-color: rgba(48, 163, 164, 0.3); position: relative; overflow: hidden; border-radius: 24px;">
+            <svg class="animated-cursor" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="z-index: 100; position: absolute; animation: cursorMoveClinical 6s infinite ease-in-out;">
+              <path d="M4 2.85986L20.4418 10.3642C21.666 10.9224 21.6706 12.6565 20.4496 13.2223L13.7846 16.3117C13.4357 16.4735 13.1506 16.7441 12.9774 17.0864L9.62083 23.7143C9.01168 24.9171 7.27961 24.8727 6.74103 23.642L4 2.85986Z" fill="#1a1a1a" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+            </svg>
+            
+            <div class="integration-bg" style="opacity: 0.5;">
+                <svg class="connection-line" viewBox="0 0 100 100" preserveAspectRatio="none">
+                  <path d="M 13,18 C 40,18 60,82 87,82" fill="none" stroke="rgba(48, 163, 164, 0.2)" stroke-width="1.5" />
+                  <path d="M 13,18 C 40,18 60,82 87,82" fill="none" stroke="#30a3a4" stroke-width="1.5" class="flowing-data" />
+                </svg>
+            </div>
+
+            <div class="chat-ui clinical-chat-ui" style="width: 85%; height: 85%; background: #ffffff; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); display: flex; flex-direction: column; overflow: hidden; z-index: 2; border: 1px solid rgba(48, 163, 164, 0.2);">
+              <div class="chat-header" style="background: #30a3a4; color: white; padding: 1rem; display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <div style="width: 32px; height: 32px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 4px; flex-shrink: 0;">
+                    <img src="assets/images/ebot_icon.avif" alt="Ê-Bot Clinical" style="width: 100%; height: 100%; object-fit: contain;">
+                  </div>
+                  <div style="display: flex; flex-direction: column;">
+                    <span style="font-weight: 600; font-size: 0.9rem; line-height: 1.2;">Clínica Ê-Bot Saúde</span>
+                    <span style="font-size: 0.7rem; opacity: 0.9;">Online agora</span>
+                  </div>
+                </div>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+              </div>
+              
+              <div class="wa-chat-body" style="flex: 1; padding: 1.2rem; display: flex; flex-direction: column; background: #fafafa; overflow-y: auto; position: relative;">
+                <div class="wa-message-wrapper" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                  
+                  <div class="wa-bubble wa-received chat-msg-1">
+                    Olá! Sou o Ê-Bot Clinical. Como posso te ajudar hoje?
+                    <span class="wa-time">10:00</span>
+                  </div>
+                  <div class="typing-indicator wa-typing-user"><span></span><span></span><span></span></div>
+
+                  <div class="wa-bubble wa-sent chat-msg-2 clinical-sent">
+                    Oi! Fui ao PS ontem e não estou entendendo a letra do médico nesta receita. Pode me ajudar?
+                    <span class="wa-time">10:01</span>
+                  </div>
+                  <div class="typing-indicator wa-typing-bot"><span></span><span></span><span></span></div>
+
+                  <div class="wa-bubble wa-received chat-msg-3">
+                    Sem problemas. Me envie uma foto ou o arquivo da receita. Nossa IA fará a leitura e te ajudará na hora.
+                    <span class="wa-time">10:01</span>
+                  </div>
+                  <div class="typing-indicator wa-typing-user"><span></span><span></span><span></span></div>
+
+                  <div class="wa-bubble wa-sent chat-msg-4 clinical-sent" style="padding: 0.4rem;">
+                    <div class="wa-pdf-doc">
+                      <div class="wa-pdf-icon" style="background: #30a3a4;">PDF</div>
+                      <div class="wa-pdf-details">
+                        <div class="wa-pdf-name">receita_medica.pdf</div>
+                        <div class="wa-pdf-size">1.2 MB • Documento</div>
+                      </div>
+                    </div>
+                    <span class="wa-time" style="padding-right: 0.4rem;">10:02</span>
+                  </div>
+                  <div class="typing-indicator wa-typing-bot"><span></span><span></span><span></span></div>
+                  
+                  <div class="wa-bubble wa-received chat-msg-5" style="padding: 0.4rem;">
+                    <img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=300&q=80" style="width: 100%; height: 110px; object-fit: cover; border-radius: 8px; margin-bottom: 0.5rem;" alt="Caixa de Remédio">
+                    <div style="padding: 0 0.4rem;">
+                      <strong style="color: #30a3a4;">Leitura concluída ✓</strong><br>
+                      O medicamento receitado é a <strong>Amoxicilina 500mg</strong>.<br>
+                      <strong>Posologia:</strong> Tomar 1 cápsula a cada 8h, durante 7 dias.
+                      <span class="wa-time">10:02</span>
+                    </div>
+                  </div>
+                  <div class="typing-indicator wa-typing-bot"><span></span><span></span><span></span></div>
+                  
+                  <div class="wa-bubble wa-received chat-msg-6">
+                    Verifiquei no sistema e há estoque na <strong>Farmácia São João</strong> (a 400m de você).<br>
+                    <div style="display: flex; align-items: center; gap: 6px; margin-top: 8px; color: #3c4844; font-weight: 700; background: rgba(0,0,0,0.05); padding: 8px; border-radius: 6px;">
+                      📍 Abrir Rota no Mapa
+                    </div>
+                    <span class="wa-time">10:02</span>
+                  </div>
+                  <div class="typing-indicator wa-typing-bot"><span></span><span></span><span></span></div>
+                  
+                  <div class="wa-bubble wa-received chat-msg-7" style="border: 1px solid rgba(48, 163, 164, 0.3);">
+                    Deseja que eu agende lembretes gratuitos via WhatsApp para você não esquecer de tomar o remédio nos horários corretos? ⏰
+                    <div style="display: flex; gap: 0.5rem; margin-top: 0.75rem;">
+                      <button class="auto-click" style="flex: 1; padding: 6px; border-radius: 6px; font-weight: 600; font-size: 0.75rem; border: 1px solid #30a3a4; color: #30a3a4; background: transparent;">Sim, agendar</button>
+                      <button style="flex: 1; padding: 6px; background: #eee; color: #555; border-radius: 6px; font-weight: 600; font-size: 0.75rem; border: none;">Não</button>
+                    </div>
+                    <span class="wa-time">10:03</span>
+                  </div>
+
+                  <div class="wa-bubble wa-sent chat-msg-8 clinical-sent">
+                    Sim, agendar
+                    <span class="wa-time">10:03</span>
+                  </div>
+                  <div class="typing-indicator wa-typing-bot"><span></span><span></span><span></span></div>
+
+                  <div class="wa-bubble wa-received chat-msg-9" style="background: rgba(48, 163, 164, 0.1); border: 1px solid rgba(48, 163, 164, 0.3);">
+                    <strong>Tudo certo! 💙</strong><br>
+                    Acabei de ativar seus alarmes. Te mandarei uma mensagem a cada 8h. Melhoras!
+                    <span class="wa-time">10:03</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div style="padding: 2rem;">
+            <span class="badge" style="background: rgba(48, 163, 164, 0.1); color: #30a3a4;">Saúde Pública & Privada</span>
+            <h2 class="h2">Ê-Bot Clinical</h2>
+            <p class="body-large" style="margin-bottom: 1.5rem;">Especializada para o setor da saúde (hospitais, UBS e clínicas particulares). Automatiza a jornada completa do paciente.</p>
+            <ul class="checklist clinical-checklist text-small">
+              <li>Redução drástica de no-show via lembretes</li>
+              <li>Identificação de Medicamentos por Foto da receita</li>
+              <li>Agendamento intuitivo e desburocratizado via WhatsApp</li>
+              <li>Triagem inteligente integrada com médicos e financeiro</li>
+            </ul>
+            <a href="ebot-clinical.html" class="btn btn-primary" style="margin-top: 2rem; background: #30a3a4; border-color: #30a3a4;">Ver detalhes do Ê-Bot Clinical</a>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUTO 4: EXPLORER -->
+    <section class="section section-light bg-grid-pattern">
+      <div class="container">
+        <div class="grid grid-2 items-center reveal reveal-right">
+          <div style="padding: 2rem; order: 2;">
+            <span class="badge" style="background: rgba(243, 156, 18, 0.1); color: #f39c12;">Turismo e Cidades</span>
+            <h2 class="h2">Ê-Bot Explorer</h2>
+            <p class="body-large" style="margin-bottom: 1.5rem;">Atendimento Inteligente ao Turista via WhatsApp (QR Code) e Totem Conversacional para modernizar a cidade.</p>
+            <ul class="checklist text-small">
+              <li>IA especialista em turismo local</li>
+              <li>Totem interativo por diálogo/voz na rodoviária e praças</li>
+              <li>Campanhas segmentadas de divulgação</li>
+              <li>Reduz demandas presenciais e mapeia interesse</li>
+            </ul>
+            <a href="ebot-explorer.html" class="btn btn-primary" style="margin-top: 2rem; background-color: #f2a016; border-color: #f2a016; color: white;">Ver detalhes do Explorer</a>
+          </div>
+          <div class="glass-card float-hover explorer-wrapper" style="order: 1; height: 400px; background: white; display: flex; align-items: center; justify-content: center; border-color: rgba(243, 156, 18, 0.3); position: relative; overflow: hidden; border-radius: 24px; padding: 0;">
+            <!-- Map background -->
+            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #fcfcfc; background-image: radial-gradient(rgba(243, 156, 18, 0.15) 1px, transparent 1px); background-size: 20px 20px; z-index: 1;"></div>
+            
+            <!-- Map Paths/Roads -->
+            <svg style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; opacity: 0.5;" viewBox="0 0 400 400" preserveAspectRatio="none">
+              <path d="M -50 150 Q 150 150, 200 250 T 450 200" fill="none" stroke="#f39c12" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity="0.2"/>
+              <path d="M 150 -50 Q 150 150, 50 250 T 150 450" fill="none" stroke="#f39c12" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" opacity="0.1"/>
+            </svg>
+
+            <!-- Animated Location Pin -->
+            <div class="explorer-pin" style="position: absolute; z-index: 3; top: 40%; left: 50%; transform: translate(-50%, -100%); display: flex; flex-direction: column; align-items: center; animation: pinBounce 2s infinite ease-in-out;">
+              <div style="width: 48px; height: 48px; background: #f39c12; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(243, 156, 18, 0.3);">
+                 <div style="width: 20px; height: 20px; background: white; border-radius: 50%; transform: rotate(45deg);"></div>
+              </div>
+              <div style="width: 24px; height: 8px; background: rgba(0,0,0,0.1); border-radius: 50%; margin-top: 4px; animation: shadowPulse 2s infinite ease-in-out; transform-origin: center;"></div>
+            </div>
+
+            <!-- Popup/Totem UI -->
+            <div class="explorer-popup" style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); width: 85%; max-width: 320px; background: white; border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); border: 1px solid rgba(243, 156, 18, 0.2); z-index: 4; overflow: hidden; animation: popupSlideUp 4s infinite alternate ease-in-out;">
+              <div style="background: #f39c12; color: white; padding: 12px 16px; font-weight: 600; font-size: 0.9rem; display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="font-size: 1.2rem;">🗺️</span> Guia Virtual
+                </div>
+                <div style="width: 24px; height: 24px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                </div>
+              </div>
+              <div style="padding: 16px; display: flex; flex-direction: column; gap: 12px; position: relative;">
+                
+                <style>
+                  @keyframes mouseClickExplore {
+                    0% { top: 100%; left: 50%; opacity: 0; }
+                    10% { top: 75%; left: 60%; opacity: 1; }
+                    20% { top: 25px; left: 50%; transform: scale(1); }
+                    22% { top: 25px; left: 50%; transform: scale(0.9); }
+                    25% { top: 25px; left: 50%; transform: scale(1); }
+                    
+                    35% { top: 85px; left: 60%; transform: scale(1); }
+                    37% { top: 85px; left: 60%; transform: scale(0.9); }
+                    40% { top: 85px; left: 60%; transform: scale(1); }
+                    
+                    50% { top: 145px; left: 70%; transform: scale(1); }
+                    52% { top: 145px; left: 70%; transform: scale(0.9); }
+                    55% { top: 145px; left: 70%; transform: scale(1); }
+                    
+                    70% { top: 100%; left: 50%; opacity: 1; }
+                    100% { top: 100%; left: 50%; opacity: 0; }
+                  }
+                  
+                  @keyframes itemHover {
+                    0%, 19% { background: transparent; }
+                    20%, 30% { background: rgba(243, 156, 18, 0.1); border-radius: 8px; }
+                    31%, 100% { background: transparent; }
+                  }
+                  
+                  @keyframes itemHover2 {
+                    0%, 34% { background: transparent; }
+                    35%, 45% { background: rgba(243, 156, 18, 0.1); border-radius: 8px; }
+                    46%, 100% { background: transparent; }
+                  }
+                  
+                  @keyframes itemHover3 {
+                    0%, 49% { background: transparent; }
+                    50%, 60% { background: rgba(243, 156, 18, 0.1); border-radius: 8px; }
+                    61%, 100% { background: transparent; }
+                  }
+                  
+                  .explore-item-1 { animation: itemHover 8s infinite; padding: 4px; margin: -4px; transition: all 0.2s; cursor: pointer; }
+                  .explore-item-2 { animation: itemHover2 8s infinite; padding: 4px; margin: -4px; transition: all 0.2s; cursor: pointer; }
+                  .explore-item-3 { animation: itemHover3 8s infinite; padding: 4px; margin: -4px; transition: all 0.2s; cursor: pointer; }
+                  
+                  .animated-mouse-pointer {
+                    position: absolute;
+                    width: 24px;
+                    height: 24px;
+                    z-index: 100;
+                    pointer-events: none;
+                    animation: mouseClickExplore 8s infinite cubic-bezier(0.4, 0, 0.2, 1);
+                    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+                  }
+                </style>
+
+                <!-- Animated Mouse -->
+                <svg class="animated-mouse-pointer" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86c.14-.14.33-.22.53-.22h6.05c.45 0 .67-.54.35-.85L6.35 3.42c-.24-.24-.85-.07-.85.34z" fill="white" stroke="#333" stroke-width="1.5"/>
+                </svg>
+
+                <div class="explore-item-1" style="display: flex; gap: 12px; align-items: center;">
+                  <div style="width: 40px; height: 40px; background: rgba(243, 156, 18, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;">🍽️</div>
+                  <div>
+                    <div style="font-weight: 700; font-size: 0.85rem; color: #333;">Onde Comer?</div>
+                    <div style="font-size: 0.75rem; color: #666;">5 restaurantes próximos</div>
+                  </div>
+                </div>
+                <div class="explore-item-2" style="display: flex; gap: 12px; align-items: center;">
+                  <div style="width: 40px; height: 40px; background: rgba(243, 156, 18, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;">📅</div>
+                  <div>
+                    <div style="font-weight: 700; font-size: 0.85rem; color: #333;">Eventos Hoje</div>
+                    <div style="font-size: 0.75rem; color: #666;">Show ao vivo às 20h na praça</div>
+                  </div>
+                </div>
+                <div class="explore-item-3" style="display: flex; gap: 12px; align-items: center;">
+                  <div style="width: 40px; height: 40px; background: rgba(243, 156, 18, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;">📸</div>
+                  <div>
+                    <div style="font-weight: 700; font-size: 0.85rem; color: #333;">Pontos Turísticos</div>
+                    <div style="font-size: 0.75rem; color: #666;">Rota histórica a 500m</div>
+                  </div>
+                </div>
+                <!-- Scanning line effect over the popup to signify "interactive totem/AI" -->
+                <div style="position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: rgba(243, 156, 18, 0.5); box-shadow: 0 0 10px #f39c12; animation: scanLine 3s infinite linear; pointer-events: none;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<!-- FAQ -->
+    <section class="section section-light">
+      <div class="container reveal">
+        <h2 class="h2 text-center" style="margin-bottom: 3rem;">Perguntas Frequentes (FAQ)</h2>
+        <div style="max-width: 800px; margin: 0 auto;">
+          <div class="accordion-item">
+            <div class="accordion-header">Qual solução é ideal para o meu negócio? <span class="chevron-icon">▼</span></div>
+            <div class="accordion-content">
+              <br><p>Se você precisa de disparos automáticos massivos: <b>Ê-Bot API</b>.<br>Se você tem uma equipe de vendas e suporte que precisa centralizar conversas: <b>Ê-Bot Panel</b>.<br>Se você é uma clínica, consultório médico, UBS, ou hospital: <b>Ê-Bot Clinical</b>.</p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <div class="accordion-header">Como funciona a implementação e setup? <span class="chevron-icon">▼</span></div>
+            <div class="accordion-content">
+              <br><p>Nós realizamos o setup em até 48h. Configuramos os fluxos, departamentos e integramos com seu ERP se necessário. Oferecemos treinamento em vídeo e suporte humanizado via WhatsApp para sua equipe durante e após a adoção.</p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <div class="accordion-header">O sistema tem limites de atendentes simultâneos? <span class="chevron-icon">▼</span></div>
+            <div class="accordion-content">
+              <br><p>O sistema suporta múltiplos atendentes conectados usando um único número de WhatsApp de maneira simultânea e transparente. Você gerencia quem atende qual fila pelo seu Painel de Admin.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  
+    
+    
+    
+    
+    <!-- FINAL CTA -->
+    <section class="section section-dark bg-grid-pattern-dark" style="background: linear-gradient(135deg, var(--dark) 0%, #1a252f 100%); overflow: hidden; margin-top: 6rem; margin-bottom: 0;">
+      <div class="container reveal">
+        <div class="final-cta-container" style="display: flex; align-items: center; justify-content: space-between; gap: 4rem; flex-wrap: wrap;">
+          
+          <div class="final-cta-content" style="flex: 3; min-width: 350px; text-align: left;">
+            <h2 class="h1" style="color: white; margin-bottom: 1.5rem;">Pronto para Transformar Seu Atendimento?</h2>
+            <p class="body-large" style="margin-bottom: 2.5rem; opacity: 0.9;">Junte-se a milhares de empresas, clínicas e prefeituras que já automatizaram e humanizaram seus processos com Ê-Sistemas.</p>
+            <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 1rem;" class="cta-button-wrapper">
+              <button class="trigger-wa-modal btn btn-primary float-hover" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; font-size: 1.25rem; padding: 1rem 2.5rem;"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.28 14.3c-.22.61-1.28 1.15-1.78 1.22-.43.06-1.02.13-3.23-.79-2.66-1.11-4.38-3.83-4.52-4.01-.13-.19-1.08-1.44-1.08-2.75 0-1.31.68-1.95.92-2.22.24-.26.52-.33.69-.33.17 0 .34 0 .49.01.16.01.37-.06.57.43.21.5.73 1.77.79 1.9.06.13.1.28.01.47-.08.19-.13.31-.26.46-.13.15-.28.33-.39.46-.13.14-.27.29-.12.56.15.26.68 1.13 1.46 1.83.99.9 1.84 1.18 2.1 1.31.26.13.41.11.56-.06.15-.17.65-.75.82-1.01.17-.26.34-.22.58-.13.24.09 1.53.72 1.79.85.26.13.43.19.5.3.06.11.06.64-.16 1.25z"/></svg>  Falar com Especialista </button>
+              <div class="text-small" style="opacity: 0.7;">Orçamento personalizado • Setup em 48h • Suporte dedicado</div>
+            </div>
+          </div>
+          
+          <div class="final-cta-robot" style="flex: 0.6; min-width: 280px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; perspective: 1000px;">
+            
+            <div class="robot-icon-container float-hover" style="position: relative; width: 130px; height: 130px; display: flex; align-items: center; justify-content: center; margin-bottom: 2.5rem; z-index: 10;">
+              <!-- Fluid and slower pulse effect matching icon contour -->
+              <img src="assets/images/ebot_icon.avif" alt="" class="pulse-layer">
+              <img src="assets/images/ebot_icon.avif" alt="" class="pulse-layer pulse-layer-2">
+              
+              <!-- Main Icon -->
+              <img src="assets/images/ebot_icon.avif" alt="Ê-Bot" style="position: absolute; width: 100%; height: 100%; object-fit: contain; z-index: 2; filter: drop-shadow(0 25px 35px rgba(0,0,0,0.7));">
+            </div>
+
+            <!-- Chat Container for descending bubbles -->
+            <div id="wa-chat-container" style="position: relative; width: 100%; max-width: 290px; height: 210px; z-index: 2;">
+              <!-- Bubbles injected by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA SCRIPTS & STYLES -->
+    <style>
+      .pulse-layer {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        z-index: 1;
+        animation: smoothPulse 4.5s cubic-bezier(0.25, 0.8, 0.25, 1) infinite;
+        opacity: 0;
+      }
+      .pulse-layer-2 {
+        animation-delay: 2.25s;
+      }
+      
+      @keyframes smoothPulse {
+        0% { transform: scale(0.9); opacity: 0.6; filter: drop-shadow(0 0 15px var(--primary)) blur(0px); }
+        100% { transform: scale(1.7); opacity: 0; filter: drop-shadow(0 0 35px var(--primary)) blur(4px); }
+      }
+      
+      #wa-chat-container .wa-bubble {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: #ffffff;
+        color: #111b21;
+        border-radius: 0 12px 12px 12px;
+        padding: 10px 14px 10px 14px;
+        text-align: left;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        transform-origin: top center;
+        transition: all 0.9s cubic-bezier(0.25, 1, 0.3, 1);
+        will-change: transform, opacity, filter;
+      }
+      
+      #wa-chat-container .wa-bubble::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -10px;
+          width: 0;
+          height: 0;
+          border-top: 0px solid transparent;
+          border-right: 10px solid #ffffff;
+          border-bottom: 14px solid transparent;
+      }
+      
+      #wa-chat-container .wa-time {
+        font-size: 0.68rem;
+        color: #667781;
+        float: right;
+        margin-top: 6px;
+        margin-left: 10px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      #wa-chat-container .wa-check {
+        color: #53bdeb;
+      }
+      
+      /* Chat Scroll States */
+      .chat-entering {
+        opacity: 0;
+        transform: translateY(-40px) scale(0.95) translateZ(-20px);
+      }
+      .chat-active {
+        opacity: 1;
+        transform: translateY(0) scale(1) translateZ(60px);
+        filter: blur(0);
+        z-index: 3;
+        box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.8), 0 20px 30px -5px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255,255,255,0.05);
+      }
+      .chat-previous {
+        opacity: 0.55;
+        transform: translateY(90px) scale(0.92) translateZ(10px);
+        filter: blur(1.5px);
+        z-index: 2;
+        box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.5);
+      }
+      .chat-leaving {
+        opacity: 0;
+        transform: translateY(165px) scale(0.85) translateZ(-20px);
+        filter: blur(4px);
+        z-index: 1;
+      }
+      
+      @media (max-width: 992px) {
+        .final-cta-container { flex-direction: column; text-align: center; gap: 3rem !important; }
+        .final-cta-content { text-align: center !important; display: flex; flex-direction: column; align-items: center; }
+        .cta-button-wrapper { align-items: center !important; }
+        #wa-chat-container { margin: 0 auto; }
+      }
+    </style>
+    <script>
+      (function() {
+        if(window.finalCtaInitialized) return;
+        window.finalCtaInitialized = true;
+        
+        document.addEventListener('DOMContentLoaded', () => {
+          const messages = [
+            "Sabia que 80% dos clientes preferem respostas imediatas? Clique ao lado!",
+            "Reduza seu tempo de resposta de horas para segundos. É só clicar no botão ali!",
+            "Aumente a satisfação dos clientes com IA 24/7. Fale com um Especialista!",
+            "Não perca mais vendas por demora. O botão ao lado é o primeiro passo para o sucesso."
+          ];
+          
+          const container = document.getElementById('wa-chat-container');
+          if (!container) return;
+          
+          let msgIndex = 0;
+          const displayDuration = 4500;
+          
+          function spawnMessage() {
+            if (!document.getElementById('wa-chat-container')) return;
+            
+            const now = new Date();
+            const timeStr = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+            
+            const bubble = document.createElement('div');
+            bubble.className = 'wa-bubble chat-entering';
+            bubble.innerHTML = `
+               <p style="margin: 0; display: inline; line-height: 1.3; font-size: 0.85rem;">${messages[msgIndex]}</p>
+               <div class="wa-time">
+                 <span>${timeStr}</span>
+                 <svg class="wa-check" viewBox="0 0 16 15" width="16" height="15"><path fill="currentColor" d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.879a.32.32 0 0 1-.484.033l-.358-.325a.319.319 0 0 0-.484.032l-.378.483a.418.418 0 0 0 .036.541l1.32 1.266c.143.14.361.125.484-.033l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.879a.32.32 0 0 1-.484.033L1.891 7.769a.366.366 0 0 0-.515.006l-.423.433a.364.364 0 0 0 .006.514l3.258 3.185c.143.14.361.125.484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z"></path></svg>
+               </div>
+               <div style="clear: both;"></div>
+            `;
+            
+            container.prepend(bubble);
+            
+            // force reflow to trigger CSS transitions
+            void bubble.offsetWidth;
+            
+            bubble.classList.remove('chat-entering');
+            bubble.classList.add('chat-active');
+            
+            // shift previous bubbles down
+            const allBubbles = container.querySelectorAll('.wa-bubble');
+            allBubbles.forEach((b, i) => {
+               if (i === 1) {
+                   b.className = 'wa-bubble chat-previous';
+               } else if (i === 2) {
+                   b.className = 'wa-bubble chat-leaving';
+               } else if (i > 2) {
+                   // clean up DOM
+                   setTimeout(() => { if (b.parentNode) b.remove() }, 1000);
+               }
+            });
+            
+            msgIndex = (msgIndex + 1) % messages.length;
+            setTimeout(spawnMessage, displayDuration);
+          }
+          
+          // Initial delay to let the page load
+          setTimeout(spawnMessage, 500);
+        });
+      })();
+    </script>
+
+  </main>
+
+  
+  
+
+  
+    <footer style="background: var(--dark-header); color: #999; border-top: 1px solid rgba(255,255,255,0.05); padding: 4rem 0 2rem; margin-top: 0;">
+    <div class="container">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 3rem;">
+        
+        <div style="flex: 1.5; min-width: 250px;">
+          <div style="margin-bottom: 1.5rem; display: flex; align-items: center;">
+            <img src="assets/images/esistemas_logo.avif" alt="Ê-Sistemas Corporativo" style="height: 48px; width: auto; object-fit: contain;">
+          </div>
+          <p class="text-small" style="margin-bottom: 1.5rem; max-width: 300px; line-height: 1.6;">Transformando tecnologia em conexões reais através de inteligência artificial focada em eficiência, resultados e humanização.</p>
+        </div>
+        
+        <div style="flex: 1; min-width: 150px;">
+          <h4 style="color: white; margin-bottom: 1.5rem; font-weight: 600; font-size: 1.125rem;">Produtos</h4>
+          <ul style="display: flex; flex-direction: column; gap: 0.75rem;" class="text-small">
+            <li><a href="ebot-api.html" style="transition: color 0.2s;">Ê-Bot API</a></li>
+            <li><a href="ebot-panel.html" style="transition: color 0.2s;">Ê-Bot Panel</a></li>
+            <li><a href="ebot-clinical.html" style="transition: color 0.2s;">Ê-Bot Clinical</a></li>
+            <li><a href="ebot-explorer.html" style="transition: color 0.2s;">Ê-Bot Explorer</a></li>
+          </ul>
+        </div>
+
+        <div style="flex: 1; min-width: 150px;">
+          <h4 style="color: white; margin-bottom: 1.5rem; font-weight: 600; font-size: 1.125rem;">A Empresa</h4>
+          <ul style="display: flex; flex-direction: column; gap: 0.75rem;" class="text-small">
+            <li><a href="nossa_historia.html" style="transition: color 0.2s;">Nossa História</a></li>
+            <li><a href="nossa_historia.html#premios" style="transition: color 0.2s;">Premiações e Imersões</a></li>
+            <li><a href="contato.html" style="transition: color 0.2s;">Fale Conosco</a></li>
+          </ul>
+        </div>
+
+        <div style="flex: 1; min-width: 150px;">
+          <h4 style="color: white; margin-bottom: 1.5rem; font-weight: 600; font-size: 1.125rem;">Legal e Privacidade</h4>
+          <ul style="display: flex; flex-direction: column; gap: 0.75rem;" class="text-small">
+            <li><a href="privacidade.html" style="transition: color 0.2s;">Aviso de Privacidade</a></li>
+            <li><a href="privacidade.html" style="transition: color 0.2s;">Conformidade LGPD</a></li>
+            <li><a href="privacidade.html" style="transition: color 0.2s;">Termos de Uso</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 4rem; padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <div style="font-size: 0.875rem;">&copy; 2024-2025 Ê-Sistemas. Todos os direitos reservados.</div>
+        <div style="font-size: 0.875rem; display: flex; gap: 1.5rem;">
+          <span>(46) 9 9113-0554</span>
+          <span>ebot@esistemas.dev.br</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/utils.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/scroll-animations.js"></script>
+  <script src="js/chat-animation.js"></script>
+  <script src="js/accordion.js"></script>
+</body>
+</html>

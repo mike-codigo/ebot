@@ -1,0 +1,1857 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ê-Bot | Inteligência que conecta, eficiência que transforma</title>
+  <meta name="description" content="O Ê-Bot é um sistema de inteligência artificial projetado para otimizar atendimento, reduzir custos e aumentar a eficiência operacional.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- CSS Styles -->
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/typography.css">
+  <link rel="stylesheet" href="css/glassmorphism.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/charts.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+<style id="custom-dash-chat-animations">
+/* --- CONFIGURAÇÕES DASHBOARD --- */
+.dash-wrapper {
+  height: 400px;
+  background: linear-gradient(135deg, #f0f4f8, #e2e8f0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  border-color: rgba(135, 166, 48, 0.2);
+  border-radius: 24px;
+}
+.dash-ui {
+  width: 85%;
+  height: 80%;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  display: flex;
+  overflow: hidden;
+  position: relative;
+}
+.dash-sidebar {
+  width: 25%;
+  background: #3d4945; /* Dark color */
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.dash-logo {
+  height: 20px;
+  width: 60%;
+  background: rgba(255,255,255,0.2);
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+.dash-menu-item {
+  height: 12px;
+  width: 80%;
+  background: rgba(255,255,255,0.1);
+  border-radius: 4px;
+}
+.dash-menu-item.active {
+  background: #87a630; /* Green color */
+  width: 90%;
+}
+.dash-main {
+  flex: 1;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  background: #f8fafc;
+}
+.dash-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.dash-title {
+  height: 16px;
+  width: 40%;
+  background: #e2e8f0;
+  border-radius: 4px;
+}
+.dash-user {
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  background: #87a630;
+}
+.dash-cards {
+  display: flex;
+  gap: 1rem;
+}
+.dash-card {
+  flex: 1;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+  border: 1px solid rgba(135,166,48,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transform: translateY(10px);
+  opacity: 0;
+  animation: cardIn 4s infinite;
+}
+.dash-card:nth-child(2) { animation-delay: 0.2s; }
+.dash-card:nth-child(3) { animation-delay: 0.4s; }
+
+.dash-card-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  background: rgba(135,166,48,0.2);
+}
+.dash-card-value {
+  width: 60%;
+  height: 12px;
+  background: #3d4945;
+  border-radius: 4px;
+}
+.dash-chart-area {
+  flex: 1;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 1rem;
+  position: relative;
+  border: 1px solid rgba(135,166,48,0.1);
+  overflow: hidden;
+}
+.dash-chart-bars {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  height: 60%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 0 10%;
+  gap: 10px;
+}
+.dash-bar {
+  width: 15%;
+  background: #3d4945;
+  border-radius: 4px 4px 0 0;
+  transform-origin: bottom;
+  animation: barGrow 4s infinite;
+}
+.dash-bar.b1 { height: 40%; animation-delay: 0.1s; }
+.dash-bar.b2 { height: 70%; animation-delay: 0.2s; }
+.dash-bar.b3 { height: 50%; background: #87a630; animation-delay: 0.3s; }
+.dash-bar.b4 { height: 90%; animation-delay: 0.4s; }
+.dash-bar.b5 { height: 60%; animation-delay: 0.5s; }
+
+.dash-line-chart {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  width: calc(100% - 2rem);
+  height: 80%;
+}
+.dash-path {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  animation: drawLine 4s infinite;
+}
+.dash-path-fill {
+  opacity: 0;
+  animation: fadeInFill 4s infinite;
+}
+
+/* Mac Cursor */
+.mac-cursor {
+  position: absolute;
+  z-index: 10;
+  top: 80%;
+  left: 80%;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+  animation: cursorMove 4s infinite ease-in-out;
+}
+
+@keyframes cardIn {
+  0% { transform: translateY(10px); opacity: 0; }
+  10%, 90% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(10px); opacity: 0; }
+}
+@keyframes barGrow {
+  0% { transform: scaleY(0); }
+  15%, 85% { transform: scaleY(1); }
+  100% { transform: scaleY(0); }
+}
+@keyframes drawLine {
+  0% { stroke-dashoffset: 200; }
+  25%, 85% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: 200; }
+}
+@keyframes fadeInFill {
+  0%, 25% { opacity: 0; }
+  35%, 85% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes cursorMove {
+  0% { top: 80%; left: 80%; transform: scale(1); }
+  20% { top: 35%; left: 45%; transform: scale(1); }
+  25% { top: 35%; left: 45%; transform: scale(0.8); }
+  30% { top: 35%; left: 45%; transform: scale(1); }
+  50% { top: 70%; left: 60%; transform: scale(1); }
+  55% { top: 70%; left: 60%; transform: scale(0.8); }
+  60% { top: 70%; left: 60%; transform: scale(1); }
+  100% { top: 80%; left: 80%; transform: scale(1); }
+}
+
+
+/* --- CONFIGURAÇÕES CHAT --- */
+.chat-wrapper {
+  height: 400px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f0f4f8, #e2e8f0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-color: rgba(135, 166, 48, 0.2);
+  border-radius: 24px;
+}
+
+/* Integração Background */
+.integration-bg {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+.float-icon {
+  position: absolute;
+  width: 80px; height: 80px;
+  z-index: 2;
+  background: white;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  animation: floatIcon 3s infinite ease-in-out alternate;
+}
+.wpp-icon { top: 6%; left: 6%; }
+.ebot-icon { bottom: 6%; right: 6%; animation-delay: -1.5s; }
+@keyframes floatIcon {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(-15px); }
+}
+
+.connection-line {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 1;
+}
+.flowing-data {
+  stroke-dasharray: 4, 12;
+  animation: flowLine 1.5s linear infinite;
+}
+@keyframes flowLine {
+  from { stroke-dashoffset: 16; }
+  to { stroke-dashoffset: 0; }
+}
+
+/* Chat UI */
+.chat-ui {
+  width: 65%;
+  height: 85%;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 24px 48px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 2;
+}
+.chat-header {
+  background: #3d4945;
+  color: white;
+  padding: 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.status-dot {
+  display: inline-block;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #87a630; box-shadow: 0 0 8px #87a630;
+  animation: pulseDot 2s infinite;
+}
+@keyframes pulseDot {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+.chat-body {
+  flex: 1;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background: #fafafa;
+  overflow: hidden;
+}
+
+.msg-bubble {
+  padding: 0.75rem;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  max-width: 85%;
+  opacity: 0;
+  position: absolute; /* Usado para fazer a animação sequencial sem esticar o container logo de cara */
+  display: none;
+}
+.msg-bubble.user {
+  background: rgba(135,166,48,0.15); /* #87a630 tinted */
+  color: #3d4945;
+  border-bottom-right-radius: 4px;
+  align-self: flex-end;
+  border: 1px solid rgba(135,166,48,0.3);
+}
+.msg-bubble.ai {
+  background: white;
+  border-bottom-left-radius: 4px;
+  align-self: flex-start;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  color: #3d4945;
+}
+
+/* Timeline Animation - Full Sequence is 12s */
+.m1 { 
+  display: block; position: relative; 
+  animation: appearStatic 12s infinite; 
+}
+.m2 { 
+  display: block; position: relative; 
+  animation: appearStatic2 12s infinite; 
+}
+.m3 { 
+  display: flex; position: relative; 
+  animation: appearStatic3 12s infinite; 
+}
+.m4 { 
+  display: block; position: relative; 
+  animation: appearStatic4 12s infinite; 
+}
+.m5 { 
+  display: block; position: relative; 
+  animation: appearStatic5 12s infinite; 
+}
+
+@keyframes appearStatic {
+  0%, 100% { opacity: 0; transform: translateY(10px) scale(0.95); }
+  2%, 98% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes appearStatic2 {
+  0%, 15%, 100% { opacity: 0; transform: translateY(10px) scale(0.95); }
+  18%, 98% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes appearStatic3 {
+  0%, 35%, 100% { opacity: 0; transform: translateY(10px) scale(0.95); }
+  38%, 98% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes appearStatic4 {
+  0%, 50%, 75%, 100% { opacity: 0; transform: translateY(10px) scale(0.95); display: none; }
+  52%, 73% { opacity: 1; transform: translateY(0) scale(1); display: block; }
+}
+@keyframes appearStatic5 {
+  0%, 75%, 100% { opacity: 0; transform: translateY(10px) scale(0.95); }
+  78%, 98% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Audio Message */
+.audio-msg {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.play-btn {
+  background: #87a630;
+  border: none;
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  padding: 0;
+}
+.audio-wave {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 20px;
+}
+.audio-wave .bar {
+  width: 3px;
+  background: #3d4945;
+  border-radius: 3px;
+  height: 4px;
+  animation: waveAnim 1s infinite alternate;
+}
+.audio-wave .bar:nth-child(1) { height: 8px; animation-delay: 0.1s; }
+.audio-wave .bar:nth-child(2) { height: 16px; animation-delay: 0.2s; }
+.audio-wave .bar:nth-child(3) { height: 10px; animation-delay: 0.3s; }
+.audio-wave .bar:nth-child(4) { height: 18px; animation-delay: 0.4s; }
+.audio-wave .bar:nth-child(5) { height: 6px; animation-delay: 0.5s; }
+.audio-wave .bar:nth-child(6) { height: 14px; animation-delay: 0.6s; }
+.audio-wave .bar:nth-child(7) { height: 10px; animation-delay: 0.7s; }
+.audio-wave .bar:nth-child(8) { height: 8px; animation-delay: 0.8s; }
+
+@keyframes waveAnim {
+  0% { transform: scaleY(0.5); }
+  100% { transform: scaleY(1); }
+}
+
+.audio-time {
+  font-size: 0.7rem;
+  color: #3d4945;
+  font-weight: 500;
+}
+
+/* Typing Indicator */
+.typing .dot {
+  display: inline-block;
+  width: 5px; height: 5px;
+  background: #87a630;
+  border-radius: 50%;
+  margin: 0 2px;
+  animation: bounceDot 1.4s infinite ease-in-out both;
+}
+.typing .dot:nth-child(1) { animation-delay: -0.32s; }
+.typing .dot:nth-child(2) { animation-delay: -0.16s; }
+@keyframes bounceDot {
+  0%, 80%, 100% { transform: scale(0.5); opacity: 0.5; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+  /* Responsive Orbit */
+  .orbit-container {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    aspect-ratio: 1/1;
+    height: auto;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .orbit-ring {
+    width: 83.33%; /* 500 / 600 */
+    height: 83.33%;
+  }
+
+  /* Glass Play Button for iPhone */
+  .glass-play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 20;
+    width: 56px;
+    height: 56px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    animation: pulse-glass 2s infinite;
+    transition: all 0.3s ease;
+  }
+  .glass-play-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+  .glass-play-btn svg {
+    margin-left: 4px; /* visually center the triangle */
+  }
+  @keyframes pulse-glass {
+    0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4); }
+    70% { box-shadow: 0 0 0 15px rgba(255, 255, 255, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+  }
+
+
+  /* Infinite Marquee */
+  .marquee-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding: 1rem 0;
+    display: flex;
+    background: transparent;
+  }
+  .marquee-container::before,
+  .marquee-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 15vw;
+    max-width: 200px;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .marquee-container::before {
+    left: 0;
+    background: linear-gradient(to right, #F5F5F5 0%, rgba(245,245,245,0) 100%);
+  }
+  .marquee-container::after {
+    right: 0;
+    background: linear-gradient(to left, #F5F5F5 0%, rgba(245,245,245,0) 100%);
+  }
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: scroll-marquee 40s linear infinite;
+  }
+  .marquee-track:hover {
+    animation-play-state: paused;
+  }
+  .marquee-items {
+    display: flex;
+    gap: 5rem;
+    padding-right: 5rem; /* Gap at the end to match */
+    align-items: center;
+  }
+  .marquee-items img {
+    height: 40px;
+    max-width: 180px;
+    object-fit: contain;
+    filter: grayscale(100%) opacity(0.5);
+    transition: filter 0.3s ease;
+  }
+  .marquee-items img:hover {
+    filter: grayscale(0%) opacity(1);
+  }
+  @keyframes scroll-marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+</style>
+
+  <link rel="stylesheet" href="css/ecosystem.css">
+
+  <style>
+  /* 1. Checklist Negative */
+  .checklist-negative li::before {
+    content: "✕" !important;
+    color: #e53935 !important;
+    font-weight: bold;
+    margin-right: 0.5rem;
+    display: inline-block;
+    width: 1.2rem;
+  }
+
+  
+  /* Dynamic Particles from Icons */
+  .dynamic-particle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #87a630;
+    border-radius: 50%;
+    box-shadow: 0 0 12px #87a630, 0 0 24px #87a630, 0 0 36px #87a630;
+    z-index: 15;
+    pointer-events: none;
+    animation: pulse-particle 1s infinite alternate, move-to-center var(--duration, 2s) cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  }
+  @keyframes pulse-particle {
+    0% { transform: scale(0.8); opacity: 0.8; }
+    100% { transform: scale(1.5); opacity: 1; }
+  }
+  @keyframes move-to-center {
+    0% { 
+      left: var(--start-x); 
+      top: var(--start-y); 
+      opacity: 0;
+    }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { 
+      left: 50%; 
+      top: 50%; 
+      opacity: 0; 
+      transform: scale(0);
+    }
+  }
+
+  /* 2. Dotted neon lines for orbit container */
+  .neon-dotted-line {
+    fill: none;
+    stroke: #87a630;
+    stroke-width: 2.5;
+    stroke-dasharray: 6 8;
+    filter: drop-shadow(0 0 6px rgba(135, 166, 48, 0.8));
+    animation: march-ants 1.5s linear infinite;
+  }
+  @keyframes march-ants {
+    to { stroke-dashoffset: -28; }
+  }
+
+  /* 3. Testimonials Popover with 2s delay */
+  .solution-popover {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: white;
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    padding: 1rem;
+    width: 220px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+    transition-delay: 2s, 2s, 0s;
+    z-index: 100;
+    text-align: center;
+  }
+  .solution-popover::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -8px;
+    border-width: 8px;
+    border-style: solid;
+    border-color: white transparent transparent transparent;
+  }
+  .testimonial-badge-container:hover .solution-popover,
+  .solution-popover:hover {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+    transition-delay: 0s, 0s, 0s;
+  }
+
+  /* Fix orbit container for the SVG */
+  .orbit-container {
+    position: relative;
+  }
+  </style>
+  
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="glass-header" style="position: fixed; top: 0; width: 100%; z-index: 1000;">
+    <div class="container header-inner">
+      
+      <div class="logo">
+        <a href="index.html" style="display: flex; align-items: center; gap: 0.5rem; font-weight: 800; font-size: 1.75rem;">
+          <img src="assets/images/ebot_icon.avif" alt="ebot Logo" style="height: 48px; width: auto; object-fit: contain;">
+          <span><span style="color: #88a72f;">ê</span><span style="color: #adb4be;">bot</span></span>
+        </a>
+      </div>
+      
+      <nav class="nav-menu flex">
+        <ul class="flex gap-lg">
+          <li><a href="index.html" class="text-primary" style="font-weight: 600;">Home</a></li>
+          <li><a href="produtos.html" >Produtos</a></li>
+          <li><a href="nossa_historia.html" >Nossa História</a></li>
+          <li><a href="privacidade.html" >Privacidade</a></li>
+          <li><a href="contato.html" >Contato</a></li>
+        </ul>
+        <div class="mobile-cta" style="display: none;">
+          <button   class="trigger-wa-modal btn btn-primary" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; width: 100%; margin-top: 1rem;"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.28 14.3c-.22.61-1.28 1.15-1.78 1.22-.43.06-1.02.13-3.23-.79-2.66-1.11-4.38-3.83-4.52-4.01-.13-.19-1.08-1.44-1.08-2.75 0-1.31.68-1.95.92-2.22.24-.26.52-.33.69-.33.17 0 .34 0 .49.01.16.01.37-.06.57.43.21.5.73 1.77.79 1.9.06.13.1.28.01.47-.08.19-.13.31-.26.46-.13.15-.28.33-.39.46-.13.14-.27.29-.12.56.15.26.68 1.13 1.46 1.83.99.9 1.84 1.18 2.1 1.31.26.13.41.11.56-.06.15-.17.65-.75.82-1.01.17-.26.34-.22.58-.13.24.09 1.53.72 1.79.85.26.13.43.19.5.3.06.11.06.64-.16 1.25z"/></svg>  Falar com Especialista </button>
+        </div>
+      </nav>
+      
+      <div class="desktop-cta">
+        <button   class="trigger-wa-modal btn btn-primary" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.28 14.3c-.22.61-1.28 1.15-1.78 1.22-.43.06-1.02.13-3.23-.79-2.66-1.11-4.38-3.83-4.52-4.01-.13-.19-1.08-1.44-1.08-2.75 0-1.31.68-1.95.92-2.22.24-.26.52-.33.69-.33.17 0 .34 0 .49.01.16.01.37-.06.57.43.21.5.73 1.77.79 1.9.06.13.1.28.01.47-.08.19-.13.31-.26.46-.13.15-.28.33-.39.46-.13.14-.27.29-.12.56.15.26.68 1.13 1.46 1.83.99.9 1.84 1.18 2.1 1.31.26.13.41.11.56-.06.15-.17.65-.75.82-1.01.17-.26.34-.22.58-.13.24.09 1.53.72 1.79.85.26.13.43.19.5.3.06.11.06.64-.16 1.25z"/></svg>  Falar com Especialista </button>
+      </div>
+      
+      <div class="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="section bg-grid-pattern" style="background: white; position: relative; overflow: hidden;">
+      <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 70% 50%, rgba(39, 174, 96, 0.08) 0%, transparent 50%); z-index: 0;"></div>
+      <div class="container grid hero-split" style="position: relative; z-index: 1;">
+        <div class="hero-content reveal reveal-left">
+          <span class="badge">🚀 Inteligência Artificial</span>
+          <h1 class="h1" style="margin-bottom: 1.5rem;">Inteligência que conecta, eficiência que transforma</h1>
+          <p class="body-large" style="margin-bottom: 2.5rem; max-width: 520px;">A Ê-Bot foi desenvolvida para ser a secretária virtual que trabalha 24 horas por dia, garantindo excelência no atendimento com automações inteligentes.</p>
+          <div class="flex gap-md" style="margin-bottom: 2rem;">
+            <button class="trigger-wa-modal btn btn-primary" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink: 0;"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.28 14.3c-.22.61-1.28 1.15-1.78 1.22-.43.06-1.02.13-3.23-.79-2.66-1.11-4.38-3.83-4.52-4.01-.13-.19-1.08-1.44-1.08-2.75 0-1.31.68-1.95.92-2.22.24-.26.52-.33.69-.33.17 0 .34 0 .49.01.16.01.37-.06.57.43.21.5.73 1.77.79 1.9.06.13.1.28.01.47-.08.19-.13.31-.26.46-.13.15-.28.33-.39.46-.13.14-.27.29-.12.56.15.26.68 1.13 1.46 1.83.99.9 1.84 1.18 2.1 1.31.26.13.41.11.56-.06.15-.17.65-.75.82-1.01.17-.26.34-.22.58-.13.24.09 1.53.72 1.79.85.26.13.43.19.5.3.06.11.06.64-.16 1.25z"/></svg> Agendar Demonstração</button>
+            <a href="#features" class="btn btn-outline">Ver Como Funciona</a>
+          </div>
+          <div class="flex gap-lg text-small" style="color: var(--text-body);">
+            <span>✓ Automação Ultra Personalizada</span>
+            <span>✓ Setup em 1 a 7 dias</span>
+            <span>✓ Suporte em português</span>
+          </div>
+        </div>
+        
+        <div class="hero-visual reveal reveal-right relative" style="position: relative; height: 750px; display: flex; align-items: center; justify-content: center; padding-top: 40px;">
+          
+          <!-- Animated Mouse Cursor -->
+          <svg class="animated-cursor" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 2.85986L20.4418 10.3642C21.666 10.9224 21.6706 12.6565 20.4496 13.2223L13.7846 16.3117C13.4357 16.4735 13.1506 16.7441 12.9774 17.0864L9.62083 23.7143C9.01168 24.9171 7.27961 24.8727 6.74103 23.642L4 2.85986Z" fill="#1a1a1a" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+
+          
+
+          <!-- NEW IPHONE MOCKUP (DARK/OLIVE) -->
+          <div class="iphone-mockup animate-float">
+            
+            <div class="wa-chat-header">
+              <div style="width: 36px; height: 36px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 4px; flex-shrink: 0;">
+                <img src="assets/images/ebot_icon.avif" alt="Ê-Bot Clinical" style="width: 100%; height: 100%; object-fit: contain;">
+              </div>
+              <div>
+                <div style="font-weight: 600; font-size: 0.9rem;">Clínica Ê-Bot Saúde</div>
+                <div style="font-size: 0.7rem; opacity: 0.8; color: #88a72f;">Online agora</div>
+              </div>
+            </div>
+            
+            <div class="wa-chat-body" style="position: relative;">
+              <!-- Wrapper moves up as conversation gets longer -->
+              <div class="wa-message-wrapper">
+                
+                
+                <!-- Msg 1 (Bot) -->
+                <div class="wa-bubble wa-received chat-msg-1">
+                  Olá! Sou o Ê-Bot Clinical. Como posso te ajudar hoje?
+                  <span class="wa-time">10:00</span>
+                </div>
+                
+                <div class="typing-indicator wa-typing-user" style="display: none;"><span></span><span></span><span></span></div>
+
+                <!-- Msg 2 (User) -->
+                <div class="wa-bubble wa-sent chat-msg-2">
+                  Oi! Fui ao PS ontem e não estou entendendo a letra do médico nesta receita. Pode me ajudar?
+                  <span class="wa-time">10:01</span>
+                </div>
+                
+                <div class="typing-indicator wa-typing-bot" style="display: none;"><span></span><span></span><span></span></div>
+
+                <!-- Msg 3 (Bot requests photo) -->
+                <div class="wa-bubble wa-received chat-msg-3">
+                  Sem problemas. Me envie uma foto ou o arquivo da receita. Nossa IA fará a leitura e te ajudará na hora.
+                  <span class="wa-time">10:01</span>
+                </div>
+                
+                <div class="typing-indicator wa-typing-user" style="display: none;"><span></span><span></span><span></span></div>
+
+                <!-- Msg 4 (User PDF) -->
+                <div class="wa-bubble wa-sent chat-msg-4" style="padding: 0.4rem; background: #E8F2D0;">
+                  <div class="wa-pdf-doc">
+                    <div class="wa-pdf-icon">PDF</div>
+                    <div class="wa-pdf-details">
+                      <div class="wa-pdf-name">receita_medica.pdf</div>
+                      <div class="wa-pdf-size">1.2 MB • Documento</div>
+                    </div>
+                  </div>
+                  <span class="wa-time" style="padding-right: 0.4rem;">10:02</span>
+                </div>
+                
+                <div class="typing-indicator wa-typing-bot" style="display: none;"><span></span><span></span><span></span></div>
+                
+                <!-- Msg 5 (Bot Image + Info) -->
+                <div class="wa-bubble wa-received chat-msg-5" style="padding: 0.4rem;">
+                  <img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=300&q=80" style="width: 100%; height: 110px; object-fit: cover; border-radius: 8px; margin-bottom: 0.5rem;" alt="Caixa de Remédio">
+                  <div style="padding: 0 0.4rem;">
+                    <strong style="color: #759226;">Leitura concluída ✓</strong><br>
+                    O medicamento receitado é a <strong>Amoxicilina 500mg</strong>.<br>
+                    <strong>Posologia:</strong> Tomar 1 cápsula a cada 8h, durante 7 dias.
+                    <span class="wa-time">10:02</span>
+                  </div>
+                </div>
+
+                <div class="typing-indicator wa-typing-bot" style="display: none;"><span></span><span></span><span></span></div>
+                
+                <!-- Msg 6 (Bot Location) -->
+                <div class="wa-bubble wa-received chat-msg-6">
+                  Verifiquei no sistema e há estoque na <strong>Farmácia São João</strong> (a 400m de você).<br>
+                  <div style="display: flex; align-items: center; gap: 6px; margin-top: 8px; color: #3c4844; font-weight: 700; background: rgba(0,0,0,0.05); padding: 8px; border-radius: 6px;">
+                    📍 Abrir Rota no Mapa
+                  </div>
+                  <span class="wa-time">10:02</span>
+                </div>
+
+                <div class="typing-indicator wa-typing-bot" style="display: none;"><span></span><span></span><span></span></div>
+                
+                <!-- Msg 7 (Bot Reminder Upsell) -->
+                <div class="wa-bubble wa-received chat-msg-7" style="border: 1px solid rgba(117,146,38,0.3);">
+                  Deseja que eu agende lembretes gratuitos via WhatsApp para você não esquecer de tomar o remédio nos horários corretos? ⏰
+                  <div style="display: flex; gap: 0.5rem; margin-top: 0.75rem;">
+                    <button class="auto-click" style="flex: 1; padding: 6px; border-radius: 6px; font-weight: 600; font-size: 0.75rem; border: 1px solid #759226; color: #759226; background: transparent;">Sim, agendar</button>
+                    <button style="flex: 1; padding: 6px; background: #eee; color: #555; border-radius: 6px; font-weight: 600; font-size: 0.75rem; border: none;">Não</button>
+                  </div>
+                  <span class="wa-time">10:03</span>
+                </div>
+
+                <!-- Msg 8 (User clicks Yes - Simulated) -->
+                <div class="wa-bubble wa-sent chat-msg-8">
+                  Sim, agendar
+                  <span class="wa-time">10:03</span>
+                </div>
+
+                <div class="typing-indicator wa-typing-bot" style="display: none;"><span></span><span></span><span></span></div>
+
+                <!-- Msg 9 (Bot Confirmation & End) -->
+                <div class="wa-bubble wa-received chat-msg-9" style="background: #E8F2D0; border: 1px solid rgba(117, 146, 38, 0.4);">
+                  <strong>Tudo certo! 💚</strong><br>
+                  Acabei de ativar seus alarmes. Te mandarei uma mensagem a cada 8h. Melhoras!
+                  <span class="wa-time">10:03</span>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          
+          <!-- Dynamic Floating Elements (Minimalist / Solid SVGs) -->
+          <div class="glass-card float-hover" style="position: absolute; top: 15%; left: -60px; width: auto; padding: 1rem 1.5rem; z-index: 3; animation: float 5s ease-in-out infinite 0.5s; border: 1px solid rgba(0,0,0,0.05); display: flex; gap: 1rem; align-items: center;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#759226" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+            <div>
+              <div style="font-weight: 700; font-size: 0.85rem; color: #3c4844;">IA Generativa</div>
+              <div style="font-size: 0.7rem; color: var(--text-body);">Respostas Autônomas</div>
+            </div>
+          </div>
+
+          <div class="glass-card float-hover" style="position: absolute; bottom: 15%; right: -40px; width: auto; padding: 1rem 1.5rem; z-index: 3; animation: float 6s ease-in-out infinite 1.2s; border: 1px solid rgba(0,0,0,0.05); display: flex; gap: 1rem; align-items: center;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3c4844" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            <div>
+              <div style="font-weight: 700; font-size: 0.85rem; color: #3c4844;">Proteção LGPD</div>
+              <div style="font-size: 0.7rem; color: var(--text-body);">Dados Criptografados</div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- CLIENT LOGOS -->
+    <section class="section section-gray" style="padding: 4rem 0; border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); overflow: hidden; width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw;">
+      <div class="text-center reveal" style="width: 100%;">
+        <p class="text-micro" style="margin-bottom: 2.5rem; color: var(--text-body);">Empresas e Parceiros que confiam na Ê-Bot</p>
+        
+        <div class="marquee-container">
+          <div class="marquee-track">
+            
+            <!-- First Set -->
+            <div class="marquee-items">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg" alt="Meta">
+              <img src="./assets/images/logos/sebrae.webp" alt="Sebrae">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg" alt="AWS">
+              <img src="./assets/images/logos/plug_and_play.webp" alt="Plug and Play">
+              <img src="./assets/images/logos/campus_mobile.webp" alt="Campus Mobile">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg" alt="Stripe">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/HubSpot_Logo.svg" alt="HubSpot">
+            </div>
+
+            <!-- Second Set (Duplicate for Infinite Scroll) -->
+            <div class="marquee-items" aria-hidden="true">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg" alt="Meta">
+              <img src="./assets/images/logos/sebrae.webp" alt="Sebrae">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg" alt="AWS">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Zendesk_logo.svg" alt="Zendesk">
+              <img src="./assets/images/logos/campus_mobile.webp" alt="campus_mobile">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg" alt="Stripe">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/HubSpot_Logo.svg" alt="HubSpot">
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS SECTION -->
+    <section class="section section-gray">
+      <div class="container">
+        <div class="grid grid-4 chart-container reveal">
+          <div class="glass-card text-center stagger-1">
+            <div style="font-size: 3.5rem; font-weight: 900; background: linear-gradient(135deg, var(--primary), #2ecc71); -webkit-background-clip: text; -webkit-text-fill-color: transparent;" class="counter-value" data-end="5000" data-suffix="+">0</div>
+            <div style="color: var(--text-body); font-weight: 500;">Empresas Ativas</div>
+          </div>
+          <div class="glass-card text-center stagger-2">
+            <div style="font-size: 3.5rem; font-weight: 900; background: linear-gradient(135deg, var(--primary), #2ecc71); -webkit-background-clip: text; -webkit-text-fill-color: transparent;" class="counter-value" data-end="4" data-suffix="M+">0</div>
+            <div style="color: var(--text-body); font-weight: 500;">Mensagens/mês</div>
+          </div>
+          <div class="glass-card text-center stagger-3">
+            <div style="font-size: 3.5rem; font-weight: 900; background: linear-gradient(135deg, var(--primary), #2ecc71); -webkit-background-clip: text; -webkit-text-fill-color: transparent;" class="counter-value" data-prefix="-" data-end="50" data-suffix="%">0</div>
+            <div style="color: var(--text-body); font-weight: 500;">Redução de Custos / Tempo Média</div>
+          </div>
+          <div class="glass-card text-center stagger-4">
+            <div style="font-size: 3.5rem; font-weight: 900; background: linear-gradient(135deg, var(--primary), #2ecc71); -webkit-background-clip: text; -webkit-text-fill-color: transparent;" class="counter-value" data-end="98" data-suffix="%">0</div>
+            <div style="color: var(--text-body); font-weight: 500;">Aprovação dos Usuários</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- POR QUE ESCOLHER -->
+    <section class="section section-light chart-container">
+      <div class="container">
+        <div class="text-center reveal" style="margin-bottom: var(--space-xl);">
+          <h2 class="h2" style="margin-bottom: 1rem;">Por Que Escolher a <span class="highlight-text">Ê-Bot</span></h2>
+          <p class="body-large">Dados reais que comprovam a transformação digital com IA</p>
+        </div>
+
+        <div class="grid grid-4" style="margin-bottom: 4rem;">
+          <div class="glass-card text-center reveal stagger-1">
+            <div class="circle-progress-container">
+              <svg viewBox="0 0 100 100" width="120" height="120" style="transform: rotate(-90deg);">
+                <circle cx="50" cy="50" r="45" class="circle-progress-bg"/>
+                <circle cx="50" cy="50" r="45" class="circle-progress-bar" data-percent="87"/>
+              </svg>
+              <div class="circle-text"><span class="counter-value" data-end="87" data-suffix="%">0</span></div>
+            </div>
+            <p class="text-small" style="margin-bottom: 0.5rem;">Aumento significativo em eficiência operacional</p>
+            <span style="font-size: 10px; font-style: italic; color: #999;">Fonte: McKinsey Global Institute 2024</span>
+          </div>
+
+          <div class="glass-card text-center reveal stagger-2">
+            <div class="bar-chart-container">
+              <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+            </div>
+            <h3 class="h3 text-primary"><span class="counter-value" data-end="67" data-suffix="%">0</span></h3>
+            <p class="text-small" style="margin-bottom: 0.5rem;">Redução no tempo de resposta com automação</p>
+            <span style="font-size: 10px; font-style: italic; color: #999;">Fonte: Gartner 2024</span>
+          </div>
+
+          <div class="glass-card text-center reveal stagger-3">
+            <div class="line-graph-container">
+              <svg viewBox="0 0 100 50" width="100%" height="100%">
+                <path d="M 10 40 Q 30 10 50 30 T 90 10" class="line-path" />
+                <circle cx="90" cy="10" class="line-point" />
+              </svg>
+            </div>
+            <h3 class="h3 text-primary">3.5x</h3>
+            <p class="text-small" style="margin-bottom: 0.5rem;">ROI médio em 12 meses com implementação de IA</p>
+            <span style="font-size: 10px; font-style: italic; color: #999;">Fonte: Forrester Research 2024</span>
+          </div>
+
+          <div class="glass-card text-center reveal stagger-4">
+            <div class="donut-chart" style="--angle: 270deg;">
+              <div class="donut-inner"></div>
+              <div class="donut-text"><span class="counter-value" data-end="75" data-suffix="%">0</span></div>
+            </div>
+            <p class="text-small" style="margin-bottom: 0.5rem;">Consideram IA essencial para o futuro</p>
+            <span style="font-size: 10px; font-style: italic; color: #999;">Fonte: PwC Digital Trends 2024</span>
+          </div>
+        </div>
+
+        <!-- Antes / Depois -->
+        <div class="glass-panel reveal" style="border-radius: var(--radius-lg); overflow: hidden;">
+          <div class="grid grid-2" style="gap: 0;">
+            <div style="padding: 3rem; background: rgba(0,0,0,0.02);">
+              <h3 class="h3" style="color: var(--text-body); margin-bottom: 1.5rem;">Antes da Ê-Bot</h3>
+              <ul class="checklist checklist-negative" style="opacity: 0.7;">
+                <li>Tempo de resposta: 15+ minutos</li>
+                <li>Taxa de conversão: 12%</li>
+                <li>Custo por atendimento: Alto</li>
+                <li>Satisfação do cliente: 65%</li>
+              </ul>
+            </div>
+            <div style="padding: 3rem; background: var(--primary-light);">
+              <h3 class="h3 text-primary" style="margin-bottom: 1.5rem;">Depois da Ê-Bot</h3>
+              <ul class="checklist">
+                <li>Tempo de resposta: &lt; 2 minutos</li>
+                <li>Taxa de conversão: 34%</li>
+                <li>Custo por atendimento: -50%</li>
+                <li>Satisfação do cliente: 98%</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTEGRATIONS HUB -->
+    <section class="section section-gray bg-grid-pattern" style="overflow: hidden;">
+      <div class="container text-center reveal">
+        <h2 class="h2" style="margin-bottom: 1rem;">Integre com as <span class="highlight-text">Ferramentas</span> que Você Já Usa</h2>
+        <p class="body-large" style="margin-bottom: 4rem;">Personalize sua solução conectando todo seu ecossistema digital</p>
+        
+        <div class="orbit-container reveal" style="margin-bottom: 6rem;">
+          <div class="orbit-ring"></div>
+          <div class="hub-center">
+            <img src="assets/images/ebot_icon.avif" alt="Ê-Bot Integrations" style="width: 120px; height: 120px; object-fit: contain;">
+          </div>
+          <!-- Data Particles shooting to integrations -->
+          
+          <!-- Orbit Icons Placeholders -->
+          <div class="orbit-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"></div>
+          <div class="orbit-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Salesforce.com_logo.svg" alt="Salesforce"></div>
+          <div class="orbit-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Slack_icon_2019.svg" alt="Slack"></div>
+          <div class="orbit-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/HubSpot_Logo.svg" alt="HubSpot"></div>
+          <div class="orbit-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" alt="Gmail"></div>
+          <div class="orbit-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg" alt="OpenAI"></div>
+          <div class="orbit-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/f/fd/Zapier_logo.svg" alt="Zapier"></div>
+          <div class="orbit-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg" alt="Stripe"></div>
+        </div>
+
+        <div class="grid grid-3 reveal">
+          <div class="glass-card">
+            <div style="font-size: 2rem; margin-bottom: 1rem;">🔧</div>
+            <h3 class="h3" style="margin-bottom: 0.5rem; font-size: 1.25rem;">Workflows Customizados</h3>
+            <p class="text-small">Configure fluxos específicos para seu negócio com facilidade e rapidez.</p>
+          </div>
+          <div class="glass-card">
+            <div style="font-size: 2rem; margin-bottom: 1rem;">🔌</div>
+            <h3 class="h3" style="margin-bottom: 0.5rem; font-size: 1.25rem;">API Aberta</h3>
+            <p class="text-small">Integre com qualquer sistema de gestão ou ERP via nossa REST API completa.</p>
+          </div>
+          <div class="glass-card">
+            <div style="font-size: 2rem; margin-bottom: 1rem;">⚡</div>
+            <h3 class="h3" style="margin-bottom: 0.5rem; font-size: 1.25rem;">Webhooks em Tempo Real</h3>
+            <p class="text-small">Receba notificações instantâneas de eventos ocorrendo na sua operação.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ALTERNATING FEATURES -->
+    <section class="section section-light" id="features">
+      <div class="container">
+        
+        <!-- Feature 1 -->
+        <div class="grid grid-2 reveal items-center" style="margin-bottom: var(--space-xxl);">
+          <div class="glass-card float-hover dash-wrapper">
+  <div class="dash-ui">
+    <div class="dash-sidebar">
+      <div class="dash-logo"></div>
+      <div class="dash-menu-item active"></div>
+      <div class="dash-menu-item"></div>
+      <div class="dash-menu-item"></div>
+    </div>
+    <div class="dash-main">
+      <div class="dash-header">
+        <div class="dash-title"></div>
+        <div class="dash-user"></div>
+      </div>
+      <div class="dash-cards">
+        <div class="dash-card">
+          <div class="dash-card-icon"></div>
+          <div class="dash-card-value"></div>
+        </div>
+        <div class="dash-card">
+          <div class="dash-card-icon"></div>
+          <div class="dash-card-value"></div>
+        </div>
+        <div class="dash-card">
+          <div class="dash-card-icon"></div>
+          <div class="dash-card-value"></div>
+        </div>
+      </div>
+      <div class="dash-chart-area">
+        <div class="dash-chart-bars">
+          <div class="dash-bar b1"></div>
+          <div class="dash-bar b2"></div>
+          <div class="dash-bar b3"></div>
+          <div class="dash-bar b4"></div>
+          <div class="dash-bar b5"></div>
+        </div>
+        <svg class="dash-line-chart" viewBox="0 0 100 40" preserveAspectRatio="none">
+          <path d="M0 30 Q 20 10, 40 25 T 80 15 T 100 5" fill="none" stroke="#87a630" stroke-width="2" class="dash-path"></path>
+          <path d="M0 30 Q 20 10, 40 25 T 80 15 T 100 5 L 100 40 L 0 40 Z" fill="rgba(135, 166, 48, 0.2)" class="dash-path-fill"></path>
+        </svg>
+      </div>
+    </div>
+    <!-- Cursor do Mac -->
+    <svg class="mac-cursor" viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5.5 2.5L19.5 10.5L12.5 12.5L16.5 20.5L13.5 22.5L9.5 14.5L3.5 18.5V2.5Z" fill="#3d4945" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+    </svg>
+  </div>
+</div>
+
+              
+          <div style="padding: 2rem;">
+            <span class="badge">📊 Gestão Completa</span>
+            <h2 class="h2" style="margin-bottom: 1.5rem;">Gerencie toda sua operação <span class="highlight-text">em tempo real</span></h2>
+            <p class="body-large" style="margin-bottom: 1.5rem;">Nosso dashboard centralizado permite que você acompanhe todas as métricas, controle o fluxo de conversas e tome decisões mais inteligentes baseadas em dados atualizados.</p>
+            <ul class="checklist" style="margin-bottom: 2rem;">
+              <li>Dashboard unificado (Kanban dinâmico)</li>
+              <li>Métricas ao vivo da equipe</li>
+              <li>Relatórios automáticos</li>
+              <li>Múltiplas conexões simultâneas</li>
+            </ul>
+            <a href="produtos.html" class="text-primary" style="font-weight: 600;">Explorar recursos →</a>
+          </div>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="grid grid-2 reveal items-center" style="margin-bottom: var(--space-xxl);">
+          <div style="padding: 2rem; order: 2;">
+            <span class="badge">🤖 Automação IA</span>
+            <h2 class="h2" style="margin-bottom: 1.5rem;">Responda dúvidas <span class="highlight-text">em segundos</span></h2>
+            <p class="body-large" style="margin-bottom: 1.5rem;">Utilizamos as melhores IAs do mundo para oferecer um atendimento humanizado, acessível por áudio e texto, entendendo exatamente as necessidades do usuário e melhorando a conversão.</p>
+            <ul class="checklist">
+              <li>Respostas em áudio e texto natural</li>
+              <li>Disparos de WhatsApp Marketing</li>
+              <li>Identificação de intenção do usuário</li>
+              <li>Triagem e roteamento inteligente</li>
+            </ul>
+          </div>
+          <div class="glass-card float-hover chat-wrapper" style="order: 1;">
+  <!-- Integração WhatsApp e Ebot (Background) -->
+  <div class="integration-bg">
+    <!-- Linha de conexão com z-index menor passa por BAIXO dos ícones -->
+    <svg class="connection-line" viewBox="0 0 100 100" preserveAspectRatio="none">
+      <path d="M 13,18 C 40,18 60,82 87,82" fill="none" stroke="rgba(135, 166, 48, 0.2)" stroke-width="1.5" />
+      <path d="M 13,18 C 40,18 60,82 87,82" fill="none" stroke="#87a630" stroke-width="1.5" class="flowing-data" />
+    </svg>
+
+    <div class="wpp-icon float-icon">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="#87a630"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.28 14.3c-.22.61-1.28 1.15-1.78 1.22-.43.06-1.02.13-3.23-.79-2.66-1.11-4.38-3.83-4.52-4.01-.13-.19-1.08-1.44-1.08-2.75 0-1.31.68-1.95.92-2.22.24-.26.52-.33.69-.33.17 0 .34 0 .49.01.16.01.37-.06.57.43.21.5.73 1.77.79 1.9.06.13.1.28.01.47-.08.19-.13.31-.26.46-.13.15-.28.33-.39.46-.13.14-.27.29-.12.56.15.26.68 1.13 1.46 1.83.99.9 1.84 1.18 2.1 1.31.26.13.41.11.56-.06.15-.17.65-.75.82-1.01.17-.26.34-.22.58-.13.24.09 1.53.72 1.79.85.26.13.43.19.5.3.06.11.06.64-.16 1.25z"/></svg>
+    </div>
+    <div class="ebot-icon float-icon">
+      <img src="assets/images/ebot_icon.avif" alt="ebot" style="width: 48px; height: 48px; object-fit: contain;">
+    </div>
+  </div>
+
+  <div class="chat-ui">
+    <div class="chat-header">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span class="status-dot"></span> Atendimento AI
+      </div>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+    </div>
+    <div class="chat-body">
+      <div class="msg-bubble user m1">Quero um orçamento de automação.</div>
+      <div class="msg-bubble ai m2">Ótimo! Para passarmos os valores com precisão, qual é o seu volume atual de atendimentos por mês?</div>
+      
+      <!-- Mensagem de Áudio -->
+      <div class="msg-bubble user m3 audio-msg">
+        <button class="play-btn">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <div class="audio-wave">
+          <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+          <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        </div>
+        <span class="audio-time">0:04</span>
+      </div>
+      
+      <div class="msg-bubble ai m4 typing">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      </div>
+      <div class="msg-bubble ai m5">Perfeito! Cerca de 5.000 chats se encaixa no nosso plano Pro. Vou te enviar os detalhes.</div>
+    </div>
+  </div>
+</div>
+  </div>
+
+      </div>
+    </section>
+
+    
+    <!-- PRODUCTS / PRICING -->
+    <section class="section section-gray bg-grid-pattern">
+      
+      <div class="container" style="max-width: 1650px;">
+        <div class="text-center reveal" style="margin-bottom: var(--space-xl);">
+          <h2 class="h2" style="margin-bottom: 1rem;">Nosso <span class="highlight-text">Ecossistema</span></h2>
+          <p class="body-large">Escolha a solução ideal para transformar seu negócio</p>
+        </div>
+
+                <div class="ecosystem-layout">
+          <!-- Left Column -->
+          <div class="ecosystem-col ecosystem-left">
+            <!-- Produto 1 (API) -->
+            <div class="glass-liquid-card ecosystem-card float-hover reveal stagger-1">
+              <div class="flashlight-glow"></div>
+              <div class="card-badge badge-orange">MAIS POPULAR PARA DEVS</div>
+              <div class="tool-hover-overlay">
+                <div class="tool-animation-container">
+                  <div class="pulse-ring delay-0"></div>
+                  <div class="pulse-ring delay-1"></div>
+                  <div class="pulse-ring delay-2"></div>
+                  <img src="assets/images/ebot_icon.avif" alt="Ê-Bot API" class="tool-anim-icon">
+                </div>
+                <div class="tool-anim-name">Ê-Bot API</div>
+              </div>
+              <div class="card-content">
+                <div class="card-icon-wrapper">
+                  <img src="assets/images/ebot_icon.avif" alt="Ê-Bot API" class="card-logo">
+                </div>
+                <h3 class="h3 card-title">Ê-Bot API</h3>
+                <p class="text-small card-desc">Mensageria e Disparos Transacionais</p>
+                <ul class="checklist text-small card-list">
+                  <li>Disparos automáticos via WhatsApp</li>
+                  <li>Lembretes e cobranças automáticas</li>
+                  <li>Integração via Webhooks</li>
+                </ul>
+                <a href="ebot-api.html" class="btn btn-neon w-100">Ver detalhes da API</a>
+              </div>
+            </div>
+            
+            <!-- Produto 2 (Panel) -->
+            <div class="glass-liquid-card ecosystem-card float-hover reveal stagger-2">
+              <div class="flashlight-glow"></div>
+              <div class="card-badge badge-orange">100% PERSONALIZÁVEL</div>
+              <div class="tool-hover-overlay">
+                <div class="tool-animation-container">
+                  <div class="pulse-ring delay-0"></div>
+                  <div class="pulse-ring delay-1"></div>
+                  <div class="pulse-ring delay-2"></div>
+                  <img src="assets/images/ebot_icon.avif" alt="Ê-Bot Panel" class="tool-anim-icon">
+                </div>
+                <div class="tool-anim-name">Ê-Bot Panel</div>
+              </div>
+              <div class="card-content">
+                <div class="card-icon-wrapper">
+                  <img src="assets/images/ebot_icon.avif" alt="Ê-Bot Panel" class="card-logo">
+                </div>
+                <h3 class="h3 card-title">Ê-Bot Panel</h3>
+                <p class="text-small card-desc">Central operacional de atendimento, vendas e CRM</p>
+                <ul class="checklist text-small card-list">
+                  <li>Multiusuários e múltiplas filas</li>
+                  <li>CRM e histórico completo</li>
+                  <li>Atendimento humano + automação IA</li>
+                </ul>
+                <a href="ebot-panel.html" class="btn btn-neon w-100">Ver detalhes do Panel</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Center Column (iPhone) -->
+          <div class="ecosystem-col ecosystem-center reveal stagger-3">
+            <div class="iphone-interactive" id="interactive-iphone">
+              <div class="iphone-device">
+                <div class="iphone-notch"></div>
+                <div class="iphone-screen">
+                  <video src="assets/videos/video_produtos.mp4" autoplay loop muted playsinline class="iphone-video-content"></video>
+                <div class="glass-play-btn trigger-video-modal">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column -->
+          <div class="ecosystem-col ecosystem-right">
+            <!-- Produto 3 (Clinical) -->
+            <div class="glass-liquid-card ecosystem-card float-hover reveal stagger-4">
+              <div class="flashlight-glow"></div>
+              <div class="card-badge badge-orange">POPULAR PARA CLÍNICAS</div>
+              <div class="tool-hover-overlay">
+                <div class="tool-animation-container">
+                  <div class="pulse-ring delay-0"></div>
+                  <div class="pulse-ring delay-1"></div>
+                  <div class="pulse-ring delay-2"></div>
+                  <img src="assets/images/ebot_icon.avif" alt="Ê-Bot Clinical" class="tool-anim-icon">
+                </div>
+                <div class="tool-anim-name">Ê-Bot Clinical</div>
+              </div>
+              <div class="card-content">
+                <div class="card-icon-wrapper">
+                  <img src="assets/images/ebot_icon.avif" alt="Ê-Bot Clinical" class="card-logo">
+                </div>
+                <h3 class="h3 card-title">Ê-Bot Clinical</h3>
+                <p class="text-small card-desc">Especializada para o setor de saúde</p>
+                <ul class="checklist text-small card-list">
+                  <li>Agendamentos Inteligentes</li>
+                  <li>Redução de faltas (No-show)</li>
+                  <li>Pesquisa de Medicamentos por Foto</li>
+                </ul>
+                <a href="ebot-clinical.html" class="btn btn-neon w-100">Ver detalhes do Clinical</a>
+              </div>
+            </div>
+
+            <!-- Produto 4 (Explorer) -->
+            <div class="glass-liquid-card ecosystem-card float-hover reveal stagger-5">
+              <div class="flashlight-glow"></div>
+              <div class="tool-hover-overlay">
+                <div class="tool-animation-container">
+                  <div class="pulse-ring delay-0"></div>
+                  <div class="pulse-ring delay-1"></div>
+                  <div class="pulse-ring delay-2"></div>
+                  <img src="assets/images/ebot_icon.avif" alt="Ê-Bot Explorer" class="tool-anim-icon">
+                </div>
+                <div class="tool-anim-name">Ê-Bot Explorer</div>
+              </div>
+              <div class="card-content">
+                <div class="card-icon-wrapper">
+                  <img src="assets/images/ebot_icon.avif" alt="Ê-Bot Explorer" class="card-logo">
+                </div>
+                <h3 class="h3 card-title">Ê-Bot Explorer</h3>
+                <p class="text-small card-desc">Atendimento Inteligente ao Turista</p>
+                <ul class="checklist text-small card-list">
+                  <li>IA especialista em turismo local</li>
+                  <li>Totem interativo por conversa</li>
+                  <li>Acesso rápido via QR Code</li>
+                </ul>
+                <a href="ebot-explorer.html" class="btn btn-neon w-100">Ver detalhes do Explorer</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+    <!-- TESTIMONIALS -->
+    <section class="section section-gray">
+      <div class="container">
+        <div class="text-center reveal" style="margin-bottom: var(--space-xl);">
+          <h2 class="h2" style="margin-bottom: 1rem;">O Que Dizem <span class="highlight-text">Nossos Clientes</span></h2>
+          <p class="body-large">Histórias reais de transformação com a Ê-Bot</p>
+        </div>
+        
+        <div class="grid grid-4 text-left reveal">
+          <!-- Testimonial 1 -->
+          <div class="glass-card" style="padding: 2rem; position: relative; display: flex; flex-direction: column;">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+              <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Client" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;">
+              <div>
+                <div style="font-weight: 700;">Marcos T.</div>
+                <div class="text-small" style="opacity: 0.7;">Gestor Hospitalar</div><div class="text-small" style="color: var(--primary); font-weight: 600; font-size: 0.8rem; margin-top: 0.2rem;">Hospital São Lucas • Saúde</div>
+              </div>
+            </div>
+            <p class="body-large" style="font-style: italic; margin-bottom: 2rem; font-size: 1rem; flex-grow: 1;">"A automatização dos agendamentos reduziu nossas faltas pela metade. A satisfação dos pacientes disparou."</p>
+            
+            <div class="testimonial-badge-container" style="position: relative; display: inline-block;">
+              <div class="card-badge badge-green" style="position: static; cursor: pointer; display: inline-block; margin: 0;">Ê-Bot Clinical</div>
+              <div class="solution-popover">
+                <img src="assets/images/ebot_icon.avif" alt="Ê-Bot" style="width: 32px; height: 32px; margin-bottom: 0.5rem; display: inline-block; object-fit: contain;">
+                <div style="font-weight: 600; font-size: 0.95rem; margin-bottom: 0.8rem; color: var(--text-body);">Quer conhecer essa mesma solução?</div>
+                <a href="ebot-clinical.html" class="btn btn-neon text-small" style="padding: 0.5rem 1rem; width: 100%;">Ver Solução</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Testimonial 2 -->
+          <div class="glass-card" style="padding: 2rem; position: relative; display: flex; flex-direction: column;">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+              <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Client" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;">
+              <div>
+                <div style="font-weight: 700;">Júlia R.</div>
+                <div class="text-small" style="opacity: 0.7;">CTO</div><div class="text-small" style="color: var(--primary); font-weight: 600; font-size: 0.8rem; margin-top: 0.2rem;">TechSolutions • Tecnologia</div>
+              </div>
+            </div>
+            <p class="body-large" style="font-style: italic; margin-bottom: 2rem; font-size: 1rem; flex-grow: 1;">"A documentação da API Aberta é fantástica. Integramos nosso ERP legado em poucos dias sem fricção."</p>
+            
+            <div class="testimonial-badge-container" style="position: relative; display: inline-block;">
+              <div class="card-badge badge-purple" style="position: static; cursor: pointer; display: inline-block; margin: 0;">Ê-Bot API</div>
+              <div class="solution-popover">
+                <img src="assets/images/ebot_icon.avif" alt="Ê-Bot" style="width: 32px; height: 32px; margin-bottom: 0.5rem; display: inline-block; object-fit: contain;">
+                <div style="font-weight: 600; font-size: 0.95rem; margin-bottom: 0.8rem; color: var(--text-body);">Quer conhecer essa mesma solução?</div>
+                <a href="ebot-api.html" class="btn btn-neon text-small" style="padding: 0.5rem 1rem; width: 100%;">Ver Solução</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Testimonial 3 -->
+          <div class="glass-card" style="padding: 2rem; position: relative; display: flex; flex-direction: column;">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+              <img src="https://randomuser.me/api/portraits/men/86.jpg" alt="Client" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;">
+              <div>
+                <div style="font-weight: 700;">Roberto M.</div>
+                <div class="text-small" style="opacity: 0.7;">Coordenador de CX</div><div class="text-small" style="color: var(--primary); font-weight: 600; font-size: 0.8rem; margin-top: 0.2rem;">Varejo Rápido • E-commerce</div>
+              </div>
+            </div>
+            <p class="body-large" style="font-style: italic; margin-bottom: 2rem; font-size: 1rem; flex-grow: 1;">"Temos visão em tempo real da equipe. Misturamos atendimento humano e IA de forma incrivelmente fluida."</p>
+            
+            <div class="testimonial-badge-container" style="position: relative; display: inline-block;">
+              <div class="card-badge badge-orange" style="position: static; cursor: pointer; display: inline-block; margin: 0;">Ê-Bot Panel</div>
+              <div class="solution-popover">
+                <img src="assets/images/ebot_icon.avif" alt="Ê-Bot" style="width: 32px; height: 32px; margin-bottom: 0.5rem; display: inline-block; object-fit: contain;">
+                <div style="font-weight: 600; font-size: 0.95rem; margin-bottom: 0.8rem; color: var(--text-body);">Quer conhecer essa mesma solução?</div>
+                <a href="ebot-panel.html" class="btn btn-neon text-small" style="padding: 0.5rem 1rem; width: 100%;">Ver Solução</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Testimonial 4 -->
+          <div class="glass-card" style="padding: 2rem; position: relative; display: flex; flex-direction: column;">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+              <img src="https://randomuser.me/api/portraits/men/62.jpg" alt="Client" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;">
+              <div>
+                <div style="font-weight: 700;">Carlos E.</div>
+                <div class="text-small" style="opacity: 0.7;">Diretor de Inovação</div><div class="text-small" style="color: var(--primary); font-weight: 600; font-size: 0.8rem; margin-top: 0.2rem;">Grupo Inova • Logística</div>
+              </div>
+            </div>
+            <p class="body-large" style="font-style: italic; margin-bottom: 2rem; font-size: 1rem; flex-grow: 1;">"Precisávamos de fluxos totalmente únicos. A Solução Personalizada revolucionou nossa operação."</p>
+            
+            <div class="testimonial-badge-container" style="position: relative; display: inline-block;">
+              <div class="card-badge" style="position: static; cursor: pointer; display: inline-block; margin: 0; background: rgba(135, 166, 48, 0.1); color: var(--primary); border: 1px solid rgba(135, 166, 48, 0.2);">Personalizada</div>
+              <div class="solution-popover">
+                <img src="assets/images/ebot_icon.avif" alt="Ê-Bot" style="width: 32px; height: 32px; margin-bottom: 0.5rem; display: inline-block; object-fit: contain;">
+                <div style="font-weight: 600; font-size: 0.95rem; margin-bottom: 0.8rem; color: var(--text-body);">Quer conhecer essa mesma solução?</div>
+                <a href="produtos.html" class="btn btn-neon text-small" style="padding: 0.5rem 1rem; width: 100%;">Ver Produtos</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  
+    <!-- AWARDS -->
+    <section class="section section-light">
+      <div class="container text-center reveal">
+        <h2 class="h2" style="margin-bottom: 3rem;">Reconhecimento e <span class="highlight-text">Conquistas Internacionais</span></h2>
+        <div class="grid grid-4 text-left">
+          <div class="glass-card" style="padding: 1.5rem;">
+            <img src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=400&h=400&fit=crop" alt="Silicon Valley" style="width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
+            <div style="font-weight: 700; margin-bottom: 0.5rem;">Plug and Play</div>
+            <p class="text-small">Certificação no Vale do Silício pela principal aceleradora do mundo.</p>
+          </div>
+          <div class="glass-card" style="padding: 1.5rem;">
+            <img src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=400&h=400&fit=crop" alt="Stanford University" style="width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
+            <div style="font-weight: 700; margin-bottom: 0.5rem;">Stanford University</div>
+            <p class="text-small">Imersão no Instituto Lemann, focado em tecnologia e impacto.</p>
+          </div>
+          <div class="glass-card" style="padding: 1.5rem;">
+            <img src="https://images.unsplash.com/photo-1541887089898-0111d5e31db5?w=400&h=400&fit=crop" alt="Mountain View" style="width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
+            <div style="font-weight: 700; margin-bottom: 0.5rem;">Google & LinkedIn</div>
+            <p class="text-small">Programa de imersão de inovação em Mountain View e San Francisco.</p>
+          </div>
+          <div class="glass-card" style="padding: 1.5rem;">
+            <img src="https://images.unsplash.com/photo-1543059080-f9b1272213d5?w=400&h=400&fit=crop" alt="São Paulo" style="width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
+            <div style="font-weight: 700; margin-bottom: 0.5rem;">Campus Mobile</div>
+            <p class="text-small">Vencedores nacionais do maior programa de inovação tecnológica do país.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+    
+    
+    
+    
+    <!-- FINAL CTA -->
+    <section class="section section-dark bg-grid-pattern-dark" style="background: linear-gradient(135deg, var(--dark) 0%, #1a252f 100%); overflow: hidden; margin-top: 6rem; margin-bottom: 0;">
+      <div class="container reveal">
+        <div class="final-cta-container" style="display: flex; align-items: center; justify-content: space-between; gap: 4rem; flex-wrap: wrap;">
+          
+          <div class="final-cta-content" style="flex: 3; min-width: 350px; text-align: left;">
+            <h2 class="h1" style="color: white; margin-bottom: 1.5rem;">Pronto para Transformar Seu Atendimento?</h2>
+            <p class="body-large" style="margin-bottom: 2.5rem; opacity: 0.9;">Junte-se a milhares de empresas, clínicas e prefeituras que já automatizaram e humanizaram seus processos com Ê-Sistemas.</p>
+            <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 1rem;" class="cta-button-wrapper">
+              <button class="trigger-wa-modal btn btn-primary float-hover" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; font-size: 1.25rem; padding: 1rem 2.5rem;"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.28 14.3c-.22.61-1.28 1.15-1.78 1.22-.43.06-1.02.13-3.23-.79-2.66-1.11-4.38-3.83-4.52-4.01-.13-.19-1.08-1.44-1.08-2.75 0-1.31.68-1.95.92-2.22.24-.26.52-.33.69-.33.17 0 .34 0 .49.01.16.01.37-.06.57.43.21.5.73 1.77.79 1.9.06.13.1.28.01.47-.08.19-.13.31-.26.46-.13.15-.28.33-.39.46-.13.14-.27.29-.12.56.15.26.68 1.13 1.46 1.83.99.9 1.84 1.18 2.1 1.31.26.13.41.11.56-.06.15-.17.65-.75.82-1.01.17-.26.34-.22.58-.13.24.09 1.53.72 1.79.85.26.13.43.19.5.3.06.11.06.64-.16 1.25z"/></svg>  Falar com Especialista </button>
+              <div class="text-small" style="opacity: 0.7;">Orçamento personalizado • Setup em 48h • Suporte dedicado</div>
+            </div>
+          </div>
+          
+          <div class="final-cta-robot" style="flex: 0.6; min-width: 280px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; perspective: 1000px;">
+            
+            <div class="robot-icon-container float-hover" style="position: relative; width: 130px; height: 130px; display: flex; align-items: center; justify-content: center; margin-bottom: 2.5rem; z-index: 10;">
+              <!-- Fluid and slower pulse effect matching icon contour -->
+              <img src="assets/images/ebot_icon.avif" alt="" class="pulse-layer">
+              <img src="assets/images/ebot_icon.avif" alt="" class="pulse-layer pulse-layer-2">
+              
+              <!-- Main Icon -->
+              <img src="assets/images/ebot_icon.avif" alt="Ê-Bot" style="position: absolute; width: 100%; height: 100%; object-fit: contain; z-index: 2; filter: drop-shadow(0 25px 35px rgba(0,0,0,0.7));">
+            </div>
+
+            <!-- Chat Container for descending bubbles -->
+            <div id="wa-chat-container" style="position: relative; width: 100%; max-width: 290px; height: 210px; z-index: 2;">
+              <!-- Bubbles injected by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA SCRIPTS & STYLES -->
+    <style>
+      .pulse-layer {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        z-index: 1;
+        animation: smoothPulse 4.5s cubic-bezier(0.25, 0.8, 0.25, 1) infinite;
+        opacity: 0;
+      }
+      .pulse-layer-2 {
+        animation-delay: 2.25s;
+      }
+      
+      @keyframes smoothPulse {
+        0% { transform: scale(0.9); opacity: 0.6; filter: drop-shadow(0 0 15px var(--primary)) blur(0px); }
+        100% { transform: scale(1.7); opacity: 0; filter: drop-shadow(0 0 35px var(--primary)) blur(4px); }
+      }
+      
+      #wa-chat-container .wa-bubble {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: #ffffff;
+        color: #111b21;
+        border-radius: 0 12px 12px 12px;
+        padding: 10px 14px 10px 14px;
+        text-align: left;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        transform-origin: top center;
+        transition: all 0.9s cubic-bezier(0.25, 1, 0.3, 1);
+        will-change: transform, opacity, filter;
+      }
+      
+      #wa-chat-container .wa-bubble::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -10px;
+          width: 0;
+          height: 0;
+          border-top: 0px solid transparent;
+          border-right: 10px solid #ffffff;
+          border-bottom: 14px solid transparent;
+      }
+      
+      #wa-chat-container .wa-time {
+        font-size: 0.68rem;
+        color: #667781;
+        float: right;
+        margin-top: 6px;
+        margin-left: 10px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      #wa-chat-container .wa-check {
+        color: #53bdeb;
+      }
+      
+      /* Chat Scroll States - FINAL CTA */
+      #wa-chat-container .chat-entering {
+        opacity: 0;
+        transform: translateY(-40px) scale(0.95) translateZ(-20px);
+      }
+      #wa-chat-container .chat-active {
+        opacity: 1;
+        transform: translateY(0) scale(1) translateZ(60px);
+        filter: blur(0);
+        z-index: 3;
+        box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.8), 0 20px 30px -5px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255,255,255,0.05);
+      }
+      #wa-chat-container .chat-previous {
+        opacity: 0.55;
+        transform: translateY(90px) scale(0.92) translateZ(10px);
+        filter: blur(1.5px);
+        z-index: 2;
+        box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.5);
+      }
+      #wa-chat-container .chat-leaving {
+        opacity: 0;
+        transform: translateY(165px) scale(0.85) translateZ(-20px);
+        filter: blur(4px);
+        z-index: 1;
+      }
+      
+      @media (max-width: 992px) {
+        .final-cta-container { flex-direction: column; text-align: center; gap: 3rem !important; }
+        .final-cta-content { text-align: center !important; display: flex; flex-direction: column; align-items: center; }
+        .cta-button-wrapper { align-items: center !important; }
+        #wa-chat-container { margin: 0 auto; }
+      }
+    </style>
+    <script>
+      (function() {
+        if(window.finalCtaInitialized) return;
+        window.finalCtaInitialized = true;
+        
+        document.addEventListener('DOMContentLoaded', () => {
+          const messages = [
+            "Sabia que 80% dos clientes preferem respostas imediatas? Clique ao lado!",
+            "Reduza seu tempo de resposta de horas para segundos. É só clicar no botão ali!",
+            "Aumente a satisfação dos clientes com IA 24/7. Fale com um Especialista!",
+            "Não perca mais vendas por demora. O botão ao lado é o primeiro passo para o sucesso."
+          ];
+          
+          const container = document.getElementById('wa-chat-container');
+          if (!container) return;
+          
+          let msgIndex = 0;
+          const displayDuration = 4500;
+          
+          function spawnMessage() {
+            if (!document.getElementById('wa-chat-container')) return;
+            
+            const now = new Date();
+            const timeStr = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+            
+            const bubble = document.createElement('div');
+            bubble.className = 'wa-bubble chat-entering';
+            bubble.innerHTML = `
+               <p style="margin: 0; display: inline; line-height: 1.3; font-size: 0.85rem;">${messages[msgIndex]}</p>
+               <div class="wa-time">
+                 <span>${timeStr}</span>
+                 <svg class="wa-check" viewBox="0 0 16 15" width="16" height="15"><path fill="currentColor" d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.879a.32.32 0 0 1-.484.033l-.358-.325a.319.319 0 0 0-.484.032l-.378.483a.418.418 0 0 0 .036.541l1.32 1.266c.143.14.361.125.484-.033l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.879a.32.32 0 0 1-.484.033L1.891 7.769a.366.366 0 0 0-.515.006l-.423.433a.364.364 0 0 0 .006.514l3.258 3.185c.143.14.361.125.484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z"></path></svg>
+               </div>
+               <div style="clear: both;"></div>
+            `;
+            
+            container.prepend(bubble);
+            
+            // force reflow to trigger CSS transitions
+            void bubble.offsetWidth;
+            
+            bubble.classList.remove('chat-entering');
+            bubble.classList.add('chat-active');
+            
+            // shift previous bubbles down
+            const allBubbles = container.querySelectorAll('.wa-bubble');
+            allBubbles.forEach((b, i) => {
+               if (i === 1) {
+                   b.className = 'wa-bubble chat-previous';
+               } else if (i === 2) {
+                   b.className = 'wa-bubble chat-leaving';
+               } else if (i > 2) {
+                   // clean up DOM
+                   setTimeout(() => { if (b.parentNode) b.remove() }, 1000);
+               }
+            });
+            
+            msgIndex = (msgIndex + 1) % messages.length;
+            setTimeout(spawnMessage, displayDuration);
+          }
+          
+          // Initial delay to let the page load
+          setTimeout(spawnMessage, 500);
+        });
+      })();
+    </script>
+
+  </main>
+
+  <!-- FOOTER -->
+  
+  
+
+
+    <footer style="background: var(--dark-header); color: #999; border-top: 1px solid rgba(255,255,255,0.05); padding: 4rem 0 2rem; margin-top: 0;">
+    <div class="container">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 3rem;">
+        
+        <div style="flex: 1.5; min-width: 250px;">
+          <div style="margin-bottom: 1.5rem; display: flex; align-items: center;">
+            <img src="assets/images/esistemas_logo.avif" alt="Ê-Sistemas Corporativo" style="height: 48px; width: auto; object-fit: contain;">
+          </div>
+          <p class="text-small" style="margin-bottom: 1.5rem; max-width: 300px; line-height: 1.6;">Transformando tecnologia em conexões reais através de inteligência artificial focada em eficiência, resultados e humanização.</p>
+        </div>
+        
+        <div style="flex: 1; min-width: 150px;">
+          <h4 style="color: white; margin-bottom: 1.5rem; font-weight: 600; font-size: 1.125rem;">Produtos</h4>
+          <ul style="display: flex; flex-direction: column; gap: 0.75rem;" class="text-small">
+            <li><a href="ebot-api.html" style="transition: color 0.2s;">Ê-Bot API</a></li>
+            <li><a href="ebot-panel.html" style="transition: color 0.2s;">Ê-Bot Panel</a></li>
+            <li><a href="ebot-clinical.html" style="transition: color 0.2s;">Ê-Bot Clinical</a></li>
+            <li><a href="ebot-explorer.html" style="transition: color 0.2s;">Ê-Bot Explorer</a></li>
+          </ul>
+        </div>
+
+        <div style="flex: 1; min-width: 150px;">
+          <h4 style="color: white; margin-bottom: 1.5rem; font-weight: 600; font-size: 1.125rem;">A Empresa</h4>
+          <ul style="display: flex; flex-direction: column; gap: 0.75rem;" class="text-small">
+            <li><a href="nossa_historia.html" style="transition: color 0.2s;">Nossa História</a></li>
+            <li><a href="nossa_historia.html#premios" style="transition: color 0.2s;">Premiações e Imersões</a></li>
+            <li><a href="contato.html" style="transition: color 0.2s;">Fale Conosco</a></li>
+          </ul>
+        </div>
+
+        <div style="flex: 1; min-width: 150px;">
+          <h4 style="color: white; margin-bottom: 1.5rem; font-weight: 600; font-size: 1.125rem;">Legal e Privacidade</h4>
+          <ul style="display: flex; flex-direction: column; gap: 0.75rem;" class="text-small">
+            <li><a href="privacidade.html" style="transition: color 0.2s;">Aviso de Privacidade</a></li>
+            <li><a href="privacidade.html" style="transition: color 0.2s;">Conformidade LGPD</a></li>
+            <li><a href="privacidade.html" style="transition: color 0.2s;">Termos de Uso</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 4rem; padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <div style="font-size: 0.875rem;">&copy; 2024-2025 Ê-Sistemas. Todos os direitos reservados.</div>
+        <div style="font-size: 0.875rem; display: flex; gap: 1.5rem;">
+          <span>(46) 9 9113-0554</span>
+          <span>ebot@esistemas.dev.br</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/utils.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/scroll-animations.js"></script>
+  <script src="js/charts-animations.js"></script>
+  <script src="js/integration-hub.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/chat-animation.js"></script>
+
+  <!-- ECOSYSTEM SCRIPTS -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Flashlight effect for ecosystem cards
+      const cards = document.querySelectorAll(".glass-liquid-card");
+      cards.forEach(card => {
+        card.addEventListener("mousemove", function(e) {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          card.style.setProperty("--mouse-x", `${x}px`);
+          card.style.setProperty("--mouse-y", `${y}px`);
+        });
+      });
+
+      // Interactive iPhone cursor
+      const interactiveIphone = document.getElementById("interactive-iphone");
+      const customCursor = document.getElementById("iphone-custom-cursor");
+
+      if (interactiveIphone && customCursor) {
+        interactiveIphone.addEventListener("mousemove", function(e) {
+          // Absolute window coordinates for fixed element
+          customCursor.style.left = `${e.clientX}px`;
+          customCursor.style.top = `${e.clientY}px`;
+          customCursor.classList.add("visible");
+          document.body.style.cursor = "none";
+        });
+
+        interactiveIphone.addEventListener("mouseleave", function() {
+          customCursor.classList.remove("visible");
+          document.body.style.cursor = "default";
+        });
+        
+        // Disable default cursor
+        interactiveIphone.style.cursor = "none";
+      }
+
+      // Video Modal Logic
+      const videoModal = document.getElementById("ecosystemVideoModal");
+      const closeBtn = document.getElementById("closeEcosystemModal");
+      const modalVideo = document.getElementById("modalVideoPlayer");
+
+      if (interactiveIphone && videoModal) {
+        interactiveIphone.addEventListener("click", function() {
+          videoModal.classList.add("active");
+          if(modalVideo) modalVideo.play();
+        });
+
+        closeBtn.addEventListener("click", function() {
+          videoModal.classList.remove("active");
+        });
+
+        videoModal.addEventListener("click", function(e) {
+          if(e.target === videoModal) {
+            videoModal.classList.remove("active");
+          }
+        });
+      }
+    });
+  </script>
+
+
+  
+  <!-- ECOSYSTEM VIDEO MODAL -->
+  <div class="video-modal-overlay" id="ecosystemVideoModal">
+    <button class="video-modal-close" id="closeEcosystemModal">&times;</button>
+    <div class="iphone-interactive modal-iphone" style="transform: perspective(1000px) rotateY(0deg); cursor: default;">
+      <div class="iphone-device">
+        <div class="iphone-notch"></div>
+        <div class="iphone-screen">
+          <video src="assets/videos/video_produtos.mp4" loop muted playsinline class="iphone-video-content" id="modalVideoPlayer"></video>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+
+
+  <div class="iphone-custom-cursor" id="iphone-custom-cursor">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8 5V19L19 12L8 5Z" />
+                </svg>
+                <span>Ver vídeo sobre produtos</span>
+              </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const orbitContainer = document.querySelector('.orbit-container');
+    if (!orbitContainer) return;
+
+    const icons = orbitContainer.querySelectorAll('.orbit-icon');
+    if (icons.length === 0) return;
+
+    function spawnParticle() {
+      // Pick a random icon
+      const randomIconIndex = Math.floor(Math.random() * icons.length);
+      const icon = icons[randomIconIndex];
+      
+      // Get the current computed style (specifically transform) to find its position
+      // The icons are rotated using CSS animation, but we can also get their bounding rect
+      const iconRect = icon.getBoundingClientRect();
+      const containerRect = orbitContainer.getBoundingClientRect();
+      
+      // Calculate position relative to the container
+      const scale = containerRect.width / orbitContainer.offsetWidth;
+      const startX = (iconRect.left - containerRect.left) / scale + (icon.offsetWidth / 2);
+      const startY = (iconRect.top - containerRect.top) / scale + (icon.offsetHeight / 2);
+
+      const particle = document.createElement('div');
+      particle.className = 'dynamic-particle';
+      
+      // Pass the start coordinates to CSS variables
+      particle.style.setProperty('--start-x', `${startX}px`);
+      particle.style.setProperty('--start-y', `${startY}px`);
+      
+      // Randomize the duration slightly
+      const duration = 1.5 + Math.random() * 1.5;
+      particle.style.setProperty('--duration', `${duration}s`);
+
+      orbitContainer.appendChild(particle);
+
+      // Remove particle after animation
+      setTimeout(() => {
+        if (particle.parentNode === orbitContainer) {
+          orbitContainer.removeChild(particle);
+        }
+      }, duration * 1000);
+
+      // Schedule next particle (random delay between 400ms and 1500ms)
+      setTimeout(spawnParticle, 400 + Math.random() * 1100);
+    }
+
+    // Start the spawning process
+    setTimeout(spawnParticle, 1000);
+  });
+</script>
+
+</body>
+</html>
