@@ -12,13 +12,21 @@ document.addEventListener('DOMContentLoaded', () => {
     window.requestAnimationFrame(step);
   };
 
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px 0px -10% 0px',
+    threshold: 0.1
+  };
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        // Counters
-        const counters = entry.target.querySelectorAll('.counter-value');
+        const target = entry.target;
+
+        // Counters (if target is a counter or contains counters)
+        const counters = target.classList.contains('counter-value') ? [target] : target.querySelectorAll('.counter-value');
         counters.forEach(counter => {
-          if(!counter.dataset.animated) {
+          if (!counter.dataset.animated) {
             const end = parseInt(counter.dataset.end || 0);
             const prefix = counter.dataset.prefix || '';
             const suffix = counter.dataset.suffix || '';
@@ -28,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // Circle Progress
-        const circle = entry.target.querySelector('.circle-progress-bar');
+        const circle = target.classList.contains('circle-progress-bar') ? target : target.querySelector('.circle-progress-bar');
         if (circle && !circle.dataset.animated) {
           const percent = circle.dataset.percent || 100;
           const offset = 283 - (283 * percent / 100);
@@ -37,20 +45,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Bar Chart
-        const bars = entry.target.querySelectorAll('.bar');
+        const bars = target.classList.contains('bar') ? [target] : target.querySelectorAll('.bar');
         bars.forEach(bar => {
           bar.style.transform = 'scaleY(1)';
         });
 
         // Line Graph
-        const linePath = entry.target.querySelector('.line-path');
+        const linePath = target.classList.contains('line-path') ? target : target.querySelector('.line-path');
         if (linePath && !linePath.dataset.animated) {
           linePath.style.strokeDashoffset = 0;
           linePath.dataset.animated = 'true';
         }
       }
     });
-  }, { threshold: 0.5 });
+  }, observerOptions);
 
-  document.querySelectorAll('.chart-container').forEach(el => observer.observe(el));
+  // Observe all elements that might need animation independently
+  document.querySelectorAll('.chart-container, .counter-value, .circle-progress-bar, .bar, .line-path').forEach(el => observer.observe(el));
 });

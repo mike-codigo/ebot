@@ -40,13 +40,25 @@
 /* --- IPHONE INTERACTIVE --- */
 .iphone-interactive {
   position: relative;
-  width: 320px;
+  width: 100%;
+  max-width: 320px;
   height: 693px;
   cursor: none;
   border-radius: 44px;
   transform: perspective(1000px) rotateY(0deg) scale(1);
   transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   z-index: 20;
+}
+
+@media (max-width: 480px) {
+  .iphone-interactive {
+    height: 550px;
+    border-radius: 36px;
+  }
+  .iphone-device {
+    border-radius: 36px;
+    padding: 8px;
+  }
 }
 
 @media (min-width: 1200px) {
@@ -317,7 +329,7 @@
   background: rgba(0, 0, 0, 0.75);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  z-index: 100000;
+  z-index: 100005;
   display: flex;
   align-items: center;
   justify-content: center;
