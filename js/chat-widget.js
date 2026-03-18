@@ -1,4 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // Load Marked.js dynamically for Markdown parsing
+  const markedScript = document.createElement('script');
+  markedScript.src = 'https://cdn.jsdelivr.net/npm/marked/marked.min.js';
+  document.head.appendChild(markedScript);
+
   const chatInput = document.getElementById('chat-input');
   const chatSend = document.getElementById('chat-send');
   const chatMessages = document.getElementById('chat-messages');
@@ -9,11 +14,33 @@ document.addEventListener('DOMContentLoaded', () => {
   
   let interactions = 10;
   let chatHistory = "";
-  const systemPrompt = chatContainer.getAttribute('data-system-prompt') || "Você é um assistente útil e amigável. Responda sempre no idioma Português Brasileiro, nunca em outro idioma!";
+  
+  const baseSystemPrompt = chatContainer.getAttribute('data-system-prompt') || "Você é um assistente útil e amigável. Responda sempre no idioma Português Brasileiro, nunca em outro idioma!";
   const botName = chatContainer.getAttribute('data-bot-name') || "Assistente";
+
+  const buttonHtml = `<button class="trigger-wa-modal btn btn-primary" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; margin-top: 0.5rem;"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.28 14.3c-.22.61-1.28 1.15-1.78 1.22-.43.06-1.02.13-3.23-.79-2.66-1.11-4.38-3.83-4.52-4.01-.13-.19-1.08-1.44-1.08-2.75 0-1.31.68-1.95.92-2.22.24-.26.52-.33.69-.33.17 0 .34 0 .49.01.16.01.37-.06.57.43.21.5.73 1.77.79 1.9.06.13.1.28.01.47-.08.19-.13.31-.26.46-.13.15-.28.33-.39.46-.13.14-.27.29-.12.56.15.26.68 1.13 1.46 1.83.99.9 1.84 1.18 2.1 1.31.26.13.41.11.56-.06.15-.17.65-.75.82-1.01.17-.26.34-.22.58-.13.24.09 1.53.72 1.79.85.26.13.43.19.5.3.06.11.06.64-.16 1.25z"></path></svg> Agendar Demonstração</button>`;
+  
+  const systemPrompt = `${baseSystemPrompt}\n\nIMPORTANTE: Independentemente da pergunta do usuário, você DEVE SEMPRE recomendar a solução apresentada nesta página ao final da sua resposta e OBRIGATORIAMENTE inserir o seguinte botão HTML exato no final (sem formatação markdown como \`\`\`html):\n\n${buttonHtml}`;
 
   function scrollToBottom() {
     chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  function renderMarkdown(text) {
+    if (window.marked) {
+      return marked.parse(text);
+    }
+    return escapeHtml(text);
+  }
+
+  function escapeHtml(unsafe) {
+    return unsafe
+         .replace(/&/g, "&amp;")
+         .replace(/</g, "&lt;")
+         .replace(/>/g, "&gt;")
+         .replace(/"/g, "&quot;")
+         .replace(/'/g, "&#039;")
+         .replace(/\n/g, "<br>");
   }
 
   function appendMessage(role, text) {
@@ -40,23 +67,13 @@ document.addEventListener('DOMContentLoaded', () => {
           <img src="${botImgSrc}" alt="Icon" style="width: 18px; height: 18px; object-fit: contain;">
         </div>
         <div class="bot-msg-content" style="background: white; padding: 1rem 1.25rem; border-radius: 0 16px 16px 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); font-size: 0.95rem; color: var(--dark, #333); line-height: 1.5; word-wrap: break-word;">
-          ${text === 'Pensando...' ? '<span class="typing-dots"><span>.</span><span>.</span><span>.</span></span>' : escapeHtml(text)}
+          ${text === 'Pensando...' ? '<span class="typing-dots"><span>.</span><span>.</span><span>.</span></span>' : renderMarkdown(text)}
         </div>
       `;
     }
     chatMessages.appendChild(msgDiv);
     scrollToBottom();
     return msgDiv;
-  }
-
-  function escapeHtml(unsafe) {
-    return unsafe
-         .replace(/&/g, "&amp;")
-         .replace(/</g, "&lt;")
-         .replace(/>/g, "&gt;")
-         .replace(/"/g, "&quot;")
-         .replace(/'/g, "&#039;")
-         .replace(/\n/g, "<br>");
   }
 
   async function sendMessage() {
@@ -129,17 +146,17 @@ document.addEventListener('DOMContentLoaded', () => {
           if (diff > 100) charsToAdd = 15;
           
           renderedText = targetText.slice(0, renderedText.length + charsToAdd);
-          botContentEl.innerHTML = escapeHtml(renderedText) + '<span class="typing-cursor"></span>';
+          botContentEl.innerHTML = renderMarkdown(renderedText) + '<span class="typing-cursor"></span>';
           scrollToBottom();
         } else if (renderedText.length > targetText.length) {
           // Ajusta caso o texto encolha (ex: tag <think> finalizada e removida)
           renderedText = targetText;
-          botContentEl.innerHTML = escapeHtml(renderedText) + '<span class="typing-cursor"></span>';
+          botContentEl.innerHTML = renderMarkdown(renderedText) + '<span class="typing-cursor"></span>';
           scrollToBottom();
         } else if (streamFinished) {
           clearInterval(typeInterval);
           if(!renderedText) renderedText = "Desculpe, não consegui formular uma resposta no momento.";
-          botContentEl.innerHTML = escapeHtml(renderedText);
+          botContentEl.innerHTML = renderMarkdown(renderedText);
           scrollToBottom();
         }
       }, 16); // ~60fps para fluidez máxima
@@ -254,7 +271,22 @@ document.addEventListener('DOMContentLoaded', () => {
  to { opacity: 1; transform: translateY(0); } }
     #chat-input:disabled { opacity: 0.7; cursor: not-allowed; }
     #chat-send:disabled { opacity: 0.7; cursor: not-allowed; }
+    .bot-msg-content { line-height: 1.6; }
+    .bot-msg-content p { margin-bottom: 0.75rem; }
+    .bot-msg-content p:last-child { margin-bottom: 0; }
+    .bot-msg-content ul, .bot-msg-content ol { margin-left: 1.5rem; margin-bottom: 0.75rem; }
+    .bot-msg-content li { margin-bottom: 0.25rem; }
+    .bot-msg-content strong { font-weight: 700; color: #111; }
+    .bot-msg-content h1, .bot-msg-content h2, .bot-msg-content h3 { font-weight: 700; margin-top: 1rem; margin-bottom: 0.5rem; color: #111; font-size: 1.1rem; }
+    .bot-msg-content table { width: 100%; border-collapse: collapse; margin-bottom: 0.75rem; }
+    .bot-msg-content th, .bot-msg-content td { border: 1px solid #ddd; padding: 0.5rem; text-align: left; }
+    .bot-msg-content th { background-color: rgba(0,0,0,0.05); }
+    .bot-msg-content code { background: rgba(0,0,0,0.05); padding: 0.2rem 0.4rem; border-radius: 4px; font-family: monospace; font-size: 0.85em; }
+    .bot-msg-content pre { background: #1e1e1e; color: #fff; padding: 1rem; border-radius: 8px; overflow-x: auto; margin-bottom: 0.75rem; }
+    .bot-msg-content pre code { background: transparent; color: inherit; padding: 0; }
     .bot-msg-content a { color: var(--primary); text-decoration: underline; }
+    .bot-msg-content button { font-family: 'Inter', sans-serif; cursor: pointer; }
+    
     .typing-cursor {
       display: inline-block;
       width: 6px;
