@@ -77,14 +77,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const botContentEl = botMsgDiv.querySelector('.bot-msg-content');
     
     try {
-      const apiUrl = 'chat-proxy.php';
+      const apiUrl = 'https://api.groq.com/openai/v1/chat/completions';
+      const apiKey = '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';
       
       const response = await fetch(apiUrl, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`
+        },
         body: JSON.stringify({
-          prompt: `Sistema: ${systemPrompt}\nHistórico: ${chatHistory}`,
-          stream: true
+          model: 'openai/gpt-oss-120b',
+          messages: [
+            {
+              role: 'system',
+              content: systemPrompt
+            },
+            {
+              role: 'user',
+              content: `Aqui está o histórico da nossa conversa e minha nova mensagem.\n\n${chatHistory}`
+            }
+          ],
+          temperature: 1,
+          max_completion_tokens: 8192,
+          top_p: 1,
+          stream: true,
+          reasoning_effort: 'medium',
+          stop: null
         })
       });
       
@@ -92,11 +111,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const reader = response.body.getReader();
       const decoder = new TextDecoder("utf-8");
+      
       let botFullText = "";
+      let renderedText = "";
+      let streamFinished = false;
+      
+      // Animação fluida de digitação ("typed")
+      const typeInterval = setInterval(() => {
+        const targetText = botFullText.replace(/<think>[\s\S]*?(<\/think>|$)/g, '').trimStart();
+        
+        if (renderedText.length < targetText.length) {
+          const diff = targetText.length - renderedText.length;
+          let charsToAdd = 1;
+          if (diff > 10) charsToAdd = 2;
+          if (diff > 30) charsToAdd = 4;
+          if (diff > 60) charsToAdd = 8;
+          if (diff > 100) charsToAdd = 15;
+          
+          renderedText = targetText.slice(0, renderedText.length + charsToAdd);
+          botContentEl.innerHTML = escapeHtml(renderedText) + '<span class="typing-cursor"></span>';
+          scrollToBottom();
+        } else if (renderedText.length > targetText.length) {
+          // Ajusta caso o texto encolha (ex: tag <think> finalizada e removida)
+          renderedText = targetText;
+          botContentEl.innerHTML = escapeHtml(renderedText) + '<span class="typing-cursor"></span>';
+          scrollToBottom();
+        } else if (streamFinished) {
+          clearInterval(typeInterval);
+          if(!renderedText) renderedText = "Desculpe, não consegui formular uma resposta no momento.";
+          botContentEl.innerHTML = escapeHtml(renderedText);
+          scrollToBottom();
+        }
+      }, 16); // ~60fps para fluidez máxima
       
       while (true) {
         const { done, value } = await reader.read();
-        if (done) break;
+        if (done) {
+          streamFinished = true;
+          break;
+        }
         
         const chunkStr = decoder.decode(value, { stream: true });
         const lines = chunkStr.split('\n');
@@ -110,25 +163,19 @@ document.addEventListener('DOMContentLoaded', () => {
               const data = JSON.parse(jsonStr);
               if (data.choices && data.choices[0] && data.choices[0].delta && data.choices[0].delta.content) {
                 botFullText += data.choices[0].delta.content;
-                let displayText = botFullText.replace(/<think>[\s\S]*?(<\/think>|$)/g, '').trim();
-                if (displayText) {
-                  botContentEl.innerHTML = escapeHtml(displayText);
-                }
-                scrollToBottom();
               }
             } catch (e) { }
           }
         }
       }
       
+      streamFinished = true;
       let finalBotText = botFullText.replace(/<think>[\s\S]*?(<\/think>|$)/g, '').trim();
-      if(!finalBotText) finalBotText = "Desculpe, não consegui formular uma resposta no momento.";
-      botContentEl.innerHTML = escapeHtml(finalBotText);
       chatHistory += ` ${finalBotText}\n`;
       
     } catch (error) {
       console.error(error);
-      botContentEl.innerHTML = '<span style="color:red; font-size: 0.85rem;"><strong>Erro de Conexão.</strong> Verifique se o servidor PHP está rodando (ex: <code>php -S localhost:8000</code>).</span>';
+      botContentEl.innerHTML = '<span style="color:red; font-size: 0.85rem;"><strong>Erro de Conexão.</strong> A chamada para a API falhou. Verifique o console para mais detalhes.</span>';
     } finally {
       if (interactions > 0) {
         chatInput.disabled = false;
@@ -208,6 +255,20 @@ document.addEventListener('DOMContentLoaded', () => {
     #chat-input:disabled { opacity: 0.7; cursor: not-allowed; }
     #chat-send:disabled { opacity: 0.7; cursor: not-allowed; }
     .bot-msg-content a { color: var(--primary); text-decoration: underline; }
+    .typing-cursor {
+      display: inline-block;
+      width: 6px;
+      height: 1.1em;
+      background-color: var(--primary, #88a72f);
+      vertical-align: text-bottom;
+      margin-left: 4px;
+      animation: cursorBlink 0.8s infinite;
+      border-radius: 2px;
+    }
+    @keyframes cursorBlink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
   `;
   document.head.appendChild(style);
 });
