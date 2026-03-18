@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Camada_2" data-name="Camada 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 189.51 124.15">
+  <defs>
+    <style>
+      .cls-1 {
+        font-size: 36px;
+      }
+
+      .cls-1, .cls-2 {
+        fill: #ef7a1a;
+      }
+
+      .cls-1, .cls-2, .cls-3 {
+        font-family: CocogooseProTrial-Bold, CocogooseProTrial;
+        font-weight: 700;
+      }
+
+      .cls-2, .cls-3 {
+        font-size: 71.31px;
+      }
+
+      .cls-4 {
+        letter-spacing: -.04em;
+      }
+
+      .cls-3 {
+        fill: #e5e5e5;
+      }
+    </style>
+  </defs>
+  <g id="Logo_clinical_white_aplicação_1">
+    <text class="cls-3" transform="translate(52.08 62.58)"><tspan x="0" y="0">bot</tspan></text>
+    <text class="cls-1" transform="translate(0 99.03)"><tspan x="0" y="0">explo</tspan><tspan class="cls-4" x="119.46" y="0">r</tspan><tspan x="138.95" y="0">er</tspan></text>
+    <text class="cls-2" transform="translate(1.82 62.58)"><tspan x="0" y="0">ê</tspan></text>
+  </g>
+</svg>

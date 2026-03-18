@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Camada_2" data-name="Camada 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 268.49 270.58">
+  <defs>
+    <style>
+      .cls-1 {
+        letter-spacing: 0em;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+
+      .cls-3 {
+        letter-spacing: -.1em;
+      }
+
+      .cls-4 {
+        font-family: CocogooseProTrial-Bold, CocogooseProTrial;
+        font-size: 42px;
+        font-weight: 700;
+      }
+
+      .cls-4, .cls-5 {
+        fill: #9abc1e;
+      }
+
+      .cls-5 {
+        stroke-miterlimit: 66.67;
+      }
+
+      .cls-5, .cls-6 {
+        stroke: #c7ccdb;
+        stroke-width: 20px;
+      }
+
+      .cls-6 {
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+    </style>
+  </defs>
+  <g id="Logo_clinical_white_aplicação_2">
+    <path class="cls-5" d="M53.49,32.8h161.52c6.86,0,12.42,5.62,12.42,12.55v125.48c0,6.93-5.56,12.55-12.42,12.55H53.49c-6.86,0-12.42-5.62-12.42-12.55V45.34c0-6.93-55.91-67.4,12.42-12.55Z"/>
+    <ellipse class="cls-2" cx="90.76" cy="82.99" rx="12.42" ry="12.55"/>
+    <ellipse class="cls-2" cx="177.73" cy="82.99" rx="12.42" ry="12.55"/>
+    <path class="cls-6" d="M10,82.99v50.19"/>
+    <path class="cls-6" d="M258.49,82.99v50.19"/>
+    <path class="cls-2" d="M128.78,120.41s-16.73-.88-27.74-3.96c-11.01-3.08-12.86,12.56-10.28,16.74,2.58,4.18,15.48,8.14,43.49,8.14s42.01-3.3,43.49-10.79c1.48-7.49-2.99-18.63-12.42-14.49-9.44,4.14-11.86,4.36-36.52,4.36Z"/>
+    <text class="cls-4" transform="translate(43.4 241.27)"><tspan x="0" y="0">&lt;</tspan><tspan class="cls-3" x="24.48" y="0">P</tspan><tspan class="cls-1" x="48.57" y="0">ANEL&gt;</tspan></text>
+  </g>
+</svg>

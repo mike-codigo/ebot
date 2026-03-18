@@ -1,0 +1,208 @@
+document.addEventListener('DOMContentLoaded', () => {
+  const chatInput = document.getElementById('chat-input');
+  const chatSend = document.getElementById('chat-send');
+  const chatMessages = document.getElementById('chat-messages');
+  const chatCountEl = document.getElementById('chat-count');
+  const chatContainer = document.querySelector('.chat-container');
+  
+  if (!chatInput || !chatSend || !chatMessages || !chatContainer) return;
+  
+  let interactions = 10;
+  let chatHistory = "";
+  const systemPrompt = chatContainer.getAttribute('data-system-prompt') || "Você é um assistente útil e amigável.";
+  const botName = chatContainer.getAttribute('data-bot-name') || "Assistente";
+
+  function scrollToBottom() {
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  function appendMessage(role, text) {
+    const msgDiv = document.createElement('div');
+    msgDiv.style.display = 'flex';
+    msgDiv.style.gap = '0.75rem';
+    msgDiv.style.maxWidth = '80%';
+    msgDiv.style.marginBottom = '1rem';
+    msgDiv.style.animation = 'fadeIn 0.3s ease forwards';
+    
+    if (role === 'user') {
+      msgDiv.style.marginLeft = 'auto';
+      msgDiv.style.flexDirection = 'row-reverse';
+      msgDiv.innerHTML = `
+        <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--dark-header, #2f3835); flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.8rem; font-weight: bold;">VC</div>
+        <div style="background: var(--primary, #88a72f); color: white; padding: 1rem 1.25rem; border-radius: 16px 0 16px 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); font-size: 0.95rem; line-height: 1.5; word-wrap: break-word;">
+          ${escapeHtml(text)}
+        </div>
+      `;
+    } else {
+      const botImgSrc = chatContainer.querySelector('img') ? chatContainer.querySelector('img').src : '';
+      msgDiv.innerHTML = `
+        <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--primary, #88a72f); flex-shrink: 0; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+          <img src="${botImgSrc}" alt="Icon" style="width: 18px; height: 18px; object-fit: contain;">
+        </div>
+        <div class="bot-msg-content" style="background: white; padding: 1rem 1.25rem; border-radius: 0 16px 16px 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); font-size: 0.95rem; color: var(--dark, #333); line-height: 1.5; word-wrap: break-word;">
+          ${text === 'Pensando...' ? '<span class="typing-dots"><span>.</span><span>.</span><span>.</span></span>' : escapeHtml(text)}
+        </div>
+      `;
+    }
+    chatMessages.appendChild(msgDiv);
+    scrollToBottom();
+    return msgDiv;
+  }
+
+  function escapeHtml(unsafe) {
+    return unsafe
+         .replace(/&/g, "&amp;")
+         .replace(/</g, "&lt;")
+         .replace(/>/g, "&gt;")
+         .replace(/"/g, "&quot;")
+         .replace(/'/g, "&#039;")
+         .replace(/\n/g, "<br>");
+  }
+
+  async function sendMessage() {
+    const text = chatInput.value.trim();
+    if (!text || interactions <= 0) return;
+    
+    chatInput.value = '';
+    chatInput.disabled = true;
+    chatSend.disabled = true;
+    
+    interactions--;
+    chatCountEl.textContent = interactions;
+    
+    appendMessage('user', text);
+    chatHistory += `\nUsuário: ${text}\nAssistente:`;
+    
+    const botMsgDiv = appendMessage('bot', 'Pensando...');
+    const botContentEl = botMsgDiv.querySelector('.bot-msg-content');
+    
+    try {
+      // Usando o proxy local em PHP que será criado para contornar o bloqueio Cloudflare da API original
+      const apiUrl = 'chat-proxy.php';
+      
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'deepseek-r1:1.5b',
+          prompt: `Sistema: ${systemPrompt}\nHistórico: ${chatHistory}`,
+          stream: true
+        })
+      });
+      
+      if (!response.ok) throw new Error('Falha na API: ' + response.statusText);
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder("utf-8");
+      let botFullText = "";
+      
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        
+        const chunkStr = decoder.decode(value, { stream: true });
+        const lines = chunkStr.split('\n');
+        
+        for (const line of lines) {
+          if (line.trim()) {
+            try {
+              const data = JSON.parse(line);
+              if (data.response) {
+                botFullText += data.response;
+                let displayText = botFullText.replace(/<think>[\s\S]*?(<\/think>|$)/g, '').trim();
+                if (displayText) {
+                  botContentEl.innerHTML = escapeHtml(displayText);
+                }
+                scrollToBottom();
+              }
+            } catch (e) { }
+          }
+        }
+      }
+      
+      let finalBotText = botFullText.replace(/<think>[\s\S]*?(<\/think>|$)/g, '').trim();
+      if(!finalBotText) finalBotText = "Desculpe, não consegui formular uma resposta no momento.";
+      botContentEl.innerHTML = escapeHtml(finalBotText);
+      chatHistory += ` ${finalBotText}\n`;
+      
+    } catch (error) {
+      console.error(error);
+      botContentEl.innerHTML = '<span style="color:red; font-size: 0.85rem;"><strong>Erro de Conexão.</strong> A API bloqueou o IP/CORS. Para testar em ambiente local, configure um servidor PHP na mesma pasta (ex: <code>php -S localhost:8000</code>). O arquivo chat-proxy.php cuida de tudo.</span>';
+    } finally {
+      if (interactions > 0) {
+        chatInput.disabled = false;
+        chatSend.disabled = false;
+        chatInput.focus();
+      } else {
+        chatInput.placeholder = 'Limite de interações atingido.';
+      }
+      scrollToBottom();
+    }
+  }
+
+  chatSend.addEventListener('click', sendMessage);
+  chatInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') sendMessage();
+  });
+  
+  const style = document.createElement('style');
+  style.innerHTML = `
+    .chat-section {
+      position: relative;
+    }
+    .chat-bg-grid {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px);
+      z-index: 0;
+      pointer-events: none;
+    }
+    .chat-flashlight {
+      position: absolute;
+      top: -50%; left: -50%; width: 200%; height: 200%;
+      background: radial-gradient(circle at center, rgba(136, 167, 47, 0.12) 0%, transparent 40%),
+                  radial-gradient(circle at 80% 80%, rgba(43, 159, 232, 0.08) 0%, transparent 35%);
+      animation: flashlightWave 12s ease-in-out infinite alternate;
+      z-index: 1;
+      opacity: 0.8;
+      pointer-events: none;
+      mix-blend-mode: multiply;
+    }
+    
+    .chat-clinical .chat-flashlight {
+      background: radial-gradient(circle at center, rgba(43, 159, 232, 0.12) 0%, transparent 40%),
+                  radial-gradient(circle at 80% 80%, rgba(136, 167, 47, 0.08) 0%, transparent 35%);
+    }
+    .chat-explorer .chat-flashlight {
+      background: radial-gradient(circle at center, rgba(255, 187, 0, 0.1) 0%, transparent 40%),
+                  radial-gradient(circle at 80% 80%, rgba(136, 167, 47, 0.08) 0%, transparent 35%);
+    }
+
+    @keyframes flashlightWave {
+      0% { transform: translate(0%, 0%) scale(1); }
+      50% { transform: translate(15%, 20%) scale(1.2); }
+      100% { transform: translate(-10%, -5%) scale(0.9); }
+    }
+    .chat-container {
+      position: relative;
+      z-index: 2;
+    }
+    .typing-dots span {
+      animation: blink 1.4s infinite both;
+      font-size: 1.5rem;
+      line-height: 0.5;
+    }
+    .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes blink { 0% { opacity: 0.2; } 20% { opacity: 1; } 100% { opacity: 0.2; } }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); }
+ to { opacity: 1; transform: translateY(0); } }
+    #chat-input:disabled { opacity: 0.7; cursor: not-allowed; }
+    #chat-send:disabled { opacity: 0.7; cursor: not-allowed; }
+    .bot-msg-content a { color: var(--primary); text-decoration: underline; }
+  `;
+  document.head.appendChild(style);
+});

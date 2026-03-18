@@ -59,6 +59,7 @@
             <li>Triagem automatizada humanizada com IA</li>
             <li>Métricas gerenciais, conversão e tempo de resposta</li>
             <li>Painel Multiatendimento</li>
+            <li>SDR e página de Automações</li>
           </ul>
         </div>
         <div class="reveal reveal-right glass-card float-hover" style="height: 400px; display: flex; flex-direction: column; gap: 1rem; padding: 1.5rem; background: #f8fafc; border-color: rgba(39, 174, 96, 0.4);">
@@ -169,6 +170,398 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+
+    <style>
+      .automation-visual-container {
+        position: relative;
+        width: 100%;
+        height: 450px;
+        background: #f8f9fa;
+        border-radius: 16px;
+        border: 1px solid rgba(0,0,0,0.05);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+        /*overflow: hidden;*/
+        display: flex;
+        flex-direction: row;
+      }
+      .sdr-panel {
+        width: 160px;
+        background: white;
+        border-right: 1px solid rgba(0,0,0,0.05);
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        z-index: 2;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.02);
+      }
+      .sdr-header {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #888;
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        white-space: nowrap;
+      }
+      .sdr-item {
+        height: 40px;
+        min-height: 40px;
+        border-radius: 6px;
+        background: #f8fafc;
+        display: flex;
+        align-items: center;
+        padding: 0 0.5rem;
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: #334155;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+        position: relative;
+        border-left: 3px solid transparent;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+      }
+      .sdr-item.sdr-new { border-left-color: #3b82f6; }
+      .sdr-item.sdr-qualified { border-left-color: var(--primary); }
+      .sdr-item.sdr-negotiation { border-left-color: #f59e0b; }
+      .sdr-item.sdr-closed { border-left-color: #10b981; }
+      
+      .sdr-item.active-hover {
+        background: #f1f5f9;
+        transform: translateX(2px);
+      }
+
+      .workflow-canvas {
+        flex: 1;
+        position: relative;
+        background: radial-gradient(#e2e8f0 1px, transparent 1px);
+        background-size: 20px 20px;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .wf-node {
+        position: relative;
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #1e293b;
+        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        z-index: 3;
+        transition: all 0.3s ease;
+        min-width: 180px;
+      }
+      .wf-node:hover, .wf-node.active-hover {
+        border-color: var(--primary);
+        box-shadow: 0 4px 12px rgba(136, 167, 47, 0.15);
+        transform: translateY(-2px);
+      }
+      
+      .wf-node .icon {
+        width: 24px;
+        height: 24px;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 0.8rem;
+        flex-shrink: 0;
+      }
+      .node-1 .icon { background: #25D366; } 
+      .node-2 .icon { background: var(--primary); } 
+      .node-3 .icon { background: #6366f1; } 
+
+      .wf-connector {
+        position: relative;
+        background: #cbd5e1;
+        width: 2px;
+        height: 40px;
+        z-index: 2;
+      }
+      
+      .conn-dot {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        background: var(--primary);
+        border-radius: 50%;
+        left: -3px;
+        top: 0;
+        box-shadow: 0 0 0 4px rgba(136, 167, 47, 0.2);
+        animation: pulseDotVertical 2s infinite linear;
+      }
+      
+      @keyframes pulseDotVertical {
+        0% { top: 0%; opacity: 1; }
+        100% { top: 100%; opacity: 0; }
+      }
+
+      .animated-cursor {
+        position: absolute;
+        top: 250px;
+        left: 350px;
+        z-index: 10;
+        pointer-events: none;
+        animation: cursorMove 8s infinite;
+      }
+
+      .cursor-icon {
+        width: 28px;
+        height: 28px;
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+      }
+
+      .click-ripple {
+        position: absolute;
+        top: -4px;
+        left: -4px;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        border: 2px solid var(--primary);
+        opacity: 0;
+        transform: scale(0.5);
+      }
+
+      @keyframes cursorMove {
+        0% { top: 350px; left: 400px; }
+        10% { top: 180px; left: 50%; } /* Go to Node 2 */
+        15% { top: 180px; left: 50%; } /* Click */
+        25% { top: 180px; left: calc(50% + 120px); } /* Select menu item */
+        30% { top: 180px; left: calc(50% + 120px); } /* Click */
+        45% { top: 140px; left: -120px; } /* Go to SDR qualified */
+        50% { top: 140px; left: -120px; } /* Click */
+        65% { top: 290px; left: 50%; } /* Go to Node 3 */
+        70% { top: 290px; left: 50%; } /* Click */
+        85% { top: 100px; left: 100px; }
+        100% { top: 350px; left: 400px; }
+      }
+
+      .animated-cursor .click-ripple {
+        animation: rippleClick 8s infinite;
+      }
+
+      @keyframes rippleClick {
+        0%, 14% { opacity: 0; transform: scale(0.5); }
+        15% { opacity: 1; transform: scale(0.5); }
+        18% { opacity: 0; transform: scale(2); }
+        29% { opacity: 0; transform: scale(0.5); }
+        30% { opacity: 1; transform: scale(0.5); }
+        33% { opacity: 0; transform: scale(2); }
+        49% { opacity: 0; transform: scale(0.5); }
+        50% { opacity: 1; transform: scale(0.5); }
+        53% { opacity: 0; transform: scale(2); }
+        69% { opacity: 0; transform: scale(0.5); }
+        70% { opacity: 1; transform: scale(0.5); }
+        73% { opacity: 0; transform: scale(2); }
+        100% { opacity: 0; }
+      }
+
+      .context-menu {
+        position: absolute;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        border: 1px solid #e2e8f0;
+        padding: 0.5rem;
+        width: 160px;
+        z-index: 5;
+        opacity: 0;
+        pointer-events: none;
+        top: 0;
+        left: calc(100% + 10px);
+        animation: showMenu1 8s infinite;
+      }
+
+      @keyframes showMenu1 {
+        0%, 15% { opacity: 0; transform: translateY(-10px); }
+        17%, 32% { opacity: 1; transform: translateY(0); }
+        34%, 100% { opacity: 0; transform: translateY(-10px); }
+      }
+
+      .menu-item {
+        font-size: 0.7rem;
+        padding: 0.5rem;
+        border-radius: 4px;
+        color: #475569;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .menu-item.active { background: #f1f5f9; color: var(--primary); font-weight: 600; }
+      
+      .wf-tooltip {
+        position: absolute;
+        background: #1e293b;
+        color: white;
+        font-size: 0.65rem;
+        padding: 0.4rem 0.6rem;
+        border-radius: 4px;
+        top: 0;
+        left: calc(100% + 10px);
+        opacity: 0;
+        white-space: nowrap;
+        animation: showTooltip 8s infinite;
+      }
+      .wf-tooltip::after {
+        content: '';
+        position: absolute;
+        top: 10px;
+        left: -4px;
+        width: 8px;
+        height: 8px;
+        background: #1e293b;
+        transform: rotate(45deg);
+      }
+      @keyframes showTooltip {
+        0%, 70% { opacity: 0; transform: translateX(-10px); }
+        72%, 90% { opacity: 1; transform: translateX(0); }
+        92%, 100% { opacity: 0; transform: translateX(-10px); }
+      }
+      
+      .wf-node.node-2 { animation: hoverNode2 8s infinite; }
+      .sdr-item.sdr-qualified { animation: hoverSDR 8s infinite; }
+      .wf-node.node-3 { animation: hoverNode3 8s infinite; }
+      
+      @keyframes hoverNode2 {
+        0%, 13%, 35%, 100% { border-color: #e2e8f0; transform: translateY(0); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        14%, 34% { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(136, 167, 47, 0.15); }
+      }
+      @keyframes hoverSDR {
+        0%, 48%, 55%, 100% { background: #f8fafc; transform: translateX(0); }
+        49%, 54% { background: #f1f5f9; transform: translateX(2px); }
+      }
+      @keyframes hoverNode3 {
+        0%, 68%, 85%, 100% { border-color: #e2e8f0; transform: translateY(0); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        69%, 84% { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(136, 167, 47, 0.15); }
+      }
+      
+      @media (max-width: 768px) {
+        .automation-visual-container {
+          flex-direction: column;
+          height: 600px;
+        }
+        .sdr-panel {
+          width: 100%;
+          flex-direction: row;
+          overflow-x: auto;
+          border-right: none;
+          border-bottom: 1px solid rgba(0,0,0,0.05);
+          padding-bottom: 0.5rem;
+          box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+        .sdr-header { margin-bottom: 0; margin-right: 1rem; }
+        
+        .animated-cursor {
+          display: none; /* Hide cursor on mobile for a cleaner look */
+        }
+      }
+    </style>
+
+    <!-- SDR & WORKFLOW SECTION -->
+    <section class="section" style="background: white;">
+      <div class="container reveal">
+        <div class="grid grid-2 items-center" style="gap: 4rem;">
+          
+          <!-- Visual Automation Side -->
+          <div class="automation-visual-container">
+            <!-- SDR Panel -->
+            <div class="sdr-panel">
+              <div class="sdr-header">📊 Kanban SDR</div>
+              <div class="sdr-item sdr-new">Lead Novo</div>
+              <div class="sdr-item sdr-qualified">Qualificado</div>
+              <div class="sdr-item sdr-negotiation">Em Negociação</div>
+              <div class="sdr-item sdr-closed">Venda Fechada</div>
+            </div>
+            
+            <!-- Workflow Canvas -->
+            <div class="workflow-canvas">
+              <div class="wf-node node-1">
+                <div class="icon">💬</div>
+                Receber Mensagem
+              </div>
+              
+              <div class="wf-connector">
+                <div class="conn-dot"></div>
+              </div>
+              
+              <div class="wf-node node-2">
+                <div class="icon">🤖</div>
+                Triagem com IA
+                
+                <div class="context-menu menu-node-2">
+                  <div class="menu-item active">➕ Adicionar Condição</div>
+                  <div class="menu-item">📝 Editar Prompt IA</div>
+                  <div class="menu-item">🗑️ Remover Etapa</div>
+                </div>
+              </div>
+              
+              <div class="wf-connector">
+                <div class="conn-dot" style="animation-delay: 1s;"></div>
+              </div>
+              
+              <div class="wf-node node-3">
+                <div class="icon">👥</div>
+                Encaminhar Humano
+                
+                <div class="wf-tooltip">Notificar Equipe de Vendas</div>
+              </div>
+              
+              <!-- Animated Cursor -->
+              <div class="animated-cursor">
+                <svg class="cursor-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5.5 3L20.5 10.5L13 12.75L10 21L5.5 3Z" fill="white" stroke="#1e293b" stroke-width="1.5" stroke-linejoin="round"/>
+                </svg>
+                <div class="click-ripple"></div>
+              </div>
+            </div></div>
+            <!-- Copy Side -->
+          <div>
+            <div class="badge" style="background: var(--primary-light); color: var(--primary); margin-bottom: 1rem; display: inline-block;">Automação & SDR</div>
+            <h2 class="h2" style="margin-bottom: 1.5rem;">Crie fluxos complexos em minutos e gerencie sua equipe</h2>
+            <p class="body-large" style="margin-bottom: 2rem; color: var(--text-body);">O e-Bot Panel permite construir jornadas automatizadas arrastando e soltando blocos, sem precisar escrever uma linha de código, integrado a um painel SDR completo.</p>
+            
+            <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+              <div style="font-size: 2rem; color: var(--primary);">⚙️</div>
+              <div>
+                <h3 class="h3" style="font-size: 1.25rem; margin-bottom: 0.5rem;">Automações e Workflows Visuais</h3>
+                <p class="text-small" style="color: var(--text-body);">Crie funis de atendimento, envie mensagens automáticas e construa fluxos de nutrição de leads com uma interface 100% visual e intuitiva.</p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+              <div style="font-size: 2rem; color: var(--primary);">👥</div>
+              <div>
+                <h3 class="h3" style="font-size: 1.25rem; margin-bottom: 0.5rem;">Módulo SDR Completo</h3>
+                <p class="text-small" style="color: var(--text-body);">Acompanhe a qualificação de contatos em tempo real. Organize seus leads em etapas de funil (Kanban) e analise as conversões de cada membro da equipe.</p>
+              </div>
+            </div>
+            
+            <div style="margin-top: 2rem;">
+              <a href="#" class="btn btn-outline float-hover trigger-wa-modal" style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; padding: 0.75rem 1.5rem; border: 2px solid var(--primary); color: var(--primary); border-radius: 8px; font-weight: 600;">
+                Conhecer os Recursos <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </a>
+            </div>
+          </div>
+          </div>
+          
+          
         </div>
       </div>
     </section>
