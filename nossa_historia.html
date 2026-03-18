@@ -242,15 +242,118 @@
       </div>
     </section>
 
-    <!-- BIG QUOTE -->
-    <section class="container reveal">
-      <h2 class="editorial-quote">
-        "Diariamente, nos dedicamos a melhorar a comunicação de nossos clientes, visando um futuro mais eficiente e conectado."
-      </h2>
-      <div class="text-center" style="margin-bottom: 8rem; color: var(--text-body); font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase;">
-        — Silveira P., CEO Ê-Sistemas (2022)
-      </div>
-    </section>
+     <!-- BIG QUOTE -->
+     <style>
+       .quote-section {
+         position: relative;
+         overflow: hidden;
+         padding: 10rem 0;
+         border-radius: 20px;
+         margin: 2rem 0;
+       }
+       
+       .quote-background {
+         position: absolute;
+         inset: 0;
+         background-image: url('./assets/images/nossa_historia/nossa_historia_4.jpg');
+         background-size: cover;
+         background-position: 0rem -30rem;
+         z-index: 0;
+       }
+       
+       .quote-background::after {
+         content: '';
+         position: absolute;
+         inset: 0;
+         background: rgba(0, 0, 0, 0.35);
+       }
+       
+       .quote-content {
+         position: relative;
+         z-index: 2;
+         color: white;
+         text-align: center;
+         padding: 3rem;
+         background: rgba(255, 255, 255, 0.12);
+         backdrop-filter: blur(20px);
+         -webkit-backdrop-filter: blur(8px);
+         border-radius: 12px;
+         border: 1px solid rgba(255, 255, 255, 0.2);
+         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+         max-width: 900px;
+         margin: 0 auto;
+       }
+       
+       .quote-text {
+         font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+         font-weight: 700;
+         line-height: 1.4;
+         margin-bottom: 0;
+         position: relative;
+         display: inline-block;
+         background: linear-gradient(45deg, #ffffff, #e8e8e8);
+         -webkit-background-clip: text;
+         -webkit-text-fill-color: transparent;
+         background-clip: text;
+       }
+       
+       .quote-author {
+         font-size: 1rem;
+         font-weight: 500;
+         color: rgba(255, 255, 255, 0.8);
+         font-style: italic;
+         margin-top: 1rem;
+       }
+       
+       .flashlight-wave {
+         position: absolute;
+         top: -50%;
+         left: -50%;
+         width: 200%;
+         height: 200%;
+         background: linear-gradient(
+           to bottom right,
+           rgba(255, 255, 255, 0) 0%,
+           rgba(255, 255, 255, 0.25) 50%,
+           rgba(255, 255, 255, 0) 100%
+         );
+         transform: rotate(45deg);
+         animation: flashlightMove 4s ease-in-out infinite;
+         pointer-events: none;
+         z-index: 1;
+         opacity: 0;
+       }
+       
+       @keyframes flashlightMove {
+         0% {
+           transform: translate(0, 0) rotate(45deg);
+           opacity: 0;
+         }
+         50% {
+           transform: translate(30%, 30%) rotate(45deg);
+           opacity: 0.4;
+         }
+         100% {
+           transform: translate(0, 0) rotate(45deg);
+           opacity: 0;
+         }
+       }
+       
+       .quote-section:hover .flashlight-wave {
+         opacity: 0.1;
+       }
+     </style>
+
+     <section class="quote-section reveal">
+       <div class="quote-background"></div>
+       <div class="flashlight-wave"></div>
+       <div class="quote-content">
+         <h2 class="quote-text">
+           "Diariamente, nos dedicamos a melhorar a comunicação de nossos clientes, visando um futuro mais eficiente e conectado."
+         </h2>
+         <div class="quote-author">— Silveira P., CEO Ê-Sistemas (2022)</div>
+       </div>
+     </section>
 
     <!-- NOSSO TIME (Comentado - Design Utilizado em Certificações)
     <style>
@@ -887,13 +990,11 @@
       }
       .gallery-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         grid-auto-rows: 280px;
         gap: 1.5rem;
         position: relative;
         z-index: 1;
-        justify-items: stretch;
-        align-items: stretch;
       }
       .gallery-item {
         position: relative;
@@ -901,8 +1002,8 @@
         border-radius: 12px;
         box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         transition: all 0.4s ease;
-        cursor: pointer;
         height: 100%;
+        cursor: pointer;
       }
       .gallery-item:hover {
         transform: translateY(-5px);
@@ -918,63 +1019,72 @@
       .gallery-item:hover img {
         transform: scale(1.05);
       }
-      
-      /* Modal */
+
+      /* Modal Styles */
       .gallery-modal {
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        width: 100% !important;
-        height: 100% !important;
-        background: rgba(0, 0, 0, 0.95) !important;
-        z-index: 9999 !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        opacity: 0 !important;
-        visibility: hidden !important;
-        transition: opacity 0.4s ease !important;
-        pointer-events: none !important;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 1000;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
       }
+      
       .gallery-modal.active {
-        opacity: 1 !important;
-        visibility: visible !important;
-        pointer-events: all !important;
+        opacity: 1;
+        visibility: visible;
       }
+      
+      .gallery-modal-content {
+        position: relative;
+        max-width: 90vw;
+        max-height: 90vh;
+        overflow: hidden;
+      }
+      
       .gallery-modal img {
-        max-width: 90vw !important;
-        max-height: 90vh !important;
-        object-fit: contain !important;
-        border-radius: 4px !important;
-        transform: scale(0.95) !important;
-        transition: transform 0.4s ease !important;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.5) !important;
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        transform: scale(0.95);
+        transition: transform 0.3s ease;
       }
+      
       .gallery-modal.active img {
-        transform: scale(1) !important;
+        transform: scale(1);
       }
+      
       .gallery-modal-close {
-        position: fixed !important;
-        top: 2rem !important;
-        right: 2rem !important;
-        width: 50px !important;
-        height: 50px !important;
-        background: white !important;
-        border: none !important;
-        border-radius: 50% !important;
-        cursor: pointer !important;
-        font-size: 2rem !important;
-        color: #333 !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        transition: all 0.3s ease !important;
-        z-index: 10000 !important;
-        pointer-events: all !important;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: 40px;
+        height: 40px;
+        background: rgba(255,255,255,0.9);
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 2rem;
+        color: #333;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        z-index: 1001;
       }
+      
       .gallery-modal-close:hover {
-        transform: rotate(90deg) scale(1.1) !important;
-        background: #f0f0f0 !important;
+        background: white;
+        transform: rotate(90deg) scale(1.1);
       }
 
       @media (max-width: 1200px) {
@@ -1000,76 +1110,72 @@
         </div>
         
         <div class="gallery-grid" id="galleryGrid">
-          <div class="gallery-item" data-img="./assets/images/nossa_historia/nossa_historia_1.jpeg"><img src="./assets/images/nossa_historia/nossa_historia_1.jpeg" alt="Evento 1"></div>
-          <div class="gallery-item" data-img="./assets/images/nossa_historia/nossa_historia_2.jpeg"><img src="./assets/images/nossa_historia/nossa_historia_2.jpeg" alt="Evento 2"></div>
-          <div class="gallery-item" data-img="./assets/images/nossa_historia/nossa_historia_3.jpg"><img src="./assets/images/nossa_historia/nossa_historia_3.jpg" alt="Evento 3"></div>
-          <div class="gallery-item" data-img="./assets/images/nossa_historia/nossa_historia_4.jpg"><img src="./assets/images/nossa_historia/nossa_historia_4.jpg" alt="Evento 4"></div>
-          <div class="gallery-item" data-img="./assets/images/nossa_historia/nossa_historia_5.jpg"><img src="./assets/images/nossa_historia/nossa_historia_5.jpg" alt="Evento 5"></div>
-          <div class="gallery-item" data-img="./assets/images/nossa_historia/nossa_historia_6.jpg"><img src="./assets/images/nossa_historia/nossa_historia_6.jpg" alt="Evento 6"></div>
-          <div class="gallery-item" data-img="./assets/images/nossa_historia/nossa_historia_7.jpg"><img src="./assets/images/nossa_historia/nossa_historia_7.jpg" alt="Evento 7"></div>
-          <div class="gallery-item" data-img="./assets/images/nossa_historia/nossa_historia_8.jpg"><img src="./assets/images/nossa_historia/nossa_historia_8.jpg" alt="Evento 8"></div>
-          <div class="gallery-item" data-img="./assets/images/nossa_historia/nossa_historia_9.jpg"><img src="./assets/images/nossa_historia/nossa_historia_9.jpg" alt="Evento 9"></div>
-          <div class="gallery-item" data-img="./assets/images/nossa_historia/nossa_historia_10.jpg"><img src="./assets/images/nossa_historia/nossa_historia_10.jpg" alt="Evento 10"></div>
+          <div class="gallery-item"><img src="./assets/images/nossa_historia/nossa_historia_1.jpeg" alt="Evento 1"></div>
+          <div class="gallery-item"><img src="./assets/images/nossa_historia/nossa_historia_2.jpeg" alt="Evento 2"></div>
+          <div class="gallery-item"><img src="./assets/images/nossa_historia/nossa_historia_3.jpg" alt="Evento 3"></div>
+          <div class="gallery-item"><img src="./assets/images/nossa_historia/nossa_historia_4.jpg" alt="Evento 4"></div>
+          <div class="gallery-item"><img src="./assets/images/nossa_historia/nossa_historia_5.jpg" alt="Evento 5"></div>
+          <div class="gallery-item"><img src="./assets/images/nossa_historia/nossa_historia_6.jpg" alt="Evento 6"></div>
+          <div class="gallery-item"><img src="./assets/images/nossa_historia/nossa_historia_7.jpg" alt="Evento 7"></div>
+          <div class="gallery-item"><img src="./assets/images/nossa_historia/nossa_historia_8.jpg" alt="Evento 8"></div>
+          <div class="gallery-item"><img src="./assets/images/nossa_historia/nossa_historia_9.jpg" alt="Evento 9"></div>
+          <div class="gallery-item"><img src="./assets/images/nossa_historia/nossa_historia_10.jpg" alt="Evento 10"></div>
         </div>
-      </div>
-      
-      <div class="gallery-modal" id="galleryModal">
-        <button class="gallery-modal-close" id="galleryModalClose">&times;</button>
-        <img src="" alt="Imagem ampliada" id="modalImage">
       </div>
     </section>
     
+    <!-- Modal for Gallery -->
+    <div class="gallery-modal" id="galleryModal">
+      <div class="gallery-modal-content">
+        <span class="gallery-modal-close" id="galleryModalClose">&times;</span>
+        <img src="" alt="Expanded image" id="modalImage">
+      </div>
+    </div>
+    
     <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const galleryGrid = document.getElementById('galleryGrid');
-        const galleryItems = galleryGrid.querySelectorAll('.gallery-item');
+      document.addEventListener('DOMContentLoaded', function() {
         const modal = document.getElementById('galleryModal');
         const modalImage = document.getElementById('modalImage');
         const modalClose = document.getElementById('galleryModalClose');
+        const galleryItems = document.querySelectorAll('.gallery-item');
         
-        // Abrir modal ao clicar na imagem
+        // Open modal when clicking on gallery item
         galleryItems.forEach(item => {
-          item.addEventListener('click', (e) => {
+          item.addEventListener('click', function(e) {
             e.preventDefault();
-            e.stopPropagation();
-            const imgSrc = item.dataset.img;
-            if (imgSrc) {
-              modalImage.src = imgSrc;
-              modal.classList.add('active');
-              document.body.style.overflow = 'hidden';
-            }
+            const imgSrc = this.querySelector('img').getAttribute('src');
+            modalImage.src = imgSrc;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
           });
         });
         
-        // Fechar modal
-        function closeModal() {
+        // Close modal when clicking close button
+        modalClose.addEventListener('click', function() {
           modal.classList.remove('active');
           document.body.style.overflow = '';
-        }
+          modalImage.src = '';
+        });
         
-        if (modalClose) {
-          modalClose.addEventListener('click', closeModal);
-        }
+        // Close modal when clicking outside the image
+        modal.addEventListener('click', function(e) {
+          if (e.target === modal) {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+            modalImage.src = '';
+          }
+        });
         
-        if (modal) {
-          modal.addEventListener('click', (e) => {
-            if (e.target === modal) closeModal();
-          });
-        }
-        
-        // Fechar com tecla ESC
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape' && modal && modal.classList.contains('active')) {
-            closeModal();
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape' && modal.classList.contains('active')) {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+            modalImage.src = '';
           }
         });
       });
     </script>
-  
-    
-    
-    
-    
     
     <!-- FINAL CTA -->
     <section class="section section-dark bg-grid-pattern-dark" style="background: linear-gradient(135deg, var(--dark) 0%, #1a252f 100%); overflow: hidden; margin-bottom: 0;">
