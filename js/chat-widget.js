@@ -77,14 +77,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const botContentEl = botMsgDiv.querySelector('.bot-msg-content');
     
     try {
-      // Usando o proxy local em PHP que será criado para contornar o bloqueio Cloudflare da API original
       const apiUrl = 'chat-proxy.php';
       
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model: 'deepseek-r1:1.5b',
           prompt: `Sistema: ${systemPrompt}\nHistórico: ${chatHistory}`,
           stream: true
         })
@@ -104,11 +102,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const lines = chunkStr.split('\n');
         
         for (const line of lines) {
-          if (line.trim()) {
+          if (line.trim() && line.startsWith('data: ')) {
             try {
-              const data = JSON.parse(line);
-              if (data.response) {
-                botFullText += data.response;
+              const jsonStr = line.slice(6);
+              if (jsonStr === '[DONE]') continue;
+              
+              const data = JSON.parse(jsonStr);
+              if (data.choices && data.choices[0] && data.choices[0].delta && data.choices[0].delta.content) {
+                botFullText += data.choices[0].delta.content;
                 let displayText = botFullText.replace(/<think>[\s\S]*?(<\/think>|$)/g, '').trim();
                 if (displayText) {
                   botContentEl.innerHTML = escapeHtml(displayText);
@@ -127,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
       
     } catch (error) {
       console.error(error);
-      botContentEl.innerHTML = '<span style="color:red; font-size: 0.85rem;"><strong>Erro de Conexão.</strong> A API bloqueou o IP/CORS. Para testar em ambiente local, configure um servidor PHP na mesma pasta (ex: <code>php -S localhost:8000</code>). O arquivo chat-proxy.php cuida de tudo.</span>';
+      botContentEl.innerHTML = '<span style="color:red; font-size: 0.85rem;"><strong>Erro de Conexão.</strong> Verifique se o servidor PHP está rodando (ex: <code>php -S localhost:8000</code>).</span>';
     } finally {
       if (interactions > 0) {
         chatInput.disabled = false;
