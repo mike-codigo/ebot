@@ -172,6 +172,10 @@ document.addEventListener('DOMContentLoaded', () => {
       mix-blend-mode: multiply;
     }
     
+    .chat-panel .chat-flashlight {
+      background: radial-gradient(circle at center, rgba(138, 43, 226, 0.12) 0%, transparent 40%),
+                  radial-gradient(circle at 80% 80%, rgba(136, 167, 47, 0.08) 0%, transparent 35%);
+    }
     .chat-clinical .chat-flashlight {
       background: radial-gradient(circle at center, rgba(43, 159, 232, 0.12) 0%, transparent 40%),
                   radial-gradient(circle at 80% 80%, rgba(136, 167, 47, 0.08) 0%, transparent 35%);

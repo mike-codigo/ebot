@@ -368,6 +368,11 @@
   background: rgba(136, 167, 47, 0.8);
   transform: scale(1.1);
 }
+
+/* Modal video: enable controls and pointer interaction */
+#modalVideoPlayer {
+  pointer-events: auto;
+}
 /* --- HOVER ANIMATION OVERLAY --- */
 .tool-hover-overlay {
   position: absolute;
