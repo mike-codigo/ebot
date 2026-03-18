@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   let interactions = 10;
   let chatHistory = "";
-  const systemPrompt = chatContainer.getAttribute('data-system-prompt') || "Você é um assistente útil e amigável.";
+  const systemPrompt = chatContainer.getAttribute('data-system-prompt') || "Você é um assistente útil e amigável. Responda sempre no idioma Português Brasileiro, nunca em outro idioma!";
   const botName = chatContainer.getAttribute('data-bot-name') || "Assistente";
 
   function scrollToBottom() {
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model: 'deepseek-r1:1.5b',
+          model: 'tinyllama',
           prompt: `Sistema: ${systemPrompt}\nHistórico: ${chatHistory}`,
           stream: true
         })
