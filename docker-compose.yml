@@ -3,7 +3,6 @@ version: '3.8'
 services:
   web:
     build: .
-    container_name: ebot-website
-    ports:
-      - "8054:80"
     restart: unless-stopped
+    expose:
+      - "80"
