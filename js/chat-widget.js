@@ -161,10 +161,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (renderedText.length < targetText.length) {
           const diff = targetText.length - renderedText.length;
           let charsToAdd = 1;
-          if (diff > 10) charsToAdd = 2;
-          if (diff > 30) charsToAdd = 4;
-          if (diff > 60) charsToAdd = 8;
-          if (diff > 100) charsToAdd = 15;
+          if (diff > 5) charsToAdd = 1;
+          if (diff > 15) charsToAdd = 2;
+          if (diff > 40) charsToAdd = 3;
+          if (diff > 80) charsToAdd = 5;
+          if (diff > 150) charsToAdd = 8;
           
           renderedText = targetText.slice(0, renderedText.length + charsToAdd);
           botContentEl.innerHTML = renderMarkdown(renderedText) + '<span class="typing-cursor"></span>';
@@ -179,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
           botContentEl.innerHTML = renderMarkdown(renderedText);
           scrollToBottom();
         }
-      }, 16);
+      }, 35);
       
       while (true) {
         const { done, value } = await reader.read();
@@ -318,12 +319,12 @@ document.addEventListener('DOMContentLoaded', () => {
       background-color: var(--primary, #88a72f);
       vertical-align: text-bottom;
       margin-left: 4px;
-      animation: cursorBlink 0.8s infinite;
+      animation: cursorBlink 1.2s ease-in-out infinite;
       border-radius: 2px;
     }
     @keyframes cursorBlink {
       0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
+      50% { opacity: 0.3; }
     }
   `;
   document.head.appendChild(style);
