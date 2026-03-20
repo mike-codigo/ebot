@@ -3,9 +3,13 @@
 .env
 .env.example
 README.md
+DEPLOY.md
+CHANGELOG-DOCKER.md
 node_modules
 npm-debug.log
 .DS_Store
 *.md
 .vscode
 .idea
+test-docker.sh
+nginx.conf

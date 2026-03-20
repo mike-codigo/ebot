@@ -1,40 +1,27 @@
 # Deploy no Coolify - Ê-BOT Site
 
-## ✅ Problemas Corrigidos
+## ✅ Status: FUNCIONANDO!
 
-1. **Nginx não iniciando**: Corrigido o entrypoint script com logs de debug
-2. **Porta já utilizada**: Usando `expose: 80` - Traefik faz o proxy automaticamente
-3. **Healthcheck**: Configurado com 40s de start_period
-4. **Docker otimizado**: Imagem Alpine com wget/curl para healthcheck
+O deploy está funcionando corretamente com Caddy Server.
 
 ## 🏗️ Arquitetura
 
 ```
-Internet → Traefik (80/443) → Container (porta 80 interna) → Nginx → Site
+Internet → Traefik (Coolify) → Container (porta 80) → Caddy → Site Estático
 ```
 
-O Coolify/Traefik gerencia:
-- SSL/TLS automático
-- Roteamento por domínio
-- Proxy reverso para o container
+## 🚀 Stack Tecnológica
 
-## 📋 Pré-requisitos
+- **Web Server**: Caddy 2 (Alpine Linux)
+- **Proxy**: Traefik (gerenciado pelo Coolify)
+- **Container**: Docker
+- **Deploy**: Coolify (Docker Compose)
 
-1. Servidor configurado no Coolify
-2. Docker instalado no servidor
-3. Domínio apontando para o servidor (DNS configurado)
+## 📋 Configuração no Coolify
 
-## 🚀 Configuração no Coolify
+### 1. Variáveis de Ambiente
 
-### 1. Criar Novo Projeto
-
-1. No Coolify, clique em "New Resource"
-2. Selecione "Docker Compose"
-3. Conecte ao seu repositório Git
-
-### 2. Configurar Variáveis de Ambiente
-
-No painel "Environment Variables", adicione:
+Configure em "Environment Variables":
 
 ```env
 GROQ_API_KEY=sua_chave_groq_aqui
@@ -42,200 +29,102 @@ WHATSAPP_NUMBER=5546999130505
 SITE_URL=https://ebot.murilosilva.com
 ```
 
-**IMPORTANTE**: A variável `GROQ_API_KEY` é obrigatória!
-
-### 3. Configurações Gerais
+### 2. Configurações do Projeto
 
 - **Name**: EBOT-SITE
 - **Build Pack**: Docker Compose
 - **Domain**: https://ebot.murilosilva.com
-- **Port**: 80 (porta interna do container)
-- **Servidor**: Selecione seu servidor disponível
+- **Port**: 80
+- **Servidor**: localhost (ou seu servidor)
 
-### 4. Configurações Avançadas (Opcional)
+### 3. Deploy
 
-Se necessário, ajuste:
-- **Health Check Path**: `/`
-- **Health Check Interval**: 30s
-- **Health Check Timeout**: 10s
-- **Health Check Retries**: 3
+1. Commit e push das alterações
+2. No Coolify, clique em "Deploy"
+3. Aguarde 2-5 minutos
+4. Verifique os logs
 
-### 5. Deploy
+## 🔍 Logs Esperados
 
-1. Salve todas as configurações
-2. Clique em "Deploy"
-3. Aguarde o build (pode levar 2-5 minutos)
-4. Verifique os logs durante o deploy
-
-## 🧪 Testar Localmente (Opcional)
-
-Antes de fazer deploy, você pode testar localmente:
-
-### Linux/Mac:
-```bash
-chmod +x test-docker.sh
-./test-docker.sh
-```
-
-### Windows (Git Bash):
-```bash
-bash test-docker.sh
-```
-
-### Teste Manual:
-```bash
-# Build
-docker build -t ebot-site-test .
-
-# Run
-docker run -d --name ebot-test -p 8888:80 \
-  -e GROQ_API_KEY=test_key \
-  -e WHATSAPP_NUMBER=5546999130505 \
-  -e SITE_URL=http://localhost:8888 \
-  ebot-site-test
-
-# Verificar logs
-docker logs ebot-test
-
-# Testar
-curl http://localhost:8888
-
-# Limpar
-docker stop ebot-test && docker rm ebot-test
-```
-
-## 🔍 Verificação Pós-Deploy
-
-### 1. Verificar Logs
-
-No Coolify, vá em "Logs" e procure por:
+Você deve ver nos logs:
 
 ```
 Starting entrypoint script...
-Replacing environment variables in env-config.js...
-GROQ_API_KEY replaced
-WHATSAPP_NUMBER replaced
-SITE_URL replaced
-Starting nginx...
+Replacing environment variables...
+Environment variables replaced
+Starting Caddy...
 ```
 
-### 2. Verificar Health Status
+## ✅ Verificação
 
-O container deve mostrar status "healthy" após ~40 segundos.
+1. Container deve estar "running"
+2. Health status deve ser "healthy" após ~40s
+3. Site acessível via domínio configurado
+4. SSL/HTTPS funcionando automaticamente
 
-### 3. Testar o Site
+## 🎯 Por que Caddy?
 
-Acesse seu domínio: https://ebot.murilosilva.com
+Mudamos de Nginx para Caddy porque:
+
+1. **Mais simples**: Configuração mais fácil e legível
+2. **Melhor com Coolify**: Integração nativa com proxy reverso
+3. **Logs melhores**: Output mais claro para debug
+4. **Menos código**: Dockerfile mais enxuto
+5. **Performance**: Compressão automática (gzip + zstd)
 
 ## 🐛 Troubleshooting
 
-### Container não inicia / Reinicia constantemente
+### Container não inicia
 
-**Verificar:**
-```bash
-# No servidor, via SSH
-docker ps -a | grep ebot
-docker logs <container_id>
-```
-
-**Possíveis causas:**
-- Variável `GROQ_API_KEY` não configurada
-- Erro no nginx.conf
-- Arquivo index.html não encontrado
-
-**Solução:**
-- Verifique os logs no Coolify
-- Confirme que todas as variáveis estão configuradas
-- Verifique se o build foi concluído com sucesso
+Verifique os logs no Coolify. Procure por erros no entrypoint.
 
 ### 503 Service Unavailable
 
-**Causa:** Healthcheck falhando ou nginx não respondendo
+Aguarde 40 segundos (healthcheck start period). Se persistir, verifique:
+- Container está rodando?
+- Porta 80 está exposta?
+- Caddy iniciou corretamente?
 
-**Solução:**
-1. Aguarde 40 segundos (start_period do healthcheck)
-2. Verifique logs: procure por "Starting nginx..."
-3. Teste manualmente no servidor:
-   ```bash
-   docker exec <container_id> wget -O- http://localhost/
-   ```
+### Variáveis não aplicadas
+
+Verifique dentro do container:
+```bash
+docker exec <container_id> cat /usr/share/caddy/js/env-config.js
+```
+
+Deve mostrar valores reais, não `{{GROQ_API_KEY}}`.
 
 ### Build falhando
 
-**Possíveis causas:**
-- Dockerfile com erro de sintaxe
-- Arquivos necessários não commitados
-- Falta de recursos no servidor (RAM/Disco)
+Confirme que estes arquivos existem no repositório:
+- Dockerfile
+- docker-compose.yml
+- Caddyfile
+- index.html
+- js/env-config.js
 
-**Solução:**
-1. Verifique os logs de build no Coolify
-2. Confirme que todos os arquivos estão no repositório:
-   - Dockerfile
-   - docker-compose.yml
-   - nginx.conf
-   - index.html
-   - js/env-config.js
-3. Teste o build localmente primeiro
+## 📝 Arquivos Importantes
 
-### "No available server"
-
-**Causa:** Nenhum servidor selecionado ou servidor offline
-
-**Solução:**
-1. Vá em "Servers" no Coolify
-2. Verifique se há servidores configurados
-3. Verifique se o servidor está online (status verde)
-4. No projeto, selecione o servidor nas configurações
-
-### Domínio não resolve / SSL não funciona
-
-**Causa:** DNS não configurado ou propagação pendente
-
-**Solução:**
-1. Verifique se o DNS aponta para o IP do servidor:
-   ```bash
-   nslookup ebot.murilosilva.com
-   ```
-2. Aguarde propagação DNS (pode levar até 48h)
-3. No Coolify, force renovação do certificado SSL
-
-### Variáveis de ambiente não aplicadas
-
-**Sintomas:** Chat não funciona, WhatsApp não abre
-
-**Causa:** env-config.js não foi substituído
-
-**Solução:**
-1. Verifique logs: procure por "replaced"
-2. Teste dentro do container:
-   ```bash
-   docker exec <container_id> cat /usr/share/nginx/html/js/env-config.js
-   ```
-3. Deve mostrar valores reais, não `{{GROQ_API_KEY}}`
-
-## 📝 Checklist de Deploy
-
-- [ ] Servidor configurado e online no Coolify
-- [ ] DNS apontando para o servidor
-- [ ] Variáveis de ambiente configuradas (especialmente GROQ_API_KEY)
-- [ ] Domínio configurado no projeto
-- [ ] Build concluído sem erros
-- [ ] Container com status "healthy"
-- [ ] Site acessível via domínio
-- [ ] SSL/HTTPS funcionando
-- [ ] Chat funcionando (teste com uma mensagem)
-- [ ] WhatsApp abrindo corretamente
+```
+.
+├── Dockerfile              # Imagem Caddy + entrypoint
+├── docker-compose.yml      # Configuração do serviço
+├── Caddyfile              # Configuração do Caddy
+├── index.html             # Página principal
+├── js/
+│   └── env-config.js      # Variáveis de ambiente (com placeholders)
+└── assets/                # Imagens, fontes, etc.
+```
 
 ## 🔄 Atualizar o Site
 
-Para atualizar após mudanças:
+1. Faça suas alterações
+2. Commit e push
+3. No Coolify: "Redeploy"
+4. Aguarde o novo build
 
-1. Faça commit e push das alterações
-2. No Coolify, clique em "Redeploy"
-3. Aguarde o novo build e deploy
+## 🎉 Sucesso!
 
-## 📚 Recursos
+Se você vê "Container Started" nos logs do Coolify, está tudo funcionando!
 
-- [Documentação Coolify](https://coolify.io/docs)
-- [Nginx Alpine Docker](https://hub.docker.com/_/nginx)
-- [Docker Compose Reference](https://docs.docker.com/compose/compose-file/)
+Acesse: https://ebot.murilosilva.com

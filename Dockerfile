@@ -1,44 +1,29 @@
-FROM nginx:alpine
+FROM caddy:2-alpine
 
-# Install required packages
-RUN apk add --no-cache bash wget curl
-
-# Copy custom nginx config
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Copy Caddyfile
+COPY Caddyfile /etc/caddy/Caddyfile
 
 # Copy static files
-COPY . /usr/share/nginx/html
+COPY . /usr/share/caddy
 
-# Create entrypoint script that properly starts nginx
-RUN echo '#!/bin/sh\n\
-set -e\n\
-\n\
-echo "Starting entrypoint script..."\n\
-\n\
-# Replace environment variables in env-config.js\n\
-if [ -f /usr/share/nginx/html/js/env-config.js ]; then\n\
-  echo "Replacing environment variables in env-config.js..."\n\
-  \n\
-  if [ -n "$GROQ_API_KEY" ]; then\n\
-    sed -i "s|{{GROQ_API_KEY}}|$GROQ_API_KEY|g" /usr/share/nginx/html/js/env-config.js\n\
-    echo "GROQ_API_KEY replaced"\n\
-  fi\n\
-  \n\
-  if [ -n "$WHATSAPP_NUMBER" ]; then\n\
-    sed -i "s|{{WHATSAPP_NUMBER}}|$WHATSAPP_NUMBER|g" /usr/share/nginx/html/js/env-config.js\n\
-    echo "WHATSAPP_NUMBER replaced"\n\
-  fi\n\
-  \n\
-  if [ -n "$SITE_URL" ]; then\n\
-    sed -i "s|{{SITE_URL}}|$SITE_URL|g" /usr/share/nginx/html/js/env-config.js\n\
-    echo "SITE_URL replaced"\n\
-  fi\n\
-else\n\
-  echo "Warning: env-config.js not found"\n\
-fi\n\
-\n\
-echo "Starting nginx..."\n\
-exec nginx -g "daemon off;"' > /docker-entrypoint.sh && chmod +x /docker-entrypoint.sh
+# Create entrypoint script
+RUN echo '#!/bin/sh' > /docker-entrypoint.sh && \
+    echo 'set -e' >> /docker-entrypoint.sh && \
+    echo '' >> /docker-entrypoint.sh && \
+    echo 'echo "Starting entrypoint script..."' >> /docker-entrypoint.sh && \
+    echo '' >> /docker-entrypoint.sh && \
+    echo '# Replace environment variables in env-config.js' >> /docker-entrypoint.sh && \
+    echo 'if [ -f /usr/share/caddy/js/env-config.js ]; then' >> /docker-entrypoint.sh && \
+    echo '  echo "Replacing environment variables..."' >> /docker-entrypoint.sh && \
+    echo '  sed -i "s|{{GROQ_API_KEY}}|${GROQ_API_KEY:-}|g" /usr/share/caddy/js/env-config.js' >> /docker-entrypoint.sh && \
+    echo '  sed -i "s|{{WHATSAPP_NUMBER}}|${WHATSAPP_NUMBER:-5546999130505}|g" /usr/share/caddy/js/env-config.js' >> /docker-entrypoint.sh && \
+    echo '  sed -i "s|{{SITE_URL}}|${SITE_URL:-https://ebot.murilosilva.com}|g" /usr/share/caddy/js/env-config.js' >> /docker-entrypoint.sh && \
+    echo '  echo "Environment variables replaced"' >> /docker-entrypoint.sh && \
+    echo 'fi' >> /docker-entrypoint.sh && \
+    echo '' >> /docker-entrypoint.sh && \
+    echo 'echo "Starting Caddy..."' >> /docker-entrypoint.sh && \
+    echo 'exec caddy run --config /etc/caddy/Caddyfile --adapter caddyfile' >> /docker-entrypoint.sh && \
+    chmod +x /docker-entrypoint.sh
 
 EXPOSE 80
 
