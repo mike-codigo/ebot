@@ -9,7 +9,7 @@ services:
     environment:
       - GROQ_API_KEY=${GROQ_API_KEY}
       - WHATSAPP_NUMBER=${WHATSAPP_NUMBER:-5546999130505}
-      - SITE_URL=${SITE_URL:-https://esistemas.dev.br}
+      - SITE_URL=${SITE_URL:-https://ebot.murilosilva.com}
     env_file:
       - .env
     healthcheck:

@@ -1,24 +1,22 @@
 # Ê-Bot / Ê-Sistemas Website
 
-Projeto premium desenvolvido em HTML5, CSS3 e JavaScript puro com foco em performance, responsividade e layout "Glassmorphism" profissional.
+Site institucional e landing pages para os produtos da Ê-Sistemas.
 
 ## 📋 Índice
 
 - [Sobre o Projeto](#-sobre-o-projeto)
 - [Estrutura do Projeto](#-estrutura-do-projeto)
-- [Variáveis de Ambiente](#-variáveis-de-ambiente)
+- [Deploy com Coolify](#-deploy-com-coolify)
+- [Deploy Manual com Docker](#-deploy-manual-com-docker)
 - [Configuração da API Groq](#-configuração-da-api-groq)
-- [Deploy com Docker](#-deploy-com-docker)
-- [Deploy Estático](#-deploy-estático)
 - [Segurança](#-segurança)
+- [Variáveis de Ambiente](#-variáveis-de-ambiente)
 - [Tecnologias Utilizadas](#-tecnologias-utilizadas)
-- [Funcionalidades](#-funcionalidades)
-- [Compatibilidade](#-compatibilidade)
 - [Contato](#-contato)
 
 ## 🚀 Sobre o Projeto
 
-Site institucional e landing pages para os produtos da Ê-Sistemas, incluindo:
+Site da Ê-Sistemas com landing pages para:
 - **Ê-Bot API**: Solução de mensageria com IA
 - **Ê-Bot Panel**: CRM e gestão de atendimento
 - **Ê-Bot Clinical**: Solução para área da saúde
@@ -27,261 +25,153 @@ Site institucional e landing pages para os produtos da Ê-Sistemas, incluindo:
 ## 📁 Estrutura do Projeto
 
 ```
-SITE5/
-├── index.html              # Página inicial
-├── contato.html            # Página de contato
-├── produtos.html           # Lista de produtos
-├── ebot-api.html          # Landing page Ê-Bot API
-├── ebot-panel.html        # Landing page Ê-Bot Panel
-├── ebot-clinical.html     # Landing page Ê-Bot Clinical
-├── ebot-explorer.html     # Landing page Ê-Bot Explorer
-├── privacidade.html        # Termos e política de privacidade
-├── nossa_historia.html     # História da empresa
-│
-├── css/                    # Estilos CSS modular
-│   ├── variables.css       # Variáveis CSS (cores, fontes, etc)
-│   ├── typography.css      # Tipografia e estilos de texto
-│   └── ...
-│
-├── js/                     # Scripts JavaScript
-│   ├── main.js             # Script principal
-│   ├── chat-widget.js      # Widget de chat com IA
-│   ├── env-config.js       # Configuração de env vars (runtime)
-│   └── ...
-│
-├── assets/
-│   ├── fonts/              # Fontes do projeto
-│   └── images/             # Imagens do projeto
-│
-├── nginx.conf             # Configuração do nginx
-├── Dockerfile              # Configuração Docker
-├── docker-compose.yml       # Orquestração Docker
-├── .env.example            # Template de variáveis de ambiente
-│
-├── documentação/           # Scripts de desenvolvimento
-│   └── opencode_changes/   # Histórico de alterações
-│
-└── README.md               # Este arquivo
+├── *.html                    # Páginas do site
+├── css/                      # Estilos CSS
+├── js/                      # Scripts JavaScript
+│   ├── chat-widget.js       # Chat com IA
+│   └── env-config.js        # Variáveis de ambiente
+├── assets/                  # Imagens e fontes
+├── nginx.conf              # Configuração nginx
+├── Dockerfile               # Build Docker
+├── docker-compose.yml       # Orquestração
+├── .env.example            # Template de variáveis
+└── README.md
 ```
 
-## 🔐 Variáveis de Ambiente
+## ☁️ Deploy com Coolify (Recomendado)
 
-O projeto utiliza variáveis de ambiente para configuração sensível. Crie um arquivo `.env` na raiz do projeto:
+### Passo 1: Configurar Repositório no Coolify
 
-```bash
-cp .env.example .env
-```
+1. Acesse seu painel Coolify
+2. Clique em **New Resource** → **Application**
+3. Conecte seu repositório GitHub
+4. Selecione a branch principal
 
-### Variáveis Disponíveis
+### Passo 2: Configurar Build
 
-| Variável | Descrição | Obrigatório |
-|----------|-----------|-------------|
-| `GROQ_API_KEY` | Chave da API do Groq para o chat de IA | **Sim** |
-| `WHATSAPP_NUMBER` | Número do WhatsApp (formato: 5546999999999) | Não |
-| `SITE_URL` | URL base do site | Não |
+1. **Build Pack**: Selecione `Dockerfile` ou `Nixpacks`
+2. **Port**: `80`
+3. **Exposed Port**: `80`
 
-### ⚠️ Importante: Segurança da API Key
+### Passo 3: Configurar Variáveis de Ambiente
 
-**NUNCA** exponha a `GROQ_API_KEY` no código fonte ou repositório Git!
+No Coolify, vá em **Environment Variables** e adicione:
 
-A chave é injetada via:
-1. Variável de ambiente no Docker
-2. Arquivo `.env` (não commitado)
+| Variável | Valor |
+|----------|-------|
+| `GROQ_API_KEY` | `sua_chave_aqui` |
+| `WHATSAPP_NUMBER` | `5546999130505` |
+| `SITE_URL` | `https://seu-dominio.com` |
 
-## 🔑 Configuração da API Groq
+### Passo 4: Deploy
 
-1. Acesse [console.groq.com](https://console.groq.com)
-2. Crie uma conta ou faça login
-3. Vá em **API Keys** → **Create API Key**
-4. Copie a chave gerada
-5. Adicione ao seu `.env`:
-   ```
-   GROQ_API_KEY=gsk_xxxxx
-   ```
+1. Clique em **Deploy**
+2. Aguarde o build finalizar
+3. Acesse via HTTPS pelo domínio configurado
 
-### Modelos Groq Disponíveis (Gratuitos)
+### ⚠️ Importante
 
-O chat de IA utiliza fallback automático entre os seguintes modelos:
-1. `llama-3.3-70b-versatile` (prioridade)
-2. `mixtral-8x7b-32768`
-3. `deepseek-r1-distill-qwen-32b`
-4. `llama-3.1-8b-instant`
-5. `gemma-7b-it`
+- A porta **não** deve ser exposta manualmente - o Coolify gerencia o proxy
+- Use `expose: "80"` no docker-compose (já configurado)
+- O SSL é configurado automaticamente pelo Coolify
 
-## 🐳 Deploy com Docker (Recomendado)
+## 🐳 Deploy Manual com Docker
 
 ### Pré-requisitos
 - Docker instalado
 - Docker Compose instalado
 
-### Deploy Rápido
+### Configuração
 
 ```bash
 # 1. Clone o repositório
 git clone <repo-url>
 cd SITE5
 
-# 2. Configure as variáveis de ambiente
+# 2. Crie o arquivo .env
 cp .env.example .env
 # Edite o .env e adicione sua GROQ_API_KEY
 
 # 3. Build e start
-docker-compose up -d
-
-# 4. Verifique o status
-docker-compose ps
-
-# 5. Acesse http://localhost:8080
-```
-
-### Configuração do Docker Compose
-
-```yaml
-# docker-compose.yml
-version: '3.8'
-services:
-  web:
-    build: .
-    restart: unless-stopped
-    ports:
-      - "8080:80"
-    environment:
-      - GROQ_API_KEY=${GROQ_API_KEY}
-      - WHATSAPP_NUMBER=${WHATSAPP_NUMBER:-5546999130505}
-    env_file:
-      - .env
-```
-
-### Variáveis de Ambiente via CLI
-
-```bash
-# Opção 1: Via arquivo .env
-docker-compose --env-file .env up -d
-
-# Opção 2: Via variável de ambiente
-export GROQ_API_KEY=sua_chave_aqui
-docker-compose up -d
-
-# Opção 3: Inline
-GROQ_API_KEY=sua_chave docker-compose up -d
-```
-
-### Logs e Debug
-
-```bash
-# Ver logs
-docker-compose logs -f
-
-# Ver logs de um serviço específico
-docker-compose logs -f web
-
-# Reiniciar
-docker-compose restart
-
-# Rebuild após alterações
 docker-compose up -d --build
+
+# 4. Ver logs
+docker-compose logs -f
 ```
 
-## 🌐 Deploy Estático
+### Variáveis de Ambiente
 
-### Netlify
+Crie um arquivo `.env` com:
 
-```bash
-npm install -g netlify-cli
-netlify deploy --prod --dir=.
+```env
+GROQ_API_KEY=sua_chave_aqui
+WHATSAPP_NUMBER=5546999130505
+SITE_URL=https://seu-dominio.com
 ```
 
-### Vercel
+## 🔑 Configuração da API Groq
 
-```bash
-npm install -g vercel
-vercel --prod
-```
+### Obtendo a API Key
 
-### Apache/Nginx Manual
+1. Acesse [console.groq.com](https://console.groq.com)
+2. Faça login ou crie uma conta
+3. Vá em **API Keys** → **Create API Key**
+4. Copie a chave gerada
 
-```bash
-# Copie arquivos (excluindo .env)
-rsync -avz --exclude='.env' --exclude='.git' ./ user@server:/var/www/html/
+### Modelos Disponíveis (Gratuitos)
 
-# Configure o nginx.conf fornecido
-scp nginx.conf user@server:/etc/nginx/conf.d/ebot.conf
-```
+O chat utiliza fallback automático entre:
+1. `llama-3.3-70b-versatile`
+2. `mixtral-8x7b-32768`
+3. `deepseek-r1-distill-qwen-32b`
+4. `llama-3.1-8b-instant`
+5. `gemma-7b-it`
 
 ## 🔒 Segurança
 
-### Headers de Segurança Implementados
+### Headers Implementados (nginx.conf)
 
-O `nginx.conf` inclui:
 - `X-Frame-Options: SAMEORIGIN`
 - `X-Content-Type-Options: nosniff`
-- `X-XSS-Protection`
-- `Content-Security-Policy`
+- `Content-Security-Policy` (restrito)
 - `Referrer-Policy`
 
 ### Boas Práticas
 
 1. **API Key**: Jamais commite no Git
-2. **Docker**: Use secrets ou variáveis de ambiente
-3. **HTTPS**: Configure SSL no proxy reverso
-4. **Rate Limiting**: Considere adicionar para APIs públicas
-5. **CORS**: APIs externas configuradas apenas para origens necessárias
+2. Use variáveis de ambiente no Coolify/Docker
+3. HTTPS é configurado automaticamente pelo proxy
 
 ### Arquivos Protegidos
 
 O nginx bloqueia acesso a:
-- Arquivos `.env`
-- Arquivos `.git`
-- Arquivos de backup (`.bak`, `.backup`)
-- Arquivos de sistema (`Thumbs.db`, `.DS_Store`)
+- `.env`, `.git`, arquivos de backup
+- Arquivos de sistema
 
-## 🛠 Tecnologias Utilizadas
+## 📝 Variáveis de Ambiente
 
-- **HTML5**: Estrutura semântica
-- **CSS3**: Glassmorphism, Flexbox, Grid
-- **JavaScript ES6+**: Vanilla JS
-- **Nginx**: Servidor web
-- **Docker**: Containerização
-- **Leaflet.js**: Mapas (OpenStreetMap)
-- **Marked.js**: Markdown parsing
-- **Google Fonts**: Inter
-- **Font Custom**: Cocogoose Pro Bold
+| Variável | Descrição | Obrigatório |
+|----------|-----------|-------------|
+| `GROQ_API_KEY` | Chave da API Groq | **Sim** |
+| `WHATSAPP_NUMBER` | Número WhatsApp | Não |
+| `SITE_URL` | URL base do site | Não |
 
-## ✨ Funcionalidades
+## 🛠 Tecnologias
 
-### Chat de IA
-- Integração com API Groq
-- Fallback automático entre 5 modelos gratuitos
-- Interface com animações de digitação
-- Limite de interações por sessão
-
-### Formulário de Contato
-- Integração direta com WhatsApp
-- Validação de campos
-- Redirecionamento seguro
-
-### Mapas
-- Leaflet.js + OpenStreetMap
-- Sem necessidade de API key
-- Marker personalizado
-
-### Animações
-- Scroll animations (IntersectionObserver)
-- Parallax effects
-- Loading counters
-
-## 📱 Compatibilidade
-
-- **Navegadores**: Chrome 90+, Firefox 88+, Safari 14+, Edge 90+
-- **Dispositivos**: 100% Responsivo
-- **Telas**: Mobile até Ultra-wide
+- HTML5, CSS3 (Glassmorphism)
+- JavaScript ES6+
+- Nginx + Docker
+- Leaflet.js (Mapas)
+- Marked.js (Markdown)
+- Google Fonts (Inter)
+- Groq API (Chat IA)
 
 ## 📞 Contato
 
 **Ê-Sistemas**
 - **WhatsApp/Telefone**: (46) 99913-0505
-- **E-mail Comercial**: comercial.ebot@esistemas.dev.br
-- **Endereço**: R. Pedro Alvares Cabral, 905 - Centro Norte, Dois Vizinhos - PR, 85660-000
+- **E-mail**: comercial.ebot@esistemas.dev.br
+- **Endereço**: R. Pedro Alvares Cabral, 905 - Centro Norte, Dois Vizinhos - PR
 - **CNPJ**: 53.695.158/0001-90
 
 ---
