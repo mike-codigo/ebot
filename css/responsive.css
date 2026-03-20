@@ -47,7 +47,7 @@
   
   /* Chat adjustments */
   .chat-panel { width: 100% !important; border-radius: 0 !important; }
-  .iphone-mockup { width: 100% !important; border-radius: 20px; height: 500px; border-width: 4px; }
+  .iphone-mockup { width: 100% !important; border-radius: 20px; aspect-ratio: 9/16; height: auto; border-width: 4px; }
   .iphone-mockup::before, .iphone-mockup::after { display: none; }
 }
 

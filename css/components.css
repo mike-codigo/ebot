@@ -195,7 +195,7 @@ textarea.form-control {
 .iphone-mockup {
   position: relative;
   width: 320px;
-  height: 650px;
+  aspect-ratio: 9/16;
   background: #f1f5f9;
   border-radius: 44px;
   border: 8px solid #cbd5e1;
@@ -290,7 +290,7 @@ textarea.form-control {
 .iphone-mockup {
   position: relative;
   width: 320px;
-  height: 650px;
+  aspect-ratio: 9/16;
   background: #3d4945; /* Dark carcase */
   border-radius: 44px;
   border: 10px solid #2f3835;
