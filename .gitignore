@@ -26,9 +26,6 @@ env/
 .env.production
 .env.*.local
 
-# JS Config com variáveis sensíveis (gerado no deploy)
-js/env-config.js
-
 # Documentação de scripts
 documentação/
 
@@ -42,3 +39,6 @@ documentação/
 .idea/
 *.swp
 *.swo
+
+# Docker test
+test-docker.sh
