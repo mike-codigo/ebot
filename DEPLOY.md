@@ -3,18 +3,20 @@
 ## Problemas Corrigidos
 
 1. **"No available server"**: Configuração correta para Coolify
-2. **"Porta já utilizada"**: Usando `expose` ao invés de `ports` - Coolify gerencia as portas via Traefik
+2. **"Porta já utilizada"**: Usando porta 3000 (alta) ao invés de 80 para evitar conflito com Traefik
 3. **Healthcheck falhando**: Aumentado `start_period` de 5s para 40s
 4. **Dockerfile otimizado**: Adicionado wget/curl e healthcheck nativo
 
 ## Como o Coolify Funciona
 
 O Coolify usa um proxy reverso (Traefik) que:
-- Gerencia automaticamente as portas externas
-- Roteia o tráfego baseado no domínio configurado
+- Usa as portas 80/443 do servidor para roteamento
+- Roteia o tráfego baseado no domínio configurado para a porta do seu container
 - Gerencia certificados SSL automaticamente
 
-Por isso, você deve usar `expose` (porta interna) e NÃO `ports` (mapeamento externo).
+Por isso, mapeamos para porta 3000 (ou outra porta alta disponível) no host: `3000:80`
+- **3000**: Porta no servidor (host) - é o que o Coolify/Traefik vai acessar
+- **80**: Porta interna do container (nginx)
 
 ## Configuração no Coolify
 
@@ -32,8 +34,10 @@ SITE_URL=https://ebot.murilosilva.com
 
 - **Build Pack**: Docker Compose
 - **Domain**: https://ebot.murilosilva.com
-- **Port**: 80 (porta interna exposta pelo container)
+- **Port**: 3000 (porta externa mapeada no docker-compose.yml)
 - **Servidor**: Selecione um servidor disponível
+
+**IMPORTANTE**: No Coolify, configure a porta como **3000** nas configurações do projeto.
 
 ### 3. Servidor
 
@@ -61,9 +65,10 @@ Após o deploy, verifique:
 ## Troubleshooting
 
 ### "Port already in use" / "Porta já utilizada"
-✅ **RESOLVIDO**: Agora usando `expose` ao invés de `ports`
-- O Coolify gerencia as portas automaticamente
-- Não mapeie portas manualmente no docker-compose.yml
+✅ **RESOLVIDO**: Agora usando porta 3000 ao invés de 80
+- Porta 80/443 são usadas pelo Traefik (proxy do Coolify)
+- Mapeamos para porta 3000: `3000:80`
+- Configure a porta 3000 nas configurações do Coolify
 
 ### Container reiniciando constantemente
 - Verifique os logs no Coolify

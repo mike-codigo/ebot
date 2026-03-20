@@ -4,8 +4,8 @@ services:
   web:
     build: .
     restart: unless-stopped
-    expose:
-      - "80"
+    ports:
+      - "3030:80"
     environment:
       - GROQ_API_KEY=${GROQ_API_KEY}
       - WHATSAPP_NUMBER=${WHATSAPP_NUMBER:-5546999130505}
@@ -18,5 +18,3 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
-    labels:
-      - "coolify.managed=true"
