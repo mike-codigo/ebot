@@ -1,3 +1,11 @@
+@font-face {
+  font-family: 'Cocogoose Pro Bold';
+  src: url('../assets/fonts/Cocogoose-Pro-Bold-trial.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
 body {
   font-family: var(--font-main);
   color: var(--text-body);

@@ -109,17 +109,23 @@
           <h3 class="h3" style="margin-bottom: 2rem;">Canais Oficiais</h3>
           
           <div style="margin-bottom: 2rem;">
-            <div style="font-weight: 600; font-size: 1.125rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">📱 WhatsApp e Celular</div>
-            <div style="opacity: 0.8; font-size: 1.25rem;">(46) 9 9113-0554</div>
+            <div style="font-weight: 600; font-size: 1.125rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">📱 WhatsApp e Telefone</div>
+            <div style="opacity: 0.8; font-size: 1.25rem;">(46) 99913-0505</div>
           </div>
           
-          <div style="margin-bottom: 3rem;">
-            <div style="font-weight: 600; font-size: 1.125rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">✉️ E-mail</div>
-            <div style="opacity: 0.8;">ebot@esistemas.dev.br</div>
+          <div style="margin-bottom: 2rem;">
+            <div style="font-weight: 600; font-size: 1.125rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">✉️ E-mail Comercial</div>
+            <div style="opacity: 0.8;">comercial.ebot@esistemas.dev.br</div>
           </div>
 
           <div style="margin-bottom: 2rem;">
-            <div style="font-weight: 600; font-size: 1.125rem; margin-bottom: 1rem;">Nossa Sede (Brasil)</div>
+            <div style="font-weight: 600; font-size: 1.125rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">🏢 CNPJ</div>
+            <div style="opacity: 0.8;">53.695.158/0001-90</div>
+          </div>
+          
+          <div style="margin-bottom: 3rem;">
+            <div style="font-weight: 600; font-size: 1.125rem; margin-bottom: 1rem;">📍 Nossa Sede (Brasil)</div>
+            <div style="opacity: 0.8; margin-bottom: 1rem; line-height: 1.6;">R. Pedro Alvares Cabral, 905 - Centro Norte<br>Dois Vizinhos - PR, 85660-000</div>
             <div id="map" style="width: 100%; height: 200px; border-radius: 12px; background: rgba(255,255,255,0.1); overflow: hidden;"></div>
           </div>
         </div>
@@ -369,10 +375,10 @@
       </div>
       
       <div style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 4rem; padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-        <div style="font-size: 0.875rem;">&copy; 2024-2025 Ê-Sistemas. Todos os direitos reservados.</div>
+        <div style="font-size: 0.875rem;">&copy; 2024-2025 Ê-Sistemas. Todos os direitos reservados. CNPJ: 53.695.158/0001-90</div>
         <div style="font-size: 0.875rem; display: flex; gap: 1.5rem;">
-          <span>(46) 9 9113-0554</span>
-          <span>ebot@esistemas.dev.br</span>
+          <span>(46) 99913-0505</span>
+          <span>comercial.ebot@esistemas.dev.br</span>
         </div>
       </div>
     </div>
@@ -386,24 +392,24 @@
   
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-  <script>
-    // Initialize Map on load
-    document.addEventListener('DOMContentLoaded', () => {
-      // Coordenadas genéricas para demonstração (Curitiba/Sudoeste PR)
-      const lat = -26.2289; 
-      const lng = -52.6705;
-      
-      const map = L.map('map').setView([lat, lng], 13);
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>',
-        subdomains: 'abcd',
-        maxZoom: 20
-      }).addTo(map);
-      
-      L.marker([lat, lng]).addTo(map)
-        .bindPopup('<b>Ê-Sistemas</b><br>Sede Oficial')
-        .openPopup();
-    });
-  </script>
+    <script>
+      // Initialize Map on load
+      document.addEventListener('DOMContentLoaded', () => {
+        // Coordenadas de R. Pedro Alvares Cabral, 905 - Centro Norte, Dois Vizinhos - PR
+        const lat = -25.9652; 
+        const lng = -53.0541;
+        
+        const map = L.map('map').setView([lat, lng], 16);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>',
+          subdomains: 'abcd',
+          maxZoom: 20
+        }).addTo(map);
+        
+        L.marker([lat, lng]).addTo(map)
+          .bindPopup('<b>Ê-Sistemas</b><br>R. Pedro Alvares Cabral, 905<br>Centro Norte, Dois Vizinhos - PR<br>CNPJ: 53.695.158/0001-90')
+          .openPopup();
+      });
+    </script>
 </body>
 </html>

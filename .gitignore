@@ -19,3 +19,26 @@ package-lock.json
 venv/
 env/
 .venv/
+
+# Environment variables - NUNCA commit estas chaves!
+.env
+.env.local
+.env.production
+.env.*.local
+
+# JS Config com variáveis sensíveis (gerado no deploy)
+js/env-config.js
+
+# Documentação de scripts
+documentação/
+
+# Backups
+*.bak
+*.backup
+*~
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo

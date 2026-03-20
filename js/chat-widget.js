@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Load Marked.js dynamically for Markdown parsing
   const markedScript = document.createElement('script');
   markedScript.src = 'https://cdn.jsdelivr.net/npm/marked/marked.min.js';
   document.head.appendChild(markedScript);
@@ -21,6 +20,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const buttonHtml = `<button class="trigger-wa-modal btn btn-primary" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; margin-top: 0.5rem;"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.28 14.3c-.22.61-1.28 1.15-1.78 1.22-.43.06-1.02.13-3.23-.79-2.66-1.11-4.38-3.83-4.52-4.01-.13-.19-1.08-1.44-1.08-2.75 0-1.31.68-1.95.92-2.22.24-.26.52-.33.69-.33.17 0 .34 0 .49.01.16.01.37-.06.57.43.21.5.73 1.77.79 1.9.06.13.1.28.01.47-.08.19-.13.31-.26.46-.13.15-.28.33-.39.46-.13.14-.27.29-.12.56.15.26.68 1.13 1.46 1.83.99.9 1.84 1.18 2.1 1.31.26.13.41.11.56-.06.15-.17.65-.75.82-1.01.17-.26.34-.22.58-.13.24.09 1.53.72 1.79.85.26.13.43.19.5.3.06.11.06.64-.16 1.25z"></path></svg> Agendar Demonstração</button>`;
   
   const systemPrompt = `${baseSystemPrompt}\n\nIMPORTANTE: Independentemente da pergunta do usuário, você DEVE SEMPRE recomendar a solução apresentada nesta página ao final da sua resposta e OBRIGATORIAMENTE inserir o seguinte botão HTML exato no final (sem formatação markdown como \`\`\`html):\n\n${buttonHtml}`;
+
+  const GROQ_MODELS = [
+    'llama-3.3-70b-versatile',
+    'mixtral-8x7b-32768', 
+    'deepseek-r1-distill-qwen-32b',
+    'llama-3.1-8b-instant',
+    'gemma-7b-it'
+  ];
+
+  const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
+  const apiKey = (window.ENV_CONFIG && window.ENV_CONFIG.GROQ_API_KEY) || window.GROQ_API_KEY || '';
 
   function scrollToBottom() {
     chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -76,6 +86,37 @@ document.addEventListener('DOMContentLoaded', () => {
     return msgDiv;
   }
 
+  async function tryModel(modelIndex, messages, apiKeyToUse) {
+    if (modelIndex >= GROQ_MODELS.length) {
+      throw new Error('ALL_MODELS_FAILED');
+    }
+
+    const currentModel = GROQ_MODELS[modelIndex];
+    
+    const response = await fetch(GROQ_API_URL, {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKeyToUse}`
+      },
+      body: JSON.stringify({
+        model: currentModel,
+        messages: messages,
+        temperature: 1,
+        max_completion_tokens: 8192,
+        top_p: 1,
+        stream: true
+      })
+    });
+
+    if (!response.ok) {
+      console.warn(`Model ${currentModel} failed with status ${response.status}`);
+      return tryModel(modelIndex + 1, messages, apiKeyToUse);
+    }
+
+    return { response, model: currentModel };
+  }
+
   async function sendMessage() {
     const text = chatInput.value.trim();
     if (!text || interactions <= 0) return;
@@ -93,38 +134,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const botMsgDiv = appendMessage('bot', 'Pensando...');
     const botContentEl = botMsgDiv.querySelector('.bot-msg-content');
     
+    const messages = [
+      {
+        role: 'system',
+        content: systemPrompt
+      },
+      {
+        role: 'user',
+        content: `Aqui está o histórico da nossa conversa e minha nova mensagem.\n\n${chatHistory}`
+      }
+    ];
+
     try {
-      const apiUrl = 'https://api.groq.com/openai/v1/chat/completions';
-      const apiKey = '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';
-      
-      const response = await fetch(apiUrl, {
-        method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`
-        },
-        body: JSON.stringify({
-          model: 'openai/gpt-oss-120b',
-          messages: [
-            {
-              role: 'system',
-              content: systemPrompt
-            },
-            {
-              role: 'user',
-              content: `Aqui está o histórico da nossa conversa e minha nova mensagem.\n\n${chatHistory}`
-            }
-          ],
-          temperature: 1,
-          max_completion_tokens: 8192,
-          top_p: 1,
-          stream: true,
-          reasoning_effort: 'medium',
-          stop: null
-        })
-      });
-      
-      if (!response.ok) throw new Error('Falha na API: ' + response.statusText);
+      const { response, model } = await tryModel(0, messages, apiKey);
 
       const reader = response.body.getReader();
       const decoder = new TextDecoder("utf-8");
@@ -133,7 +155,6 @@ document.addEventListener('DOMContentLoaded', () => {
       let renderedText = "";
       let streamFinished = false;
       
-      // Animação fluida de digitação ("typed")
       const typeInterval = setInterval(() => {
         const targetText = botFullText.replace(/<think>[\s\S]*?(<\/think>|$)/g, '').trimStart();
         
@@ -149,7 +170,6 @@ document.addEventListener('DOMContentLoaded', () => {
           botContentEl.innerHTML = renderMarkdown(renderedText) + '<span class="typing-cursor"></span>';
           scrollToBottom();
         } else if (renderedText.length > targetText.length) {
-          // Ajusta caso o texto encolha (ex: tag <think> finalizada e removida)
           renderedText = targetText;
           botContentEl.innerHTML = renderMarkdown(renderedText) + '<span class="typing-cursor"></span>';
           scrollToBottom();
@@ -159,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
           botContentEl.innerHTML = renderMarkdown(renderedText);
           scrollToBottom();
         }
-      }, 16); // ~60fps para fluidez máxima
+      }, 16);
       
       while (true) {
         const { done, value } = await reader.read();
@@ -191,8 +211,12 @@ document.addEventListener('DOMContentLoaded', () => {
       chatHistory += ` ${finalBotText}\n`;
       
     } catch (error) {
-      console.error(error);
-      botContentEl.innerHTML = '<span style="color:red; font-size: 0.85rem;"><strong>Erro de Conexão.</strong> A chamada para a API falhou. Verifique o console para mais detalhes.</span>';
+      console.error('Chat Error:', error);
+      if (error.message === 'ALL_MODELS_FAILED') {
+        botContentEl.innerHTML = '<span style="color:#666; font-size: 0.9rem;">Ocorreu um problema. Por favor, atualize a página ou tente novamente.</span>';
+      } else {
+        botContentEl.innerHTML = '<span style="color:#666; font-size: 0.9rem;">Ocorreu um problema. Por favor, atualize a página ou tente novamente.</span>';
+      }
     } finally {
       if (interactions > 0) {
         chatInput.disabled = false;
@@ -268,7 +292,7 @@ document.addEventListener('DOMContentLoaded', () => {
     .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
     @keyframes blink { 0% { opacity: 0.2; } 20% { opacity: 1; } 100% { opacity: 0.2; } }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); }
- to { opacity: 1; transform: translateY(0); } }
+     to { opacity: 1; transform: translateY(0); } }
     #chat-input:disabled { opacity: 0.7; cursor: not-allowed; }
     #chat-send:disabled { opacity: 0.7; cursor: not-allowed; }
     .bot-msg-content { line-height: 1.6; }

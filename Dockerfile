@@ -1,20 +1,24 @@
-FROM php:8.2-apache
+FROM nginx:alpine
 
-# Enable apache mod_rewrite
-RUN a2enmod rewrite
+RUN apk add --no-cache bash sed
 
-# Install required PHP extensions for curl (curl is usually pre-installed in this image, but we ensure it works)
-RUN apt-get update && apt-get install -y libcurl4-openssl-dev \
-    && docker-php-ext-install curl \
-    && rm -rf /var/lib/apt/lists/*
+# Copy custom nginx config
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Set working directory
-WORKDIR /var/www/html
+# Copy static files
+COPY . /usr/share/nginx/html
 
-# Copy project files to the container
-COPY . /var/www/html/
-
-# Update permissions
-RUN chown -R www-data:www-data /var/www/html
+# Make script executable
+RUN chmod +x /docker-entrypoint.d/*.sh 2>/dev/null || true
 
 EXPOSE 80
+
+# Entrypoint script to inject environment variables at runtime
+RUN echo '#!/bin/bash\n\
+sed -i "s|{{GROQ_API_KEY}}|${GROQ_API_KEY:-}|g" /usr/share/nginx/html/js/env-config.js\n\
+sed -i "s|{{WHATSAPP_NUMBER}}|${WHATSAPP_NUMBER:-}|g" /usr/share/nginx/html/js/env-config.js\n\
+sed -i "s|{{SITE_URL}}|${SITE_URL:-}|g" /usr/share/nginx/html/index.html\n\
+exec docker-entrypoint.sh nginx -g "daemon off;"' > /entrypoint.sh && chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["nginx", "-g", "daemon off;"]

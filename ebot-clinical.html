@@ -133,36 +133,95 @@
         <h2 class="h2 text-center" style="margin-bottom: 1rem;">O Ecossistema Completo para a sua Clínica</h2>
         <p class="body-large text-center" style="margin-bottom: 4rem; max-width: 800px; margin-inline: auto;">Elimine a dependência de processos manuais. Do agendamento à renovação de receitas, centralizamos tudo de forma transparente.</p>
         
-        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;">
-          <div class="glass-card float-hover" style="padding: 2rem;">
-            <div style="font-size: 2.5rem; color: #2B9FE8; font-weight: 900; opacity: 0.2; position: absolute; right: 2rem; top: 1rem;">01</div>
+        <style>
+          .ecosystem-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+          }
+          .ecosystem-grid .glass-card {
+            flex: 1 1 calc(25% - 1.5rem);
+            min-width: 280px;
+            max-width: 100%;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+          }
+          @media (max-width: 1200px) {
+            .ecosystem-grid .glass-card {
+              flex: 1 1 calc(33.333% - 1.5rem);
+            }
+          }
+          @media (max-width: 900px) {
+            .ecosystem-grid .glass-card {
+              flex: 1 1 calc(50% - 1rem);
+              min-width: calc(50% - 1rem);
+            }
+          }
+          @media (max-width: 600px) {
+            .ecosystem-grid .glass-card {
+              flex: 1 1 100%;
+              min-width: 100%;
+            }
+          }
+          .ecosystem-grid .glass-card:hover {
+            background: var(--secondary) !important;
+            color: white !important;
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 
+              0 25px 50px -12px rgba(43, 159, 232, 0.35),
+              0 15px 30px -8px rgba(43, 159, 232, 0.25),
+              0 0 0 1px rgba(43, 159, 232, 0.1);
+          }
+          .ecosystem-grid .glass-card:hover .text-small {
+            color: rgba(255, 255, 255, 0.95) !important;
+          }
+          .ecosystem-grid .glass-card:hover h4 {
+            color: white !important;
+          }
+          .ecosystem-grid .glass-card:hover .card-number {
+            color: rgba(255, 255, 255, 0.35) !important;
+          }
+        </style>
+        
+        <div class="ecosystem-grid">
+          <div class="glass-card" style="padding: 2rem; position: relative;">
+            <div class="card-number" style="font-size: 2.5rem; color: #2B9FE8; font-weight: 900; opacity: 0.2; position: absolute; right: 2rem; top: 1rem;">01</div>
             <h4 style="font-weight: 700; margin-bottom: 0.5rem; font-size: 1.25rem;">Triagem Inteligente</h4>
             <p class="text-small">Roteamento de sintomas para o profissional adequado antes mesmo da consulta.</p>
           </div>
-          <div class="glass-card float-hover" style="padding: 2rem;">
-            <div style="font-size: 2.5rem; color: #2B9FE8; font-weight: 900; opacity: 0.2; position: absolute; right: 2rem; top: 1rem;">02</div>
+          <div class="glass-card" style="padding: 2rem; position: relative;">
+            <div class="card-number" style="font-size: 2.5rem; color: #2B9FE8; font-weight: 900; opacity: 0.2; position: absolute; right: 2rem; top: 1rem;">02</div>
             <h4 style="font-weight: 700; margin-bottom: 0.5rem; font-size: 1.25rem;">Agendamento de Consultas</h4>
             <p class="text-small">Sincronização ao vivo com o sistema da clínica para alocar horários via WhatsApp.</p>
           </div>
-          <div class="glass-card float-hover" style="padding: 2rem;">
-            <div style="font-size: 2.5rem; color: #2B9FE8; font-weight: 900; opacity: 0.2; position: absolute; right: 2rem; top: 1rem;">03</div>
+          <div class="glass-card" style="padding: 2rem; position: relative;">
+            <div class="card-number" style="font-size: 2.5rem; color: #2B9FE8; font-weight: 900; opacity: 0.2; position: absolute; right: 2rem; top: 1rem;">03</div>
             <h4 style="font-weight: 700; margin-bottom: 0.5rem; font-size: 1.25rem;">Renovação de Receitas</h4>
             <p class="text-small">Pedidos automáticos de uso contínuo liberando as linhas telefônicas.</p>
           </div>
-          <div class="glass-card float-hover" style="padding: 2rem;">
-            <div style="font-size: 2.5rem; color: #2B9FE8; font-weight: 900; opacity: 0.2; position: absolute; right: 2rem; top: 1rem;">04</div>
+          <div class="glass-card" style="padding: 2rem; position: relative;">
+            <div class="card-number" style="font-size: 2.5rem; color: #2B9FE8; font-weight: 900; opacity: 0.2; position: absolute; right: 2rem; top: 1rem;">04</div>
             <h4 style="font-weight: 700; margin-bottom: 0.5rem; font-size: 1.25rem;">Lembretes Automatizados</h4>
             <p class="text-small">Fluxo contínuo de confirmação para derrubar a taxa de ausência.</p>
           </div>
-          <div class="glass-card float-hover" style="padding: 2rem; background: var(--primary); color: white;">
-            <div style="font-size: 2.5rem; font-weight: 900; opacity: 0.2; position: absolute; right: 2rem; top: 1rem;">05</div>
+          <div class="glass-card" style="padding: 2rem; position: relative;">
+            <div class="card-number" style="font-size: 2.5rem; color: #2B9FE8; font-weight: 900; opacity: 0.2; position: absolute; right: 2rem; top: 1rem;">05</div>
             <h4 style="font-weight: 700; margin-bottom: 0.5rem; font-size: 1.25rem;">Pesquisa de Medicamentos</h4>
-            <p class="text-small" style="color: rgba(255,255,255,0.9);">Inovação: O paciente tira foto da receita, e a IA lê os componentes indicando o local de retirada mais próximo (Rede Pública ou Privada).</p>
+            <p class="text-small">Inovação: O paciente tira foto da receita, e a IA lê os componentes indicando o local de retirada mais próximo (Rede Pública ou Privada).</p>
           </div>
-          <div class="glass-card float-hover" style="padding: 2rem;">
-            <div style="font-size: 2.5rem; color: #2B9FE8; font-weight: 900; opacity: 0.2; position: absolute; right: 2rem; top: 1rem;">06</div>
+          <div class="glass-card" style="padding: 2rem; position: relative;">
+            <div class="card-number" style="font-size: 2.5rem; color: #2B9FE8; font-weight: 900; opacity: 0.2; position: absolute; right: 2rem; top: 1rem;">06</div>
             <h4 style="font-weight: 700; margin-bottom: 0.5rem; font-size: 1.25rem;">Dashboard Gerencial</h4>
             <p class="text-small">Administração em tempo real das agendas de todos os médicos no mesmo lugar.</p>
+          </div>
+          <div class="glass-card" style="padding: 2rem; position: relative;">
+            <div class="card-number" style="font-size: 2.5rem; color: #2B9FE8; font-weight: 900; opacity: 0.2; position: absolute; right: 2rem; top: 1rem;">07</div>
+            <h4 style="font-weight: 700; margin-bottom: 0.5rem; font-size: 1.25rem;">Prontuário Digital</h4>
+            <p class="text-small">Acesso rápido e seguro ao histórico completo de cada paciente em um único lugar.</p>
+          </div>
+          <div class="glass-card" style="padding: 2rem; position: relative;">
+            <div class="card-number" style="font-size: 2.5rem; color: #2B9FE8; font-weight: 900; opacity: 0.2; position: absolute; right: 2rem; top: 1rem;">08</div>
+            <h4 style="font-weight: 700; margin-bottom: 0.5rem; font-size: 1.25rem;">Telemedicina Integrada</h4>
+            <p class="text-small">Consultas remotas com integração direta ao sistema de agendamento e prontuário.</p>
           </div>
         </div>
       </div>
@@ -216,12 +275,13 @@
             </button>
           </div>
           <div style="text-align: center; padding-bottom: 0.5rem; font-size: 0.75rem; color: #888; background: rgba(255,255,255,0.8);">
-            Interações gratuitas restantes: <span id="chat-count">10</span>/10 (Powered by DeepSeek R1)
+            Interações gratuitas restantes: <span id="chat-count">10</span>/10 (Powered by Ê-Bot LLM)
           </div>
         </div>
       </div>
     </section>
-<script src="js/chat-widget.js?v=3"></script>
+    <script src="js/env-config.js"></script>
+    <script src="js/chat-widget.js?v=5"></script>
  
     <!-- FINAL CTA -->
     <section class="section section-dark bg-grid-pattern-dark" style="background: linear-gradient(135deg, var(--dark) 0%, #1a252f 100%); overflow: hidden; margin-bottom: 0;">
@@ -466,8 +526,8 @@
       <div style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 4rem; padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
         <div style="font-size: 0.875rem;">&copy; 2024-2025 Ê-Sistemas. Todos os direitos reservados.</div>
         <div style="font-size: 0.875rem; display: flex; gap: 1.5rem;">
-          <span>(46) 9 9113-0554</span>
-          <span>ebot@esistemas.dev.br</span>
+          <span>(46) 99913-0505</span>
+          <span>comercial.ebot@esistemas.dev.br</span>
         </div>
       </div>
     </div>

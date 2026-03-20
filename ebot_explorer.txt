@@ -1,27 +1,0 @@
-Ê-Bot Turismo -- Atendimento Inteligente ao Turista (WhatsApp + Totem Conversacional)
-O Ê-Bot Turismo é uma solução de atendimento e divulgação turística que transforma a cidade em uma experiência guiada por conversa. A plataforma integra WhatsApp, IA especialista em turismo local, painel de gestão e campanhas direcionadas, permitindo que o turista encontre informações com rapidez e que a gestão pública/privada mantenha o conteúdo sempre atualizado. Além do atendimento via WhatsApp por QR Codes espalhados pela cidade, o Ê-Bot Turismo também conta com um Totem Inteligente: um ponto físico de atendimento que interage por diálogo natural, oferecendo uma experiência mais humana e acessível, indo além do modelo tradicional de tela "apenas por toque".
-Jornada do Turista (WhatsApp via QR Code)
-1. QR Code na cidade: o turista escaneia um QR Code em pontos turísticos, hotéis, restaurantes, praças e centros de informação.
-2. Abertura no WhatsApp: começa a conversa imediatamente, sem instalar aplicativo. 3. IA especialista em turismo: o turista solicita:  locais turísticos e roteiros por tempo disponível  rotas e deslocamento (a pé, carro, bike)  restaurantes, bares, cafés e experiências locais  eventos e agenda cultural do dia/semana 4. Respostas objetivas e acionáveis: com sugestões e direcionamento para "o que
-fazer agora".
-Totem Inteligente (Atendimento por Conversa)
-
-O Totem Inteligente do Ê-Bot Turismo funciona como um "guia turístico digital" no espaço físico. Ele realiza atendimento por conversa (voz e/ou texto), tornando o acesso mais intuitivo para turistas de diferentes perfis e idades, especialmente em locais com grande fluxo. Diferenciais do Totem
- Interação por diálogo, não apenas por menus e botões  Atendimento rápido para dúvidas comuns e recomendações  Ideal para locais como rodoviária, praça central, prefeitura, centros culturais, hotéis e
-eventos  Pode operar em conjunto com o WhatsApp: o turista inicia no totem e continua no
-celular (quando aplicável)
-O que o Totem resolve  Reduz demanda presencial de informação turística  Padroniza orientações e evita desencontro de informações  Melhora a experiência do visitante com um atendimento moderno e acessível
-Painel de Gestão (conteúdo e operação)
-A equipe responsável administra toda a base pelo Ê-Bot Painel, garantindo atualização constante e governança. O que pode ser editado no painel
- Pontos turísticos (descrição, horários, regras, dicas e contatos)  Rotas e roteiros sugeridos  Restaurantes, bares e parceiros locais (quando aplicável)  Eventos e agenda cultural  Informações úteis (transporte, emergência, horários, orientações gerais)
-
-Campanhas de Marketing Direcionadas (ativação e divulgação)
-O Ê-Bot Turismo permite disparar campanhas segmentadas para divulgar atrações e eventos, incentivando a movimentação turística e o consumo local. Exemplos de campanhas
- Agenda do fim de semana e feriados  Eventos da cidade (festas, feiras, shows)  Roteiros temáticos (cultura, gastronomia, natureza, família)  Boas-vindas ao turista com recomendações personalizadas
-Segmentos e interesses principais
-Setor Público (Secretarias de Turismo, Prefeituras e Gestão Municipal)
-Interesse central: modernizar o atendimento ao turista e ampliar divulgação com canal oficial, escalável e mensurável. Valor: redução de filas e demandas presenciais, informação padronizada, maior promoção dos eventos e atrativos, e indicadores de interesse do turista.
-Iniciativa Privada (hotéis, restaurantes, atrativos, comércio e organizadores de eventos)
-Interesse central: aumentar fluxo e conversão de turistas em visitas, reservas e consumo. Valor: maior visibilidade, ativação por campanhas e orientação prática que leva o visitante ao destino certo.
-
-
