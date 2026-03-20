@@ -4,8 +4,8 @@ services:
   web:
     build: .
     restart: unless-stopped
-    ports:
-      - "8080:80"
+    expose:
+      - "80"
     environment:
       - GROQ_API_KEY=${GROQ_API_KEY}
       - WHATSAPP_NUMBER=${WHATSAPP_NUMBER:-5546999130505}
