@@ -17,9 +17,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const baseSystemPrompt = chatContainer.getAttribute('data-system-prompt') || "Você é um assistente útil e amigável. Responda sempre no idioma Português Brasileiro, nunca em outro idioma!";
   const botName = chatContainer.getAttribute('data-bot-name') || "Assistente";
 
-  const buttonHtml = `<button class="trigger-wa-modal btn btn-primary" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; margin-top: 0.5rem;"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.28 14.3c-.22.61-1.28 1.15-1.78 1.22-.43.06-1.02.13-3.23-.79-2.66-1.11-4.38-3.83-4.52-4.01-.13-.19-1.08-1.44-1.08-2.75 0-1.31.68-1.95.92-2.22.24-.26.52-.33.69-.33.17 0 .34 0 .49.01.16.01.37-.06.57.43.21.5.73 1.77.79 1.9.06.13.1.28.01.47-.08.19-.13.31-.26.46-.13.15-.28.33-.39.46-.13.14-.27.29-.12.56.15.26.68 1.13 1.46 1.83.99.9 1.84 1.18 2.1 1.31.26.13.41.11.56-.06.15-.17.65-.75.82-1.01.17-.26.34-.22.58-.13.24.09 1.53.72 1.79.85.26.13.43.19.5.3.06.11.06.64-.16 1.25z"></path></svg> Agendar Demonstração</button>`;
-  
-  const systemPrompt = `${baseSystemPrompt}\n\nIMPORTANTE: Sempre responda usando Markdown(Titulos, subtitulos, listas, tables e etc para ficar mais categorizado e melhor de se ver, pode usar também emojis mas não de maneira exagerada) e Independentemente da pergunta do usuário, você DEVE SEMPRE recomendar a solução apresentada nesta página ao final da sua resposta e OBRIGATORIAMENTE inserir o seguinte botão HTML exato no final (sem formatação markdown como \`\`\`html):\n\n${buttonHtml}`;
+  const buttonHtml = `<button class="trigger-wa-modal btn btn-primary" style="display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;margin-top:0.75rem;"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.28 14.3c-.22.61-1.28 1.15-1.78 1.22-.43.06-1.02.13-3.23-.79-2.66-1.11-4.38-3.83-4.52-4.01-.13-.19-1.08-1.44-1.08-2.75 0-1.31.68-1.95.92-2.22.24-.26.52-.33.69-.33.17 0 .34 0 .49.01.16.01.37-.06.57.43.21.5.73 1.77.79 1.9.06.13.1.28.01.47-.08.19-.13.31-.26.46-.13.15-.28.33-.39.46-.13.14-.27.29-.12.56.15.26.68 1.13 1.46 1.83.99.9 1.84 1.18 2.1 1.31.26.13.41.11.56-.06.15-.17.65-.75.82-1.01.17-.26.34-.22.58-.13.24.09 1.53.72 1.79.85.26.13.43.19.5.3.06.11.06.64-.16 1.25z"/></svg> Agendar Demonstração</button>`;
+
+  // Placeholder que a IA deve escrever — o JS substitui por buttonHtml antes de renderizar
+  const BUTTON_PLACEHOLDER = '[BOTAO_AGENDAR]';
+
+  // ATENÇÃO: O texto do botão deve ser written EXATAMENTE como placeholder abaixo, sem espaços extras ou variações
+  // A IA deve terminar a resposta com esta linha EXATA (incluindo os colchetes):
+  // [BOTAO_AGENDAR]
+  const systemPrompt = `${baseSystemPrompt}
+
+IMPORTANT: Você deve sempre recomendar a solução desta página de forma clara e encorajadora.
+
+Ao final de TODAS as suas respostas, adicione esta linha exata (sem as aspas):
+"[BOTAO_AGENDAR]"
+
+Não escreva código HTML. Não escreva o botão. Apenas escreva o texto [BOTAO_AGENDAR] no final.
+A função de renderização Replacehed substitui automaticamente o texto [BOTAO_AGENDAR] pelo botão real.`;
 
   const GROQ_MODELS = [
     'llama-3.3-70b-versatile',
@@ -37,10 +51,29 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderMarkdown(text) {
+    // O placeholder [BOTAO_AGENDAR] é substituído após parsear o Markdown
+    // para evitar que o marked.js escape o HTML do botão
+    const PLACEHOLDER = '[BOTAO_AGENDAR]';
+    const SAFE_TOKEN = 'EBOT__SCHEDULE__BTN';
+
+    // Troca o placeholder por um token seguro (sem colchetes) antes do Markdown
+    // Usamos regex case-insensitive para capturar variações
+    let processed = text.replace(/\[BOTAO_AGENDAR\]/gi, SAFE_TOKEN);
+
+    let html;
     if (window.marked) {
-      return marked.parse(text);
+      html = marked.parse(processed);
+    } else {
+      html = escapeHtml(processed);
     }
-    return escapeHtml(text);
+
+    // Agora substitui o token (e qualquer versão escaped) pelo botão real
+    html = html.replace(/EBOT__SCHEDULE__BTN/gi, buttonHtml);
+    // Limpar parágrafo vazio que marked pode criar ao redor do token
+    html = html.replace(/<p>\s*EBOT__SCHEDULE__BTN\s*<\/p>/gi, buttonHtml);
+    // Também remover qualquer <p> que contenha só o token
+    html = html.replace(/<p>.*?EBOT__SCHEDULE__BTN.*?<\/p>/gi, buttonHtml);
+    return html;
   }
 
   function escapeHtml(unsafe) {
@@ -156,28 +189,32 @@ document.addEventListener('DOMContentLoaded', () => {
       let streamFinished = false;
       
       const typeInterval = setInterval(() => {
-        const targetText = botFullText.replace(/<think>[\s\S]*?(<\/think>|$)/g, '').trimStart();
-        
-        if (renderedText.length < targetText.length) {
-          const diff = targetText.length - renderedText.length;
+        // Texto limpo sem tags <think>
+        const cleanText = botFullText.replace(/<think>[\s\S]*?(<\/think>|$)/g, '').trimStart();
+
+        // Texto de exibição durante stream: sem o placeholder (evita texto parcial quebrado)
+        const textForTyping = cleanText
+          .replace(/\[BOTAO_AGENDAR\]/gi, '')
+          .replace(/\[BOTAO_AGEND[A-R_]*\]?/gi, '')
+          .trimEnd();
+
+        if (renderedText.length < textForTyping.length) {
+          // Typewriter: vai digitando o texto progressivamente
+          const diff = textForTyping.length - renderedText.length;
           let charsToAdd = 1;
-          if (diff > 5) charsToAdd = 1;
-          if (diff > 15) charsToAdd = 2;
-          if (diff > 40) charsToAdd = 3;
-          if (diff > 80) charsToAdd = 5;
+          if (diff > 15)  charsToAdd = 2;
+          if (diff > 40)  charsToAdd = 3;
+          if (diff > 80)  charsToAdd = 5;
           if (diff > 150) charsToAdd = 8;
-          
-          renderedText = targetText.slice(0, renderedText.length + charsToAdd);
-          botContentEl.innerHTML = renderMarkdown(renderedText) + '<span class="typing-cursor"></span>';
-          scrollToBottom();
-        } else if (renderedText.length > targetText.length) {
-          renderedText = targetText;
+
+          renderedText = textForTyping.slice(0, renderedText.length + charsToAdd);
           botContentEl.innerHTML = renderMarkdown(renderedText) + '<span class="typing-cursor"></span>';
           scrollToBottom();
         } else if (streamFinished) {
+          // Stream terminou e o typewriter chegou ao fim: renderiza o texto COMPLETO com o botão
           clearInterval(typeInterval);
-          if(!renderedText) renderedText = "Desculpe, não consegui formular uma resposta no momento.";
-          botContentEl.innerHTML = renderMarkdown(renderedText);
+          const finalText = cleanText.trimEnd() || 'Desculpe, não consegui formular uma resposta no momento.';
+          botContentEl.innerHTML = renderMarkdown(finalText);
           scrollToBottom();
         }
       }, 35);

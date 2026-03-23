@@ -56,10 +56,20 @@ document.addEventListener('DOMContentLoaded', () => {
           linePath.style.strokeDashoffset = 0;
           linePath.dataset.animated = 'true';
         }
+
+        // Gauge Arc (half-donut / speedometer)
+        const gaugeArc = target.classList.contains('gauge-arc') ? target : target.querySelector('.gauge-arc');
+        if (gaugeArc && !gaugeArc.dataset.animated) {
+          const percent = parseFloat(gaugeArc.dataset.percent || 100);
+          const totalDash = parseFloat(gaugeArc.getAttribute('stroke-dasharray') || 176);
+          const offset = totalDash - (totalDash * percent / 100);
+          gaugeArc.style.strokeDashoffset = offset;
+          gaugeArc.dataset.animated = 'true';
+        }
       }
     });
   }, observerOptions);
 
   // Observe all elements that might need animation independently
-  document.querySelectorAll('.chart-container, .counter-value, .circle-progress-bar, .bar, .line-path').forEach(el => observer.observe(el));
+  document.querySelectorAll('.chart-container, .counter-value, .circle-progress-bar, .bar, .line-path, .gauge-arc').forEach(el => observer.observe(el));
 });

@@ -663,6 +663,221 @@
   }
   </style>
   
+
+  <style>
+/* NOTEBOOK MOCKUP */
+.laptop-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.laptop {
+  width: 100%;
+  max-width: 900px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.laptop-screen {
+  background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 100%);
+  border-radius: 12px 12px 0 0;
+  padding: 10px;
+  position: relative;
+}
+
+.laptop-screen::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 8px;
+  background: #0a0a0a;
+  border-radius: 50%;
+  z-index: 10;
+}
+
+.laptop-screen-inner {
+  background: #000;
+  border-radius: 4px;
+  overflow: hidden;
+  aspect-ratio: 16/10;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.laptop-screen video {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+}
+
+.laptop-screen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 50%);
+  pointer-events: none;
+  border-radius: 4px;
+}
+
+.laptop-play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  background: rgba(136, 167, 47, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  animation: pulse-play 2s infinite;
+  transition: all 0.3s ease;
+}
+
+.laptop-play-btn:hover {
+  transform: translate(-50%, -50%) scale(1.15);
+  background: rgba(136, 167, 47, 1);
+}
+
+.laptop-play-btn svg {
+  fill: white;
+  margin-left: 3px;
+}
+
+@keyframes pulse-play {
+  0% { box-shadow: 0 0 0 0 rgba(136, 167, 47, 0.6); }
+  70% { box-shadow: 0 0 0 25px rgba(136, 167, 47, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(136, 167, 47, 0); }
+}
+
+.laptop-keyboard {
+  background: linear-gradient(180deg, #d4d7dc 0%, #b8bcbf 50%, #a8acb0 100%);
+  height: 32px;
+  border-radius: 0 0 8px 8px;
+  position: relative;
+  box-shadow: inset 0 2px 4px rgba(255,255,255,0.5), inset 0 -2px 4px rgba(0,0,0,0.1), 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.laptop-keyboard::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 12%;
+  right: 12%;
+  height: 3px;
+  background: repeating-linear-gradient(90deg, rgba(0,0,0,0.08) 0px, rgba(0,0,0,0.08) 12px, transparent 12px, transparent 16px);
+  border-radius: 2px;
+}
+
+.laptop-trackpad {
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20%;
+  height: 10px;
+  background: rgba(0,0,0,0.06);
+  border-radius: 3px;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+.laptop-base {
+  width: 108%;
+  height: 12px;
+  background: #888;
+  margin-left: -4%;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+/* VIDEO MODAL - Same style as iPhone modal */
+.video-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  z-index: 100005;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.video-modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-laptop {
+  height: 85vh;
+  width: calc(85vh * 16 / 10);
+  max-width: 95vw;
+  transform: scale(0.85) translateY(30px);
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: default;
+}
+
+.video-modal-overlay.active .modal-laptop {
+  transform: scale(1) translateY(0);
+}
+
+.video-modal-close {
+  position: fixed;
+  top: 30px;
+  right: 40px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: white;
+  font-size: 2rem;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 100001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.video-modal-close:hover {
+  background: rgba(136, 167, 47, 0.9);
+  transform: scale(1.1);
+}
+
+.modal-laptop video {
+  pointer-events: auto;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Responsive for Notebook + AntesDepois */
+@media (max-width: 768px) {
+  .laptop-container {
+    width: 100%;
+    max-width: 100%;
+  }
+  .laptop {
+    max-width: 100%;
+  }
+}
+  </style>
+
 </head>
 <body>
 
@@ -671,7 +886,7 @@
     <div class="container header-inner">
       
       <div class="logo">
-        <a href="index.html" style="display: flex; align-items: center; gap: 0.5rem; font-weight: 800; font-size: 1.75rem;">
+        <a href="index.html" style="display: flex; align-items: center; gap: 0.5rem; font-weight: 800; font-size: 1.75rem; font-family: 'Cocogoose Pro Bold', sans-serif;">
           <img src="assets/images/ebot_icon.avif" alt="ebot Logo" style="height: 48px; width: auto; object-fit: contain;">
           <span><span style="color: #88a72f;">ê</span><span style="color: #adb4be;">bot</span></span>
         </a>
@@ -972,20 +1187,38 @@
             <span style="font-size: 10px; font-style: italic; color: #999;">Fonte: Forrester Research 2024</span>
           </div>
 
-          <div class="glass-card text-center reveal stagger-4">
-            <div class="donut-chart" style="--angle: 270deg;">
-              <div class="donut-inner"></div>
-              <div class="donut-text"><span class="counter-value" data-end="75" data-suffix="%">0</span></div>
+          <div class="glass-card text-center reveal stagger-4" style="position: relative; overflow: hidden;">
+            <div class="gauge-glow" style="position: absolute; top: -30%; left: 50%; transform: translateX(-50%); width: 200px; height: 200px; background: radial-gradient(circle, rgba(135,166,48,0.15) 0%, transparent 70%); pointer-events: none; z-index: 0;"></div>
+            <div class="gauge-chart-wrapper" style="position:relative;width:140px;height:80px;margin:0 auto 1rem;">
+              <svg viewBox="0 0 140 80" width="140" height="80" style="overflow:visible;">
+                <defs>
+                  <linearGradient id="gaugeGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#2ecc71"/>
+                    <stop offset="50%" stop-color="#f39c12"/>
+                    <stop offset="100%" stop-color="#e74c3c"/>
+                  </linearGradient>
+                  <filter id="gaugeShadow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="rgba(135,166,48,0.4)"/>
+                  </filter>
+                </defs>
+                <path d="M 14 70 A 56 56 0 0 1 126 70" fill="none" stroke="#e8ecf0" stroke-width="12" stroke-linecap="round"/>
+                <path class="gauge-arc" data-percent="75" d="M 14 70 A 56 56 0 0 1 126 70" fill="none" stroke="url(#gaugeGrad2)" stroke-width="12" stroke-linecap="round" stroke-dasharray="176" stroke-dashoffset="176" style="transition: stroke-dashoffset 2s cubic-bezier(0.4,0,0.2,1); filter: url(#gaugeShadow);" />
+              </svg>
+              <div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);font-size:1.8rem;font-weight:900;background:linear-gradient(135deg,#2ecc71,#87a630);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;">
+                <span class="counter-value" data-end="75" data-suffix="%">0</span>
+              </div>
             </div>
-            <p class="text-small" style="margin-bottom: 0.5rem;">Consideram IA essencial para o futuro</p>
+            <p class="text-small" style="margin-bottom: 0.5rem; font-weight: 600; color: #3d4945;">Consideram IA essencial</p>
             <span style="font-size: 10px; font-style: italic; color: #999;">Fonte: PwC Digital Trends 2024</span>
           </div>
         </div>
 
-        <!-- Antes / Depois -->
-        <div class="glass-panel reveal" style="border-radius: var(--radius-lg); overflow: hidden;">
-          <div class="grid grid-2" style="gap: 0;">
-            <div style="padding: 3rem; background: rgba(0,0,0,0.02);">
+        <!-- Notebook + AntesDepois -->
+        <div class="reveal" style="display: flex; flex-wrap: wrap; gap: 2rem; align-items: flex-start; justify-content: center; margin-bottom: 5rem; width: 100%;">
+          
+          <!-- Antes / Depois - Column on left -->
+          <div style="display: flex; flex-direction: column; gap: 1rem; min-width: 320px; flex: 1; max-width: 500px;">
+            <div class="glass-panel" style="border-radius: var(--radius-lg); padding: 2.5rem; background: rgba(0,0,0,0.02);">
               <h3 class="h3" style="color: var(--text-body); margin-bottom: 1.5rem;">Antes da Ê-Bot</h3>
               <ul class="checklist checklist-negative" style="opacity: 0.7;">
                 <li>Tempo de resposta: 15+ minutos</li>
@@ -994,14 +1227,30 @@
                 <li>Satisfação do cliente: 65%</li>
               </ul>
             </div>
-            <div style="padding: 3rem; background: var(--primary-light);">
+            <div class="glass-panel" style="border-radius: var(--radius-lg); padding: 2.5rem; background: var(--primary-light);">
               <h3 class="h3 text-primary" style="margin-bottom: 1.5rem;">Depois da Ê-Bot</h3>
               <ul class="checklist">
-                <li>Tempo de resposta: &lt; 1 minutos</li>
+                <li>Tempo de resposta: &lt; 1 minuto</li>
                 <li>Taxa de conversão: 34%</li>
                 <li>Custo por atendimento: -80%</li>
                 <li>Satisfação do cliente: 98%</li>
               </ul>
+            </div>
+          </div>
+
+          <!-- Notebook on right -->
+          <div class="laptop-container" style="flex: 1; min-width: 350px; max-width: 900px;">
+            <div class="laptop" id="laptop-video" style="max-width: 100%; width: 100%;">
+              <div class="laptop-screen">
+                <div class="laptop-screen-inner">
+                  <video src="assets/videos/video_ebot.mp4" autoplay loop muted playsinline id="laptop-video-preview"></video>
+                  <div class="laptop-play-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                  </div>
+                </div>
+              </div>
+              <div class="laptop-keyboard"></div>
+              <div class="laptop-base"></div>
             </div>
           </div>
         </div>
@@ -1881,6 +2130,61 @@
     setTimeout(spawnParticle, 1000);
   });
 </script>
+
+
+  <!-- LAPTOP VIDEO MODAL -->
+  <div class="video-modal-overlay" id="laptopVideoModal">
+    <button class="video-modal-close" id="closeLaptopModal">&times;</button>
+    <div class="laptop modal-laptop">
+      <div class="laptop-screen" style="border-radius: 12px; padding: 12px;">
+        <div class="laptop-screen-inner" style="border-radius: 6px;">
+          <video src="assets/videos/video_ebot.mp4" loop playsinline controls id="laptopModalVideoPlayer"></video>
+        </div>
+      </div>
+      <div class="laptop-keyboard">
+        <div class="laptop-trackpad"></div>
+      </div>
+      <div class="laptop-base"></div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const laptop = document.getElementById("laptop-video");
+      const modal = document.getElementById("laptopVideoModal");
+      const closeBtn = document.getElementById("closeLaptopModal");
+      const videoPlayer = document.getElementById("laptopModalVideoPlayer");
+
+      if (laptop && modal && closeBtn && videoPlayer) {
+        laptop.addEventListener("click", () => {
+          modal.classList.add("active");
+          videoPlayer.play();
+        });
+
+        closeBtn.addEventListener("click", () => {
+          modal.classList.remove("active");
+          videoPlayer.pause();
+          videoPlayer.currentTime = 0;
+        });
+
+        modal.addEventListener("click", (e) => {
+          if (e.target === modal) {
+            modal.classList.remove("active");
+            videoPlayer.pause();
+            videoPlayer.currentTime = 0;
+          }
+        });
+
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && modal.classList.contains("active")) {
+            modal.classList.remove("active");
+            videoPlayer.pause();
+            videoPlayer.currentTime = 0;
+          }
+        });
+      }
+    });
+  </script>
 
 </body>
 </html>
