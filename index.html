@@ -761,7 +761,6 @@
 .laptop-keyboard {
   background: linear-gradient(180deg, #d4d7dc 0%, #b8bcbf 50%, #a8acb0 100%);
   height: 32px;
-  border-radius: 0 0 8px 8px;
   position: relative;
   box-shadow: inset 0 2px 4px rgba(255,255,255,0.5), inset 0 -2px 4px rgba(0,0,0,0.1), 0 4px 8px rgba(0,0,0,0.2);
 }
@@ -791,7 +790,8 @@
 
 .laptop-base {
   width: 108%;
-  height: 12px;
+  height: 20px;
+  position: relative;
   background: #888;
   margin-left: -4%;
   border-radius: 0 0 10px 10px;
@@ -2136,7 +2136,7 @@
   <div class="video-modal-overlay" id="laptopVideoModal">
     <button class="video-modal-close" id="closeLaptopModal">&times;</button>
     <div class="laptop modal-laptop">
-      <div class="laptop-screen" style="border-radius: 12px; padding: 12px;">
+      <div class="laptop-screen" style="padding: 25px;">
         <div class="laptop-screen-inner" style="border-radius: 6px;">
           <video src="assets/videos/video_ebot.mp4" loop playsinline controls id="laptopModalVideoPlayer"></video>
         </div>
@@ -2144,7 +2144,7 @@
       <div class="laptop-keyboard">
         <div class="laptop-trackpad"></div>
       </div>
-      <div class="laptop-base"></div>
+      <div class="laptop-base" style="height: 25px;"></div>
     </div>
   </div>
 
