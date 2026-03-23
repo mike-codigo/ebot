@@ -37,6 +37,10 @@
   position: relative;
 }
 
+.glass-card {
+  align-content: center;
+}
+
 /* --- IPHONE INTERACTIVE --- */
 .iphone-interactive {
   position: relative;
